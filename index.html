@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#F6F6F2">
-<title>สีเขียว · ลงทะเบียนนักกีฬา กีฬาสีปีใหม่ 2570</title>
+<title>สีเขียว · ลงทะเบียนนักกีฬา กองเชียร์ ขบวนพาเหรด · กีฬาสีปีใหม่ 2570</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
   --sh:0 1px 2px rgba(20,30,20,.04),0 6px 24px -12px rgba(20,30,20,.12);
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
@@ -116,6 +117,8 @@ main{min-height:60vh;padding-bottom:70px}
 
 /* ---------- sport grid ---------- */
 .sports{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.sports.g3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:620px){.sports.g3{grid-template-columns:1fr}}
 @media (max-width:980px){.sports{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:620px){.sports{grid-template-columns:1fr 1fr}}
 .sp{position:relative;display:flex;flex-direction:column;gap:22px;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);transition:.2s;overflow:hidden}
@@ -266,6 +269,25 @@ tr.grp td{background:#FAFAF7;font-weight:600}
 .sum-sp{margin-top:34px}
 .sum-sp h3{font-size:19px;margin-bottom:10px}
 .sum-ev h4{font-size:15px;margin:18px 0 8px}
+
+/* ---------- groups / event manager ---------- */
+.ghead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.ghead .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c)}
+.ghead .ic svg{width:24px;height:24px}
+.ghead h3{font-size:20px}
+.ghead p{margin:2px 0 0;font-size:14px;color:var(--ink2)}
+.ghead .btn{margin-left:auto}
+.ev-note{display:inline-block;margin-top:6px;font-size:13px;color:var(--amber);background:#FBF3E4;border-radius:6px;padding:2px 8px}
+.presets{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.presets button{height:32px;padding:0 12px;border-radius:999px;border:1px dashed var(--line2);background:#fff;cursor:pointer;font-size:13px;color:var(--ink2)}
+.presets button:hover{border-color:var(--g);color:var(--g)}
+.posgrid{display:flex;flex-wrap:wrap;gap:8px;border:0;padding:0;margin:14px 0 0}
+.posgrid legend{font-size:13px;color:var(--ink2);margin-bottom:6px;font-weight:500}
+.posgrid label{margin:0;cursor:pointer}
+.posgrid input{position:absolute;opacity:0;pointer-events:none}
+.posgrid span{display:inline-block;padding:9px 16px;border:1px solid var(--line2);border-radius:999px;font-size:14px;color:var(--ink)}
+.posgrid input:checked+span{border-color:var(--g);background:var(--gs);box-shadow:0 0 0 1px var(--g)}
+input[type=number]{-moz-appearance:textfield}
 
 /* ---------- dialog ---------- */
 dialog{width:min(520px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:0;border-radius:22px;background:var(--card);color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.35)}
@@ -454,9 +476,68 @@ footer button{background:none;border:0;color:var(--ink2);cursor:pointer;text-dec
   </div>
 </dialog>
 
+<!-- จัดการประเภทการแข่งขัน (ผู้ดูแล) -->
+<dialog id="dlgEvent">
+  <div class="dh"><h3>ประเภทการแข่งขัน</h3><p id="evSub"></p></div>
+  <div class="db">
+    <ul class="clist" id="evList"></ul>
+    <form id="formEvent" style="padding:0" autocomplete="off">
+      <input type="hidden" name="id"><input type="hidden" name="sportId">
+      <h4 style="margin-top:22px;font-size:15px" id="evFormTitle">เพิ่มประเภทใหม่</h4>
+      <div class="presets" id="evPresets">
+        <button type="button" data-pre="เดี่ยว|1|0">เดี่ยว</button>
+        <button type="button" data-pre="คู่|2|1">คู่</button>
+        <button type="button" data-pre="ทีม 3 คน|3|2">ทีม 3 คน</button>
+        <button type="button" data-pre="ทีม 4 คน|4|2">ทีม 4 คน</button>
+        <button type="button" data-pre="ทีม 6 คน|6|6">ทีม 6 คน</button>
+      </div>
+      <label>ชื่อประเภท</label>
+      <input name="name" required maxlength="50" placeholder="เช่น ชายคู่, ทีมผสม, ชายอายุ 40 ปีขึ้นไป">
+      <div class="row2">
+        <div><label>ตัวจริงต่อทีม</label><input name="maxMembers" type="number" min="1" max="30" required value="1"></div>
+        <div><label>ตัวสำรองต่อทีม</label><input name="maxReserves" type="number" min="0" max="30" required value="0"></div>
+      </div>
+      <div class="row2">
+        <div><label>รับสูงสุดกี่ทีม <small>(0 = ไม่จำกัด)</small></label><input name="maxTeams" type="number" min="0" max="200" required value="0"></div>
+        <div><label>เงื่อนไข / หมายเหตุ <small>(ไม่บังคับ)</small></label><input name="note" maxlength="120" placeholder="เช่น ต้องมีหญิง 2 คน"></div>
+      </div>
+      <p class="hint">ตัวจริง 1 + สำรอง 0 = ประเภทเดี่ยว (ลงชื่อได้เลย ไม่ต้องตั้งชื่อทีม)</p>
+      <div class="acts">
+        <button type="button" class="btn ghost" id="evNew" hidden>เพิ่มประเภทใหม่แทน</button>
+        <button type="button" class="btn ghost" data-close>ปิด</button>
+        <button type="submit" class="btn">ถัดไป</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- ลงชื่อกองเชียร์ / เชียร์ลีดเดอร์ / พาเหรด -->
+<dialog id="dlgGroup">
+  <div class="dh"><h3 id="grpTitle">ลงชื่อ</h3><p id="grpSub"></p></div>
+  <form id="formGroup" autocomplete="off">
+    <fieldset class="posgrid" id="grpPos"></fieldset>
+    <div class="prefill">
+      <label>เคยลงทะเบียนแล้ว? เลือกชื่อเพื่อกรอกให้อัตโนมัติ</label>
+      <input type="search" class="pf" list="personList" placeholder="พิมพ์ชื่อ หรือชื่อเล่น">
+    </div>
+    <div class="row2">
+      <div><label>ชื่อ</label><input name="firstName" required maxlength="60"></div>
+      <div><label>นามสกุล</label><input name="lastName" required maxlength="60"></div>
+    </div>
+    <div class="row2">
+      <div><label>ชื่อเล่น</label><input name="nickname" required maxlength="30"></div>
+      <div><label>ฝ่าย</label><input name="department" required maxlength="80" list="deptList"></div>
+    </div>
+    <div class="acts">
+      <button type="button" class="btn ghost" data-close>ยกเลิก</button>
+      <button type="submit" class="btn">ถัดไป</button>
+    </div>
+  </form>
+</dialog>
+
 <!-- รหัสผู้ดูแล -->
 <dialog id="dlgPin">
-  <div class="dh"><h3>โหมดผู้ดูแล</h3><p>ใช้ลบทีม ลบรายชื่อ จัดตารางแข่ง บันทึกผล และตั้งผู้ประสานงาน</p></div>
+  <div class="dh"><h3>โหมดผู้ดูแล</h3><p>ใช้ตั้งประเภทการแข่งขัน ลบทีม/รายชื่อ จัดตารางแข่ง บันทึกผล และตั้งผู้ประสานงาน</p></div>
   <form id="formPin">
     <label>รหัสผู้ดูแล</label>
     <input name="pin" type="password" required autocomplete="off" inputmode="numeric">
@@ -492,7 +573,7 @@ footer button{background:none;border:0;color:var(--ink2);cursor:pointer;text-dec
 <script>
 const S = { data: null, pin: null, ev: {}, q: '', dept: '', sumSport: '',
   calMonth: null, calDay: null, calSport: 'all', calMode: 'month',
-  teamEvent: null, joinTeam: null, coordSport: null };
+  teamEvent: null, joinTeam: null, coordSport: null, evSport: null, group: null };
 const RES = 'สำรอง', MAIN = 'ตัวจริง';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -506,7 +587,12 @@ const UI = {
   tabletennis: { c: '#2D69C4', short: 'เทเบิลเทนนิส', svg: '<circle cx="10" cy="10" r="6.5"/><path d="m14.6 14.6 4.9 4.9"/><path d="m13.2 16.8 3.6-3.6"/><circle cx="19" cy="5" r="1.6"/>' },
   badminton:   { c: '#17613D', short: 'แบดมินตัน', svg: '<path d="M9.5 14 5 4.5l3.6-.9L12 8l3.4-4.4 3.6.9L14.5 14"/><path d="M8.6 9.6h6.8"/><circle cx="12" cy="17.6" r="3.4"/>' }
 };
-const ui = id => UI[id] || { c: '#888', short: id, svg: '<circle cx="12" cy="12" r="9"/>' };
+const GUI = {
+  cheer:       { c: '#7A4CB5', short: 'กองเชียร์', svg: '<path d="M3 10v4h3l8 4.5v-13L6 10H3z"/><path d="M17.5 9a4 4 0 0 1 0 6"/><path d="M20 6.5a7.5 7.5 0 0 1 0 11"/><path d="M6 14l1.2 5h2.6l-1.2-5"/>' },
+  cheerleader: { c: '#C4436F', short: 'เชียร์ลีดเดอร์', svg: '<path d="M12 3.5l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.1l-5.1 2.8 1.1-5.6-4.2-3.9 5.7-.7z"/>' },
+  parade:      { c: '#1F7F7A', short: 'ขบวนพาเหรด', svg: '<path d="M5 21V3.5"/><path d="M5 4h12l-2.5 4.5L17 13H5"/>' }
+};
+const ui = id => UI[id] || GUI[id] || { c: '#888', short: id, svg: '<circle cx="12" cy="12" r="9"/>' };
 const icon = (id, cls = 'i') => `<svg class="${cls}" viewBox="0 0 24 24">${ui(id).svg}</svg>`;
 const I = {
   arrow: '<svg class="i" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>',
@@ -591,9 +677,12 @@ const initial = m => (m.nickname || m.firstName || '?').trim().charAt(0);
 const coordChips = list => list.map(c => `<span class="coord">${esc(c.name)}${c.nickname ? ` (${esc(c.nickname)})` : ''}${c.phone ? ` · <a href="tel:${esc(c.phone.replace(/[^0-9+]/g, ''))}">${esc(c.phone)}</a>` : ''}</span>`).join('');
 
 /* รวมรายชื่อบุคลากร (1 คน = หลายทีม) */
+const groupOf = id => (D().groups || []).find(g => g.id === id);
+const supOf = gid => (D().supporters || []).filter(x => x.groupId === gid);
 function persons() {
   const g = {};
-  D().members.forEach(m => { const k = pkey(m); (g[k] = g[k] || { p: m, list: [] }).list.push(m); });
+  D().members.forEach(m => { const k = pkey(m); (g[k] = g[k] || { p: m, list: [], sup: [] }).list.push(m); });
+  (D().supporters || []).forEach(m => { const k = pkey(m); (g[k] = g[k] || { p: m, list: [], sup: [] }).sup.push(m); });
   return Object.values(g).sort((a, b) => a.p.firstName.localeCompare(b.p.firstName, 'th'));
 }
 
@@ -608,18 +697,19 @@ function render() {
   if (r[0] === 'sport' && sportOf(r[1])) app.innerHTML = viewSport(sportOf(r[1]), r[2] === 'calendar' ? 'calendar' : 'teams');
   else if (r[0] === 'calendar') app.innerHTML = viewCalendar();
   else if (r[0] === 'people') app.innerHTML = viewPeople();
+  else if (r[0] === 'cheer') app.innerHTML = viewCheer();
   else if (r[0] === 'summary') app.innerHTML = viewSummary();
   else app.innerHTML = viewHome();
   const q = $('#q'); if (q) { q.value = S.q; renderPeopleList(); }
 }
 function renderNav(r) {
   const cur = r[0] === 'sport' ? 'sport/' + r[1] : (r[0] || 'home');
-  const items = [['home', 'ภาพรวม'], ...D().sports.map(s => ['sport/' + s.id, s.name]), ['calendar', 'ปฏิทิน'], ['people', 'นักกีฬา'], ['summary', 'สรุป']];
+  const items = [['home', 'ภาพรวม'], ...D().sports.map(s => ['sport/' + s.id, s.name]), ['cheer', 'กองเชียร์'], ['calendar', 'ปฏิทิน'], ['people', 'รายชื่อ'], ['summary', 'สรุป']];
   $('#nav').innerHTML = items.map(([h, l]) => `<a href="#${h}" class="${cur === h ? 'on' : ''}">${l}</a>`).join('');
   const on = $('#nav .on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 function renderAdminBar() {
-  $('#adminbar').innerHTML = S.pin ? `<div class="adminbar"><div class="wrap"><span>โหมดผู้ดูแล · ลบทีม/รายชื่อ จัดตารางแข่ง บันทึกผล ตั้งผู้ประสานงานได้</span><button id="adminOff">ออก</button></div></div>` : '';
+  $('#adminbar').innerHTML = S.pin ? `<div class="adminbar"><div class="wrap"><span>โหมดผู้ดูแล · ตั้งประเภทการแข่งขัน ลบทีม/รายชื่อ จัดตารางแข่ง บันทึกผล ตั้งผู้ประสานงานได้</span><button id="adminOff">ออก</button></div></div>` : '';
   $('#adminBtn').textContent = S.pin ? 'ออกจากโหมดผู้ดูแล' : 'สำหรับผู้ดูแล';
 }
 
@@ -636,15 +726,21 @@ function viewHome() {
     <section class="hero">
       <div class="eyebrow">กีฬาสีภายใน · งานปีใหม่ 2570</div>
       <h1>ทีม<em>สีเขียว</em><br>ลงทะเบียนนักกีฬา</h1>
-      <p class="lead">เลือกกีฬา ตั้งทีม หรือลงชื่อเข้าทีมที่มีอยู่ เป็นตัวจริงหรือตัวสำรองก็ได้ หนึ่งคนลงได้หลายกีฬาและหลายทีม</p>
+      <p class="lead">เลือกกีฬา ตั้งทีม หรือลงชื่อเข้าทีมที่มีอยู่ เป็นตัวจริงหรือตัวสำรองก็ได้ หนึ่งคนลงได้หลายกีฬาและหลายทีม หรือมาร่วมกองเชียร์ เชียร์ลีดเดอร์ และขบวนพาเหรด</p>
       <div class="stats">
         <div><b class="num">${D().teams.length}</b><span>ทีม / คู่</span></div>
         <div><b class="num">${people(D().members)}</b><span>นักกีฬา (ไม่นับซ้ำ)</span></div>
+        <div><b class="num">${(D().supporters || []).length}</b><span>กองเชียร์ & พาเหรด</span></div>
         <div><b class="num">${D().matches.length}</b><span>นัดแข่ง</span></div>
       </div>
     </section>
     <section class="sec"><div class="sec-h"><div><h2>เลือกกีฬา</h2><p>กดเพื่อดูทีมและลงทะเบียน</p></div></div>
       <div class="sports">${cards}</div></section>
+    <section class="sec"><div class="sec-h"><div><h2>กองเชียร์ · เชียร์ลีดเดอร์ · ขบวนพาเหรด</h2><p>ไม่ได้ลงแข่ง ก็มาช่วยสีเขียวได้</p></div></div>
+      <div class="sports g3">${(D().groups || []).map(g => `<a class="sp" href="#cheer" style="--c:${ui(g.id).c}">
+        <span class="go">${I.arrow}</span><span class="ic">${icon(g.id)}</span>
+        <span><h3>${esc(g.name)}</h3><div class="meta">${g.max ? `รับ ${g.max} คน` : 'รับไม่จำกัด'}</div></span>
+        <span class="nums"><span><b class="num">${supOf(g.id).length}</b>คน</span></span></a>`).join('')}</div></section>
     <section class="sec"><div class="sec-h"><div><h2>นัดแข่งถัดไป</h2></div><a class="btn ghost sm" href="#calendar">เปิดปฏิทิน ${I.arrow}</a></div>
       ${nx.length ? `<div class="matches">${nx.map(m => matchRow(m, true)).join('')}</div>` : `<div class="empty">ยังไม่มีตารางแข่ง ผู้ดูแลจะเพิ่มหลังจับสลาก</div>`}
     </section></div>`;
@@ -664,7 +760,7 @@ function viewSport(sp, tab) {
     const list = D().matches.filter(m => m.sportId === sp.id && (cur === 'all' || m.eventId === cur));
     body = calendarBlock(list, { addKey: `${sp.id}|${cur === 'all' ? '' : cur}`, sportFilter: false });
   } else {
-    body = shown.length ? shown.map(eventSection).join('') : `<div class="empty" style="margin-top:20px">ยังไม่มีประเภทในกีฬานี้ (เพิ่มได้ที่ชีต Events)</div>`;
+    body = shown.length ? shown.map(eventSection).join('') : `<div class="empty" style="margin-top:20px">ยังไม่มีประเภทในกีฬานี้${S.pin ? `<br><br><button class="btn" data-evmgr="${sp.id}">${I.plus} เพิ่มประเภท</button>` : ' ผู้ดูแลกำลังตั้งค่า'}</div>`;
   }
   return `<div class="wrap" style="--c:${ui(sp.id).c}">
     <section class="sph"><div class="top-row">
@@ -673,7 +769,7 @@ function viewSport(sp, tab) {
       <nav class="seg"><a href="#sport/${sp.id}" class="${tab === 'teams' ? 'on' : ''}">ทีม & ลงทะเบียน</a><a href="#sport/${sp.id}/calendar" class="${tab === 'calendar' ? 'on' : ''}">ปฏิทินแข่งขัน</a></nav>
     </div>
     <div class="coords"><span class="lbl">ผู้ประสานงาน</span>${sc.length ? coordChips(sc) : '<span class="lbl">· ยังไม่ได้ตั้ง</span>'}
-      ${S.pin ? `<button class="btn sm ghost" data-coord="${sp.id}">จัดการ</button>` : ''}</div>
+      ${S.pin ? `<button class="btn sm ghost" data-coord="${sp.id}">จัดการผู้ประสานงาน</button><button class="btn sm" data-evmgr="${sp.id}">ตั้งประเภทการแข่งขัน</button>` : ''}</div>
     </section>${pills}${body}</div>`;
 }
 
@@ -688,7 +784,8 @@ function eventSection(ev) {
           ${S.pin ? `<button class="x" title="ลบ" data-delt="${t.id}">${I.x}</button>` : '<span></span>'}</div>`; }).join('')}</div>`
     : `<div class="teams">${ts.map(t => teamCard(t, ev)).join('')}</div>`;
   return `<section class="event">
-    <div class="event-h"><div><h3>${esc(ev.name)}</h3><p>${cap(ev)} · ตอนนี้ ${ts.length} ${unit(ev)}</p>
+    <div class="event-h"><div><h3>${esc(ev.name)}${S.pin ? ` <button class="btn sm ghost" style="height:28px;margin-left:6px;vertical-align:middle" data-editev="${ev.id}">แก้ไขประเภท</button>` : ''}</h3><p>${cap(ev)} · ตอนนี้ ${ts.length} ${unit(ev)}</p>
+      ${ev.note ? `<span class="ev-note">${esc(ev.note)}</span>` : ''}
       ${ec.length ? `<div class="coords" style="margin-top:8px"><span class="lbl">ผู้ประสานงาน</span>${coordChips(ec)}</div>` : ''}</div>
       <button class="btn" data-new="${ev.id}" ${closed ? 'disabled' : ''}>${closed ? 'รับครบแล้ว' : `${I.plus} ${single ? 'ลงทะเบียนประเภทนี้' : `ตั้ง${unit(ev)}ใหม่`}`}</button>
     </div>${content}</section>`;
@@ -811,10 +908,10 @@ function viewCalendar() {
 
 /* ---------- รายชื่อนักกีฬา ---------- */
 function viewPeople() {
-  const depts = [...new Set(D().members.map(m => m.department).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
+  const depts = [...new Set(persons().map(x => x.p.department).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
   return `<div class="wrap">
-    <section class="sph"><div class="top-row"><div><div class="eyebrow">บุคลากร</div><h1>รายชื่อนักกีฬา</h1>
-      <p>${people(D().members)} คน · ลงทะเบียนรวม ${D().members.length} ครั้ง · ดูว่าแต่ละคนอยู่ทีมไหนบ้าง</p></div></div></section>
+    <section class="sph"><div class="top-row"><div><div class="eyebrow">บุคลากร</div><h1>รายชื่อทั้งหมด</h1>
+      <p>${persons().length} คน · นักกีฬา ${people(D().members)} คน · กองเชียร์ & พาเหรด ${people(D().supporters || [])} คน · ดูว่าแต่ละคนลงอะไรไว้บ้าง</p></div></div></section>
     <div class="ptools" style="margin-top:22px">
       <input id="q" type="search" placeholder="ค้นหาชื่อ นามสกุล หรือชื่อเล่น" autocomplete="off">
       <select id="deptSel"><option value="">ทุกฝ่าย</option>${depts.map(d => `<option ${d === S.dept ? 'selected' : ''}>${esc(d)}</option>`).join('')}</select>
@@ -825,23 +922,26 @@ function renderPeopleList() {
   const n = norm(S.q);
   const list = persons().filter(({ p }) => (!S.dept || p.department === S.dept) &&
     (!n || pkey(p).includes(n) || norm(p.nickname).includes(n)));
-  $('#plist').innerHTML = !list.length ? `<div class="empty">${D().members.length ? 'ไม่พบชื่อนี้ ลองพิมพ์แค่ชื่อหรือชื่อเล่น' : 'ยังไม่มีผู้ลงทะเบียน'}</div>`
-    : `<div class="people">${list.map(({ p, list: ls }) => `<article class="person">
+  $('#plist').innerHTML = !list.length ? `<div class="empty">${persons().length ? 'ไม่พบชื่อนี้ ลองพิมพ์แค่ชื่อหรือชื่อเล่น' : 'ยังไม่มีผู้ลงทะเบียน'}</div>`
+    : `<div class="people">${list.map(({ p, list: ls, sup }) => `<article class="person">
       <div class="person-h"><span class="av">${esc(initial(p))}</span>
         <div style="min-width:0"><h4>${esc(fullName(p))} <span class="muted">(${esc(p.nickname)})</span></h4><p>${esc(p.department)}</p></div>
-        <div class="k"><b class="num">${ls.length}</b>ทีม</div></div>
+        <div class="k"><b class="num">${ls.length + sup.length}</b>รายการ</div></div>
       <ul class="plays">${ls.map(m => { const sp = sportOf(m.sportId), ev = eventOf(m.eventId), t = teamOf(m.teamId);
         return `<li style="--c:${ui(m.sportId).c}"><i></i><a class="w" href="#sport/${m.sportId}">${sp ? sp.name : ''} <small>${ev ? esc(ev.name) : ''}${t && ev && !isSingle(ev) ? ` · ${unit(ev)} ${esc(t.name)}` : ''}</small></a>
-          ${m.role === RES ? '<span class="tag res">สำรอง</span>' : '<span class="tag">ตัวจริง</span>'}</li>`; }).join('')}</ul>
+          ${m.role === RES ? '<span class="tag res">สำรอง</span>' : '<span class="tag">ตัวจริง</span>'}</li>`; }).join('')}
+        ${sup.map(m => { const g = groupOf(m.groupId);
+          return `<li style="--c:${ui(m.groupId).c}"><i></i><a class="w" href="#cheer">${g ? esc(g.name) : ''}</a>${m.position ? `<span class="tag out">${esc(m.position)}</span>` : ''}</li>`; }).join('')}</ul>
     </article>`).join('')}</div>`;
 }
 
 /* ---------- สรุป ---------- */
 function viewSummary() {
-  const sel = S.sumSport, sports = sel ? [sportOf(sel)] : D().sports, inSel = m => !sel || m.sportId === sel;
+  const sel = S.sumSport, onlyG = sel === 'cheer', showG = !sel || onlyG;
+  const sports = onlyG ? [] : sel ? [sportOf(sel)] : D().sports, inSel = m => !sel || m.sportId === sel;
   const cnt = (eid, res) => D().members.filter(m => m.eventId === eid && (m.role === RES) === res).length;
   const coordLine = list => list.map(c => esc(c.name) + (c.phone ? ' ' + esc(c.phone) : '')).join(', ');
-  const overview = `<table><tr><th>กีฬา</th><th>ประเภท</th><th class="n">ทีม/คู่</th><th class="n">ตัวจริง</th><th class="n">สำรอง</th></tr>
+  const overview = !sports.length ? '' : `<table><tr><th>กีฬา</th><th>ประเภท</th><th class="n">ทีม/คู่</th><th class="n">ตัวจริง</th><th class="n">สำรอง</th></tr>
     ${sports.map(s => eventsOf(s.id).map((e, i) => `<tr>${i === 0 ? `<td rowspan="${eventsOf(s.id).length}">${s.name}</td>` : ''}
       <td>${esc(e.name)}</td><td class="n">${teamsOfEvent(e.id).length}</td><td class="n">${cnt(e.id, false)}</td><td class="n">${cnt(e.id, true)}</td></tr>`).join('')).join('')}
     <tr class="grp"><td colspan="2">รวม · นักกีฬาไม่นับซ้ำ ${people(D().members.filter(inSel))} คน</td>
@@ -858,19 +958,71 @@ function viewSummary() {
     <section class="sph"><div class="top-row"><div><div class="eyebrow">รายงาน</div><h1>สรุปรายชื่อนักกีฬา</h1>
       <p>ข้อมูล ณ ${new Date().toLocaleString('th-TH')}</p></div>
       <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
-        <select id="sumSel" style="width:auto;height:42px"><option value="">ทุกกีฬา</option>${D().sports.map(s => `<option value="${s.id}" ${s.id === sel ? 'selected' : ''}>${s.name}</option>`).join('')}</select>
+        <select id="sumSel" style="width:auto;height:42px"><option value="">ทุกกีฬา</option>${D().sports.map(s => `<option value="${s.id}" ${s.id === sel ? 'selected' : ''}>${s.name}</option>`).join('')}<option value="cheer" ${sel === 'cheer' ? 'selected' : ''}>กองเชียร์ & พาเหรด</option></select>
         <button class="btn ghost" id="btnCsv">ดาวน์โหลด CSV</button><button class="btn" onclick="print()">พิมพ์</button></div>
     </div></section>
-    <div style="margin-top:26px">${overview}</div>${detail}</div>`;
+    <div style="margin-top:26px">${overview}</div>${detail}${showG ? groupsSummary() : ''}</div>`;
+}
+function groupsSummary() {
+  return `<div class="sum-sp"><h3>กองเชียร์ · เชียร์ลีดเดอร์ · ขบวนพาเหรด</h3>${(D().groups || []).map(g => { const ls = supOf(g.id);
+    return `<div class="sum-ev"><h4>${esc(g.name)} · ${ls.length} คน</h4>${ls.length ? `<table><tr><th style="width:56px">ลำดับ</th><th>ชื่อ - นามสกุล</th><th>ชื่อเล่น</th><th>ฝ่าย</th><th style="width:130px">ตำแหน่ง</th></tr>
+      ${ls.map((m, i) => `<tr><td>${i + 1}</td><td>${esc(fullName(m))}</td><td>${esc(m.nickname)}</td><td>${esc(m.department)}</td><td>${esc(m.position || '-')}</td></tr>`).join('')}</table>`
+      : `<p class="muted" style="margin:0;font-size:14px">ยังไม่มีผู้ลงชื่อ</p>`}</div>`; }).join('')}</div>`;
 }
 function downloadCsv() {
   const sel = S.sumSport, rows = [['กีฬา', 'ประเภทการแข่งขัน', 'ทีม', 'ลำดับ', 'ชื่อ', 'นามสกุล', 'ชื่อเล่น', 'ฝ่าย', 'ประเภทนักกีฬา']];
   D().sports.filter(s => !sel || s.id === sel).forEach(s => eventsOf(s.id).forEach(e => teamsOfEvent(e.id).forEach(t =>
     membersOf(t.id).forEach((m, i) => rows.push([s.name, e.name, t.name, i + 1, m.firstName, m.lastName, m.nickname, m.department, m.role])))));
+  if (!sel || sel === 'cheer') (D().groups || []).forEach(g => supOf(g.id).forEach((m, i) =>
+    rows.push([g.name, '', '', i + 1, m.firstName, m.lastName, m.nickname, m.department, m.position || ''])));
   const csv = '﻿' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-  a.download = `นักกีฬาสีเขียว_${sel ? sportOf(sel).name : 'ทุกกีฬา'}.csv`; a.click();
+  a.download = `สีเขียว_${sel === 'cheer' ? 'กองเชียร์และพาเหรด' : sel ? sportOf(sel).name : 'ทั้งหมด'}.csv`; a.click();
+}
+
+/* ---------- กองเชียร์ / เชียร์ลีดเดอร์ / ขบวนพาเหรด ---------- */
+function viewCheer() {
+  const gs = D().groups || [];
+  return `<div class="wrap">
+    <section class="sph"><div class="top-row"><div><div class="eyebrow">ร่วมเชียร์สีเขียว</div><h1>กองเชียร์ & ขบวนพาเหรด</h1>
+      <p>${gs.map(g => `${esc(g.name)} ${supOf(g.id).length} คน`).join(' · ')}</p></div></div></section>
+    ${gs.map(g => { const ls = supOf(g.id), full = g.max && ls.length >= g.max;
+      const byPos = g.positions.length ? g.positions.map(pos => [pos, ls.filter(m => m.position === pos)]) : [['', ls]];
+      return `<section class="event" style="--c:${ui(g.id).c}">
+        <div class="ghead"><span class="ic">${icon(g.id)}</span>
+          <div><h3>${esc(g.name)}</h3><p>${ls.length} คน${g.max ? ` จาก ${g.max}` : ''}${g.positions.length ? ' · ' + g.positions.map(esc).join(' / ') : ''}</p></div>
+          <button class="btn" data-grp="${g.id}" ${full ? 'disabled' : ''}>${full ? 'รับครบแล้ว' : `${I.plus} ลงชื่อ${esc(g.name)}`}</button></div>
+        ${!ls.length ? `<div class="empty">ยังไม่มีใครลงชื่อ ลงเป็นคนแรกได้เลย</div>` : byPos.filter(([, l]) => l.length).map(([pos, l]) => `
+          ${pos ? `<div class="dayh" style="margin-top:14px">${esc(pos)} <small>${l.length} คน</small></div>` : ''}
+          <div class="solo">${l.map(m => `<div class="pp"><span class="av" style="background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c)">${esc(initial(m))}</span>
+            <span style="min-width:0;line-height:1.3"><b style="font-weight:500">${esc(m.nickname)}</b> <span class="muted">${esc(fullName(m))}</span><small style="display:block;font-size:12px;color:var(--ink3)">${esc(m.department)}</small></span>
+            ${S.pin ? `<button class="x" title="ลบ" data-delsup="${m.id}">${I.x}</button>` : '<span></span>'}</div>`).join('')}</div>`).join('')}
+      </section>`; }).join('')}</div>`;
+}
+function openGroup(gid) {
+  const g = groupOf(gid); S.group = gid; $('#formGroup').reset();
+  $('#grpTitle').textContent = `ลงชื่อ${g.name}`;
+  $('#grpSub').textContent = 'สีเขียว · กีฬาสีปีใหม่ 2570';
+  $('#grpPos').hidden = !g.positions.length;
+  $('#grpPos').innerHTML = g.positions.length ? `<legend>ตำแหน่ง</legend>` + g.positions.map((p, i) =>
+    `<label><input type="radio" name="position" value="${esc(p)}" ${i === 0 ? 'checked' : ''}><span>${esc(p)} <small class="muted">${supOf(gid).filter(m => m.position === p).length}</small></span></label>`).join('') : '';
+  $('#dlgGroup').showModal();
+}
+function openEventMgr(sid, ev) {
+  S.evSport = sid;
+  const sp = sportOf(sid), f = $('#formEvent'); f.reset();
+  f.elements.sportId.value = sid; f.elements.id.value = ev ? ev.id : '';
+  $('#evSub').textContent = `${sp.name} · ตั้งประเภทและจำนวนผู้เล่นต่อทีมได้เอง`;
+  if (ev) { f.elements.name.value = ev.name; f.elements.maxMembers.value = ev.maxMembers; f.elements.maxReserves.value = ev.maxReserves; f.elements.maxTeams.value = ev.maxTeams; f.elements.note.value = ev.note || ''; }
+  $('#evFormTitle').textContent = ev ? `แก้ไขประเภท ${ev.name}` : 'เพิ่มประเภทใหม่';
+  $('#evPresets').hidden = !!ev; $('#evNew').hidden = !ev;
+  const list = eventsOf(sid);
+  $('#evList').innerHTML = list.length ? list.map(e => `<li><span><b style="font-weight:500">${esc(e.name)}</b>
+      <small>${cap(e)} · ${teamsOfEvent(e.id).length} ${unit(e)}${e.note ? ' · ' + esc(e.note) : ''}</small></span>
+      <span style="display:flex;gap:6px"><button class="btn sm ghost" data-editev="${e.id}">แก้ไข</button><button class="btn sm danger" data-delev="${e.id}">ลบ</button></span></li>`).join('')
+    : `<li class="muted">ยังไม่มีประเภท เพิ่มประเภทแรกด้านล่าง</li>`;
+  if (!$('#dlgEvent').open) $('#dlgEvent').showModal();
 }
 
 /* ---------- dialogs ---------- */
@@ -994,6 +1146,24 @@ $('#formCoord').addEventListener('submit', async e => {
   if (!ok) return;
   if (await act('saveCoord', f, 'บันทึกผู้ประสานงานแล้ว')) openCoord(f.sportId);
 });
+$('#formEvent').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = formData(e.target), single = +f.maxMembers === 1 && +f.maxReserves === 0;
+  const ok = await confirmBox({ title: f.id ? 'ยืนยันการแก้ไขประเภท' : 'ยืนยันการเพิ่มประเภท',
+    rows: [['กีฬา', sportOf(f.sportId).name], ['ชื่อประเภท', f.name], ['รูปแบบ', single ? 'เดี่ยว' : `ตัวจริง ${f.maxMembers} คน · สำรอง ${f.maxReserves} คน`],
+      ['รับสูงสุด', +f.maxTeams ? f.maxTeams + ' ทีม' : 'ไม่จำกัด'], ['เงื่อนไข', f.note]],
+    ok: f.id ? 'ยืนยันแก้ไข' : 'ยืนยันเพิ่ม' });
+  if (!ok) return;
+  if (await act('saveEvent', f, f.id ? 'แก้ไขประเภทแล้ว' : `เพิ่มประเภท ${f.name} แล้ว`)) openEventMgr(f.sportId);
+});
+$('#evNew').addEventListener('click', () => openEventMgr(S.evSport));
+$('#formGroup').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = formData(e.target), g = groupOf(S.group);
+  const ok = await confirmBox({ title: `ยืนยันการลงชื่อ${g.name}`, rows: [['กิจกรรม', g.name], ['ตำแหน่ง', f.position || ''], ...personRows(f)], ok: 'ยืนยันลงชื่อ' });
+  if (!ok) return;
+  if (await act('joinGroup', { groupId: g.id, ...f }, `${f.firstName} ลงชื่อ${g.name}แล้ว`)) $('#dlgGroup').close();
+});
 $('#formPin').addEventListener('submit', async e => {
   e.preventDefault();
   const pin = e.target.elements.pin.value; busy(true);
@@ -1008,7 +1178,7 @@ $('#btnRefresh').addEventListener('click', () => refresh(true));
 
 /* ---------- ปุ่มต่าง ๆ ---------- */
 document.addEventListener('click', async e => {
-  const b = e.target.closest('[data-new],[data-join],[data-delm],[data-delt],[data-ev],[data-addmatch],[data-editm],[data-coord],[data-editc],[data-delc],[data-close],[data-cal],[data-day],[data-calmode],[data-calsp],#adminOff,#btnCsv');
+  const b = e.target.closest('[data-new],[data-join],[data-delm],[data-delt],[data-ev],[data-addmatch],[data-editm],[data-coord],[data-editc],[data-delc],[data-close],[data-cal],[data-day],[data-calmode],[data-calsp],[data-evmgr],[data-editev],[data-delev],[data-pre],[data-grp],[data-delsup],#adminOff,#btnCsv');
   if (!b) return;
   const d = b.dataset;
   if (b.id === 'adminOff') { S.pin = null; render(); }
@@ -1025,6 +1195,21 @@ document.addEventListener('click', async e => {
   else if (d.day) { S.calDay = S.calDay === d.day ? null : d.day; if (S.calDay) S.calMonth = d.day.slice(0, 7); render(); }
   else if (d.calmode) { S.calMode = d.calmode; render(); }
   else if (d.calsp) { S.calSport = d.calsp; render(); }
+  else if (d.evmgr) openEventMgr(d.evmgr);
+  else if (d.editev) { const ev = eventOf(d.editev); openEventMgr(ev.sportId, ev); }
+  else if (d.pre) { const [n, mm, mr] = d.pre.split('|'), f = $('#formEvent'); if (!f.elements.name.value) f.elements.name.value = n; f.elements.maxMembers.value = mm; f.elements.maxReserves.value = mr; }
+  else if (d.grp) openGroup(d.grp);
+  else if (d.delev) {
+    const ev = eventOf(d.delev), n = teamsOfEvent(ev.id).length;
+    if (n) { toast(`ประเภท${ev.name}มี ${n} ${unit(ev)}อยู่ ต้องลบทีมก่อน`, true); return; }
+    if (await confirmBox({ title: 'ลบประเภทนี้?', sub: 'ลบแล้วกู้คืนไม่ได้', rows: [['กีฬา', sportOf(ev.sportId).name], ['ประเภท', ev.name]], ok: 'ลบประเภท', danger: true })
+      && await act('deleteEvent', { eventId: ev.id }, 'ลบประเภทแล้ว')) openEventMgr(ev.sportId);
+  }
+  else if (d.delsup) {
+    const m = D().supporters.find(x => x.id === d.delsup), g = groupOf(m.groupId);
+    if (await confirmBox({ title: 'ลบรายชื่อนี้?', sub: 'ลบแล้วกู้คืนไม่ได้', rows: [['ชื่อ', `${fullName(m)} (${m.nickname})`], ['กิจกรรม', g ? g.name : ''], ['ตำแหน่ง', m.position]], ok: 'ลบรายชื่อ', danger: true }))
+      act('deleteSupporter', { supId: m.id }, 'ลบรายชื่อแล้ว');
+  }
   else if (d.addmatch !== undefined) { const [sid, eid] = d.addmatch.split('|'); openMatch(null, sid, eid); }
   else if (d.editm) openMatch(D().matches.find(m => m.id === d.editm));
   else if (d.coord) openCoord(d.coord);
