@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F6F6F2">
+<title>สีเขียว · ลงทะเบียนนักกีฬา กีฬาสีปีใหม่ 2570</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  /* ===== ใส่ URL ของ Apps Script Web App (ลงท้ายด้วย /exec) ===== */
+  const API_URL = 'PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE';
+</script>
+<style>
+:root{
+  --bg:#F6F6F2; --card:#FFFFFF; --ink:#151815; --ink2:#5C635D; --ink3:#9AA19B;
+  --line:#E5E6E0; --line2:#D6D8D0;
+  --g:#17613D; --g2:#0F4A2E; --gs:#E7F0EA; --gs2:#D3E5D9; --lime:#C9E265;
+  --red:#B4352A; --reds:#F8E9E7; --amber:#B7791F;
+  --r:16px; --r2:10px;
+  --f:'Anuphan',system-ui,sans-serif;
+  --sh:0 1px 2px rgba(20,30,20,.04),0 6px 24px -12px rgba(20,30,20,.12);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.muted{color:var(--ink2)}
+.num{font-variant-numeric:tabular-nums}
+svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:0;z-index:20;background:rgba(246,246,242,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;white-space:nowrap}
+.brand .dot{width:26px;height:26px;border-radius:50%;background:var(--g);position:relative;flex:none}
+.brand .dot::after{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--lime)}
+.brand small{display:block;font-weight:400;font-size:12px;color:var(--ink2);line-height:1.1}
+.nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{padding:8px 11px;border-radius:999px;font-size:14.5px;color:var(--ink2);white-space:nowrap;transition:.15s}
+.nav a:hover{color:var(--ink);background:rgba(0,0,0,.04)}
+.nav a.on{color:var(--ink);background:var(--card);box-shadow:0 0 0 1px var(--line)}
+.iconbtn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:13px;color:var(--ink2);white-space:nowrap}
+.iconbtn:hover{color:var(--ink);border-color:var(--line2)}
+.iconbtn svg{width:16px;height:16px}
+.iconbtn.spin svg{animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (max-width:860px){
+  .top .wrap{flex-wrap:wrap;height:auto;padding-top:10px;gap:8px}
+  .nav{order:3;width:100%;margin:0 -20px;padding:0 20px 8px}
+  .top .iconbtn{margin-left:auto}
+  .top .iconbtn .txt{display:none}
+}
+
+/* ---------- admin bar ---------- */
+.adminbar{background:var(--ink);color:#fff;font-size:14px}
+.adminbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:9px;padding-bottom:9px}
+.adminbar button{background:none;border:0;color:var(--lime);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- buttons / inputs ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--g);background:var(--g);color:#fff;font-weight:500;cursor:pointer;white-space:nowrap;transition:.15s}
+.btn:hover{background:var(--g2);border-color:var(--g2)}
+.btn svg{width:17px;height:17px;stroke-width:2}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
+.btn.ghost:hover{background:var(--card);border-color:var(--ink3)}
+.btn.sm{height:34px;padding:0 13px;font-size:14px}
+.btn.danger{background:transparent;color:var(--red);border-color:#E7C3BE}
+.btn.danger:hover{background:var(--reds)}
+.btn.danger.solid{background:var(--red);border-color:var(--red);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed;background:var(--line);border-color:var(--line);color:var(--ink2)}
+label{display:block;font-size:13px;color:var(--ink2);margin:14px 0 6px;font-weight:500}
+label small{font-weight:400;color:var(--ink3)}
+input,select{width:100%;height:46px;padding:0 14px;border:1px solid var(--line2);border-radius:var(--r2);background:#fff;outline:none;transition:.15s}
+input:focus,select:focus{border-color:var(--g);box-shadow:0 0 0 3px var(--gs)}
+input[type=search]{padding-left:42px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239AA19B' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E") no-repeat 14px center/18px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media (max-width:520px){.row2{grid-template-columns:1fr}}
+
+/* ---------- common blocks ---------- */
+main{min-height:60vh;padding-bottom:70px}
+.sec{margin-top:44px}
+.sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.sec-h h2{font-size:22px}
+.sec-h p{margin:2px 0 0;color:var(--ink2);font-size:14px}
+.eyebrow{font-size:13px;color:var(--ink2);font-weight:500}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+.empty{padding:34px 20px;text-align:center;color:var(--ink2);border:1px dashed var(--line2);border-radius:var(--r);font-size:15px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 6px}
+.pill{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:14px;color:var(--ink2);transition:.15s}
+.pill:hover{color:var(--ink);border-color:var(--line2)}
+.pill.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pill small{font-size:12px;opacity:.6}
+.pill .sw{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;font-size:12px;font-weight:500;background:var(--gs);color:var(--g2);white-space:nowrap}
+.tag.res{background:#F1EFE7;color:#7A6A3A}
+.tag.out{background:transparent;box-shadow:inset 0 0 0 1px var(--line2);color:var(--ink2)}
+.seg{display:inline-flex;padding:3px;background:#ECEDE7;border-radius:999px}
+.seg a,.seg button{padding:7px 16px;border-radius:999px;font-size:14px;color:var(--ink2);border:0;background:none;cursor:pointer}
+.seg .on{background:var(--card);color:var(--ink);box-shadow:var(--sh)}
+
+/* ---------- hero ---------- */
+.hero{padding:56px 0 8px}
+.hero h1{font-size:clamp(40px,7vw,76px);font-weight:600;letter-spacing:-.035em;line-height:1.02;margin-top:14px}
+.hero h1 em{font-style:normal;color:var(--g)}
+.hero p.lead{max-width:560px;color:var(--ink2);font-size:17px;margin:16px 0 0}
+.stats{display:flex;gap:0;margin-top:34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats div{flex:1;padding:18px 0}
+.stats div+div{border-left:1px solid var(--line);padding-left:22px}
+.stats b{display:block;font-size:34px;font-weight:500;letter-spacing:-.02em;line-height:1.1}
+.stats span{font-size:13px;color:var(--ink2)}
+
+/* ---------- sport grid ---------- */
+.sports{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media (max-width:980px){.sports{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:620px){.sports{grid-template-columns:1fr 1fr}}
+.sp{position:relative;display:flex;flex-direction:column;gap:22px;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);transition:.2s;overflow:hidden}
+.sp:hover{border-color:var(--line2);transform:translateY(-2px);box-shadow:var(--sh)}
+.sp .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c)}
+.sp .ic svg{width:24px;height:24px}
+.sp h3{font-size:18px}
+.sp .meta{font-size:13px;color:var(--ink2);margin-top:2px}
+.sp .go{position:absolute;top:18px;right:16px;color:var(--ink3);transition:.2s}
+.sp:hover .go{color:var(--ink);transform:translateX(2px)}
+.sp .nums{display:flex;gap:16px;font-size:13px;color:var(--ink2)}
+.sp .nums b{font-size:20px;font-weight:500;color:var(--ink);margin-right:3px}
+
+/* ---------- match rows ---------- */
+.matches{display:flex;flex-direction:column;gap:8px}
+.match{display:grid;grid-template-columns:76px 1fr auto;gap:16px;align-items:center;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:14px;border-left:3px solid var(--c,var(--line2))}
+.match .t{font-size:20px;font-weight:500;letter-spacing:-.02em}
+.match .t small{display:block;font-size:12px;color:var(--ink2);font-weight:400;letter-spacing:0}
+.match .meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:var(--ink2);margin-bottom:5px}
+.match .meta span:first-child{color:var(--c);font-weight:500}
+.vs{display:grid;grid-template-columns:1fr auto auto auto 1fr;align-items:center;gap:10px}
+.vs .s{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vs .s.a{text-align:right}
+.vs .s.ours{color:var(--g)}
+.vs .s.win::after{content:" ●";color:var(--lime);font-size:10px;vertical-align:middle}
+.vs .sc{min-width:30px;text-align:center;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.vs .sc.dim{color:var(--ink3);font-weight:400}
+.vs .c{color:var(--ink3)}
+.match .note{font-size:13px;color:var(--ink2);margin:6px 0 0}
+.match .r{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.st{font-size:12px;padding:3px 9px;border-radius:999px;background:#F0F0EB;color:var(--ink2);white-space:nowrap}
+.st.live{background:#FDEBD3;color:#9A5B07}
+.st.live::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#E08A0B;margin-right:6px;vertical-align:middle;animation:bl 1.2s infinite}
+@keyframes bl{50%{opacity:.25}}
+.st.done{background:var(--gs);color:var(--g2)}
+.st.post{background:var(--reds);color:var(--red)}
+@media (max-width:620px){
+  .match{grid-template-columns:1fr;gap:6px}
+  .match .t{font-size:16px;display:flex;gap:8px;align-items:baseline}
+  .match .t small{display:inline}
+  .match .r{flex-direction:row;justify-content:space-between;align-items:center}
+}
+.dayh{display:flex;align-items:baseline;gap:10px;margin:26px 0 10px;font-size:15px;font-weight:600}
+.dayh small{color:var(--ink2);font-weight:400}
+
+/* ---------- sport page ---------- */
+.sph{padding:40px 0 0}
+.sph .top-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.sph .ic{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c)}
+.sph .ic svg{width:30px;height:30px}
+.sph h1{font-size:clamp(30px,5vw,44px);letter-spacing:-.03em}
+.sph p{margin:2px 0 0;color:var(--ink2);font-size:14px}
+.sph .seg{margin-left:auto}
+.coords{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:20px;font-size:14px}
+.coords .lbl{color:var(--ink2)}
+.coord{display:inline-flex;gap:6px;align-items:center;padding:5px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line)}
+.coord a{color:var(--g);font-weight:500}
+
+.event{margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}
+.event-h{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.event-h h3{font-size:20px}
+.event-h p{margin:3px 0 0;font-size:14px;color:var(--ink2)}
+.teams{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.team{display:flex;flex-direction:column;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+.team-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.team-h h4{font-size:17px}
+.team-h .by{font-size:12px;color:var(--ink3);margin-top:2px}
+.slots{display:flex;gap:3px;margin:14px 0 4px}
+.slots i{flex:1;height:4px;border-radius:2px;background:var(--line)}
+.slots i.f{background:var(--g)}
+.slots i.rf{background:#C9B98A}
+.slots i.r{background:#F0ECDF}
+.cnt{display:flex;gap:14px;font-size:12px;color:var(--ink2);margin-bottom:10px}
+.cnt b{color:var(--ink);font-weight:600}
+.roster{list-style:none;margin:0;padding:0;flex:1}
+.roster li{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid #F0F1EC}
+.av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;background:var(--gs);color:var(--g2)}
+.av.res{background:#F1EFE7;color:#7A6A3A}
+.roster .who{min-width:0;line-height:1.3}
+.roster .who b{font-weight:500}
+.roster .who span{color:var(--ink2);font-size:14px}
+.roster .who small{display:block;font-size:12px;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.roster .rt{display:flex;gap:6px;align-items:center}
+.roster .sub{font-size:12px;color:var(--ink3);padding:12px 0 2px;border:0;display:block}
+.x{width:26px;height:26px;border-radius:50%;border:0;background:none;color:var(--ink3);cursor:pointer;display:grid;place-items:center}
+.x:hover{background:var(--reds);color:var(--red)}
+.x svg{width:14px;height:14px}
+.team-f{display:flex;gap:8px;margin-top:14px}
+.team-f .btn{flex:1}
+.solo{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px}
+.solo .pp{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+
+/* ---------- calendar ---------- */
+.cal-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 14px}
+.cal-bar h3{font-size:22px;min-width:180px}
+.cal-bar .nv{display:flex;gap:4px}
+.cal-bar .sp1{flex:1}
+.cal{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.cal-w,.cal-g{display:grid;grid-template-columns:repeat(7,1fr)}
+.cal-w div{padding:10px 12px;font-size:12px;color:var(--ink2);border-bottom:1px solid var(--line)}
+.cal-w div:first-child,.cal-w div:last-child{color:var(--ink3)}
+.cd{position:relative;min-height:112px;padding:8px;border:0;border-right:1px solid #F0F1EC;border-bottom:1px solid #F0F1EC;background:none;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px;transition:background .15s}
+.cd:nth-child(7n){border-right:0}
+.cd:hover{background:#FAFAF7}
+.cd .n{font-size:13px;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;margin-bottom:2px;font-variant-numeric:tabular-nums}
+.cd.out{background:#FBFBF9}
+.cd.out .n{color:var(--ink3)}
+.cd.today .n{background:var(--ink);color:#fff}
+.cd.sel{background:var(--gs);box-shadow:inset 0 0 0 1.5px var(--g)}
+.cd .e{display:flex;align-items:center;gap:5px;font-size:12px;line-height:1.3;padding:2px 6px;border-radius:6px;background:color-mix(in srgb,var(--c) 11%,#fff);color:color-mix(in srgb,var(--c) 75%,#000);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cd .e i{width:6px;height:6px;border-radius:50%;background:var(--c);flex:none}
+.cd .more{font-size:11px;color:var(--ink2);padding-left:6px}
+.cd .dots{display:none}
+@media (max-width:720px){
+  .cd{min-height:62px;padding:6px 4px;align-items:center}
+  .cd .e,.cd .more{display:none}
+  .cd .dots{display:flex;gap:3px;flex-wrap:wrap;justify-content:center}
+  .cd .dots i{width:6px;height:6px;border-radius:50%;background:var(--c)}
+  .cal-w div{padding:8px 4px;text-align:center}
+}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-top:12px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+
+/* ---------- people ---------- */
+.ptools{display:grid;grid-template-columns:1fr 240px;gap:10px;margin-bottom:16px}
+@media (max-width:620px){.ptools{grid-template-columns:1fr}}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px}
+.person{padding:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+.person-h{display:flex;gap:12px;align-items:center}
+.person-h .av{width:42px;height:42px;font-size:16px}
+.person-h h4{font-size:16px;font-weight:500}
+.person-h p{margin:0;font-size:13px;color:var(--ink2)}
+.person-h .k{margin-left:auto;text-align:right;font-size:12px;color:var(--ink2);line-height:1.2}
+.person-h .k b{display:block;font-size:22px;color:var(--ink);font-weight:500}
+.plays{list-style:none;margin:14px 0 0;padding:0}
+.plays li{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #F0F1EC;font-size:14px}
+.plays li i{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
+.plays li .w{flex:1;min-width:0}
+.plays li .w small{color:var(--ink2)}
+
+/* ---------- summary ---------- */
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:14px;margin-bottom:12px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid #F0F1EC;vertical-align:top}
+th{font-weight:500;color:var(--ink2);background:#FAFAF7;font-size:13px}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.grp td{background:#FAFAF7;font-weight:600}
+.sum-sp{margin-top:34px}
+.sum-sp h3{font-size:19px;margin-bottom:10px}
+.sum-ev h4{font-size:15px;margin:18px 0 8px}
+
+/* ---------- dialog ---------- */
+dialog{width:min(520px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:0;border-radius:22px;background:var(--card);color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(20,24,20,.38);backdrop-filter:blur(3px)}
+dialog[open]{animation:pop .22s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}}
+.dh{padding:24px 24px 4px}
+.dh h3{font-size:21px}
+.dh p{margin:4px 0 0;color:var(--ink2);font-size:14px}
+dialog form,.db{padding:4px 24px 24px}
+.acts{display:flex;justify-content:flex-end;gap:8px;margin-top:24px;flex-wrap:wrap}
+.acts .left{margin-right:auto}
+.hint{font-size:13px;color:var(--ink2);background:#F6F6F2;border-radius:10px;padding:10px 12px;margin:14px 0 0}
+.prefill{margin-top:14px;padding:12px;border-radius:12px;background:var(--gs)}
+.prefill label{margin-top:0;color:var(--g2)}
+.prefill input{background-color:#fff}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:8px;border:0;padding:0;margin:14px 0 0}
+.roles legend{font-size:13px;color:var(--ink2);margin-bottom:6px;font-weight:500}
+.role{margin:0;cursor:pointer}
+.role input{position:absolute;opacity:0;pointer-events:none}
+.role span{display:block;padding:12px 14px;border:1px solid var(--line2);border-radius:12px;color:var(--ink);font-weight:500;font-size:15px;transition:.15s}
+.role span small{display:block;font-weight:400;font-size:12px;color:var(--ink2)}
+.role input:checked+span{border-color:var(--g);background:var(--gs);box-shadow:0 0 0 1px var(--g)}
+.role input:disabled+span{opacity:.45;cursor:not-allowed}
+.cf{display:grid;grid-template-columns:120px 1fr;gap:0;margin:8px 0 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.cf dt,.cf dd{margin:0;padding:10px 14px;border-bottom:1px solid #F0F1EC;font-size:14px}
+.cf dt{color:var(--ink2);background:#FAFAF7}
+.cf dd{font-weight:500}
+.cf dt:nth-last-of-type(1),.cf dd:last-child{border-bottom:0}
+dialog.danger .dh h3{color:var(--red)}
+.clist{list-style:none;margin:6px 0 0;padding:0}
+.clist li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F0F1EC}
+.clist li small{display:block;color:var(--ink2);font-size:12px}
+
+/* ---------- toast / loading / footer ---------- */
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:60;max-width:calc(100vw - 32px);padding:12px 18px;border-radius:999px;background:var(--ink);color:#fff;font-size:14px;display:none;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+#toast.err{background:var(--red)}
+#loading{position:fixed;inset:0;z-index:70;display:none;place-items:center;background:rgba(246,246,242,.6);backdrop-filter:blur(2px);font-size:14px;color:var(--ink2)}
+#loading::before{content:"";display:block;width:28px;height:28px;margin:0 auto 10px;border-radius:50%;border:2.5px solid var(--gs2);border-top-color:var(--g);animation:sp .8s linear infinite}
+footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:13px;color:var(--ink2)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer button{background:none;border:0;color:var(--ink2);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+
+@media print{
+  .top,.adminbar,footer,.no-print,.pills{display:none!important}
+  body{background:#fff}
+  table{border-color:#999}
+  .sum-sp{break-inside:avoid-page}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home"><span class="dot"></span><span>สีเขียว<small>กีฬาสีปีใหม่ 2570</small></span></a>
+    <nav class="nav" id="nav" aria-label="เมนูหลัก"></nav>
+    <button class="iconbtn" id="btnRefresh" title="ดึงข้อมูลล่าสุด">
+      <svg class="i" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
+      <span class="txt" id="updated">รีเฟรช</span>
+    </button>
+  </div>
+</header>
+<div id="adminbar"></div>
+<main id="app"><div class="wrap"><p class="muted" style="margin-top:40px">กำลังโหลดข้อมูล…</p></div></main>
+<footer>
+  <div class="wrap">
+    <span>การแข่งขันกีฬาสีภายใน · โรงพยาบาลสมเด็จพระบรมราชเทวี ณ ศรีราชา</span>
+    <button id="adminBtn">สำหรับผู้ดูแล</button>
+  </div>
+</footer>
+
+<!-- สร้างทีม / สมัครเดี่ยว -->
+<dialog id="dlgTeam">
+  <div class="dh"><h3 id="teamTitle">ตั้งทีมใหม่</h3><p id="teamSub"></p></div>
+  <form id="formTeam" autocomplete="off">
+    <div id="teamNameRow">
+      <label id="teamNameLabel">ชื่อทีม</label>
+      <input name="teamName" maxlength="50" placeholder="เช่น เขียวมรกต">
+    </div>
+    <div class="prefill">
+      <label>เคยลงทะเบียนแล้ว? เลือกชื่อเพื่อกรอกให้อัตโนมัติ</label>
+      <input type="search" class="pf" list="personList" placeholder="พิมพ์ชื่อ หรือชื่อเล่น">
+    </div>
+    <div class="row2">
+      <div><label>ชื่อ</label><input name="firstName" required maxlength="60"></div>
+      <div><label>นามสกุล</label><input name="lastName" required maxlength="60"></div>
+    </div>
+    <div class="row2">
+      <div><label>ชื่อเล่น</label><input name="nickname" required maxlength="30"></div>
+      <div><label>ฝ่าย</label><input name="department" required maxlength="80" list="deptList"></div>
+    </div>
+    <p class="hint" id="teamHint"></p>
+    <div class="acts">
+      <button type="button" class="btn ghost" data-close>ยกเลิก</button>
+      <button type="submit" class="btn">ถัดไป</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ลงชื่อเข้าทีม -->
+<dialog id="dlgJoin">
+  <div class="dh"><h3 id="joinTitle">ลงชื่อเข้าทีม</h3><p id="joinSub"></p></div>
+  <form id="formJoin" autocomplete="off">
+    <fieldset class="roles">
+      <legend>ประเภทนักกีฬา</legend>
+      <label class="role"><input type="radio" name="role" value="ตัวจริง"><span>ตัวจริง<small id="leftMain"></small></span></label>
+      <label class="role" id="roleResWrap"><input type="radio" name="role" value="สำรอง"><span>ตัวสำรอง<small id="leftRes"></small></span></label>
+    </fieldset>
+    <div class="prefill">
+      <label>เคยลงทะเบียนแล้ว? เลือกชื่อเพื่อกรอกให้อัตโนมัติ</label>
+      <input type="search" class="pf" list="personList" placeholder="พิมพ์ชื่อ หรือชื่อเล่น">
+    </div>
+    <div class="row2">
+      <div><label>ชื่อ</label><input name="firstName" required maxlength="60"></div>
+      <div><label>นามสกุล</label><input name="lastName" required maxlength="60"></div>
+    </div>
+    <div class="row2">
+      <div><label>ชื่อเล่น</label><input name="nickname" required maxlength="30"></div>
+      <div><label>ฝ่าย</label><input name="department" required maxlength="80" list="deptList"></div>
+    </div>
+    <div class="acts">
+      <button type="button" class="btn ghost" data-close>ยกเลิก</button>
+      <button type="submit" class="btn">ถัดไป</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- นัดแข่ง (ผู้ดูแล) -->
+<dialog id="dlgMatch">
+  <div class="dh"><h3 id="matchTitle">เพิ่มนัดแข่ง</h3><p>ใส่ชื่อทีมของสีเขียว หรือชื่อสีคู่แข่ง</p></div>
+  <form id="formMatch" autocomplete="off">
+    <input type="hidden" name="id">
+    <div class="row2">
+      <div><label>กีฬา</label><select name="sportId" id="mSport" required></select></div>
+      <div><label>ประเภท</label><select name="eventId" id="mEvent"></select></div>
+    </div>
+    <div class="row2">
+      <div><label>วันที่</label><input type="date" name="date"></div>
+      <div><label>เวลา</label><input type="time" name="time"></div>
+    </div>
+    <div class="row2">
+      <div><label>รอบ <small>(ไม่บังคับ)</small></label><input name="round" maxlength="40" list="roundList" placeholder="รอบแรก"></div>
+      <div><label>สนาม <small>(ไม่บังคับ)</small></label><input name="venue" maxlength="60" placeholder="สนาม 1"></div>
+    </div>
+    <div class="row2">
+      <div><label>ฝั่งที่ 1</label><input name="sideA" required maxlength="60" list="sideList"></div>
+      <div><label>ฝั่งที่ 2</label><input name="sideB" required maxlength="60" list="sideList"></div>
+    </div>
+    <div class="row2">
+      <div><label>คะแนนฝั่งที่ 1</label><input name="scoreA" maxlength="30" inputmode="numeric"></div>
+      <div><label>คะแนนฝั่งที่ 2</label><input name="scoreB" maxlength="30" inputmode="numeric"></div>
+    </div>
+    <div class="row2">
+      <div><label>สถานะ</label><select name="status" id="mStatus"></select></div>
+      <div><label>หมายเหตุ <small>(ไม่บังคับ)</small></label><input name="note" maxlength="120"></div>
+    </div>
+    <div class="acts">
+      <button type="button" class="btn danger sm left" id="matchDelete" hidden>ลบนัดนี้</button>
+      <button type="button" class="btn ghost" data-close>ยกเลิก</button>
+      <button type="submit" class="btn">ถัดไป</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ผู้ประสานงาน (ผู้ดูแล) -->
+<dialog id="dlgCoord">
+  <div class="dh"><h3>ผู้ประสานงาน</h3><p id="coordSub"></p></div>
+  <div class="db">
+    <ul class="clist" id="coordList"></ul>
+    <form id="formCoord" style="padding:0" autocomplete="off">
+      <input type="hidden" name="id"><input type="hidden" name="sportId">
+      <h4 style="margin-top:22px;font-size:15px" id="coordFormTitle">เพิ่มผู้ประสานงาน</h4>
+      <label>ดูแล</label><select name="eventId" id="cEvent"></select>
+      <label>ชื่อ - นามสกุล</label><input name="name" required maxlength="80">
+      <div class="row2">
+        <div><label>ชื่อเล่น <small>(ไม่บังคับ)</small></label><input name="nickname" maxlength="30"></div>
+        <div><label>เบอร์โทร <small>(ไม่บังคับ)</small></label><input name="phone" maxlength="15" inputmode="tel" placeholder="08x-xxx-xxxx"></div>
+      </div>
+      <label>ฝ่าย <small>(ไม่บังคับ)</small></label><input name="department" maxlength="80" list="deptList">
+      <div class="acts">
+        <button type="button" class="btn ghost" data-close>ปิด</button>
+        <button type="submit" class="btn">ถัดไป</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- รหัสผู้ดูแล -->
+<dialog id="dlgPin">
+  <div class="dh"><h3>โหมดผู้ดูแล</h3><p>ใช้ลบทีม ลบรายชื่อ จัดตารางแข่ง บันทึกผล และตั้งผู้ประสานงาน</p></div>
+  <form id="formPin">
+    <label>รหัสผู้ดูแล</label>
+    <input name="pin" type="password" required autocomplete="off" inputmode="numeric">
+    <div class="acts">
+      <button type="button" class="btn ghost" data-close>ยกเลิก</button>
+      <button type="submit" class="btn">เข้าสู่โหมดผู้ดูแล</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ยืนยัน -->
+<dialog id="dlgConfirm">
+  <div class="dh"><h3 id="cfTitle">ยืนยันข้อมูล</h3><p id="cfSub"></p></div>
+  <div class="db">
+    <dl class="cf" id="cfList"></dl>
+    <div class="acts">
+      <button type="button" class="btn ghost" id="cfBack">กลับไปแก้ไข</button>
+      <button type="button" class="btn" id="cfOk">ยืนยัน</button>
+    </div>
+  </div>
+</dialog>
+
+<datalist id="deptList"></datalist>
+<datalist id="personList"></datalist>
+<datalist id="sideList"></datalist>
+<datalist id="roundList">
+  <option value="รอบแรก"><option value="รอบแบ่งกลุ่ม"><option value="รอบ 8 ทีม"><option value="รอบรองชนะเลิศ">
+  <option value="ชิงอันดับ 3"><option value="รอบชิงชนะเลิศ">
+</datalist>
+<div id="toast" role="status"></div>
+<div id="loading"><div>กำลังบันทึก…</div></div>
+
+<script>
+const S = { data: null, pin: null, ev: {}, q: '', dept: '', sumSport: '',
+  calMonth: null, calDay: null, calSport: 'all', calMode: 'month',
+  teamEvent: null, joinTeam: null, coordSport: null };
+const RES = 'สำรอง', MAIN = 'ตัวจริง';
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const norm = s => String(s ?? '').replace(/\s+/g, '').toLowerCase();
+
+/* สี + ไอคอนเส้นของแต่ละกีฬา */
+const UI = {
+  volleyball:  { c: '#C98A12', short: 'วอลเลย์บอล', svg: '<circle cx="12" cy="12" r="9"/><path d="M12 3c-1.5 4-.5 8 3.5 10.5"/><path d="M3.3 10c4-.8 8 .6 9.7 4.3"/><path d="M6.5 19.2c1.8-3.6 5-5.8 9.2-6"/><path d="M15.5 13.5c2.2.3 3.9 1.2 5 2.5"/>' },
+  takraw:      { c: '#C4553B', short: 'ตะกร้อ', svg: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="8" r="2.6"/><circle cx="8.4" cy="14.2" r="2.6"/><circle cx="15.6" cy="14.2" r="2.6"/>' },
+  petanque:    { c: '#56657A', short: 'เปตอง', svg: '<circle cx="10" cy="13.5" r="7"/><path d="M6 10.5c1-1.6 2.6-2.5 4.5-2.6"/><circle cx="19.2" cy="5.6" r="2"/>' },
+  tabletennis: { c: '#2D69C4', short: 'เทเบิลเทนนิส', svg: '<circle cx="10" cy="10" r="6.5"/><path d="m14.6 14.6 4.9 4.9"/><path d="m13.2 16.8 3.6-3.6"/><circle cx="19" cy="5" r="1.6"/>' },
+  badminton:   { c: '#17613D', short: 'แบดมินตัน', svg: '<path d="M9.5 14 5 4.5l3.6-.9L12 8l3.4-4.4 3.6.9L14.5 14"/><path d="M8.6 9.6h6.8"/><circle cx="12" cy="17.6" r="3.4"/>' }
+};
+const ui = id => UI[id] || { c: '#888', short: id, svg: '<circle cx="12" cy="12" r="9"/>' };
+const icon = (id, cls = 'i') => `<svg class="${cls}" viewBox="0 0 24 24">${ui(id).svg}</svg>`;
+const I = {
+  arrow: '<svg class="i" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>',
+  plus: '<svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
+  x: '<svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  left: '<svg class="i" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg>',
+  right: '<svg class="i" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>'
+};
+
+/* ---------- API ---------- */
+function call(action, payload = {}) {
+  if (!API_URL || API_URL.startsWith('PASTE')) return Promise.reject(new Error('ยังไม่ได้ใส่ API_URL ในไฟล์ index.html'));
+  const req = action === 'data'
+    ? fetch(API_URL + '?action=data&t=' + Date.now())
+    : fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action, ...payload }) });
+  return req.then(r => r.json()).then(r => { if (!r.ok) throw new Error(r.error); return r.data; });
+}
+function toast(msg, err) {
+  const t = $('#toast'); t.textContent = msg; t.className = err ? 'err' : ''; t.style.display = 'block';
+  clearTimeout(t._h); t._h = setTimeout(() => t.style.display = 'none', err ? 6000 : 3000);
+}
+const busy = on => $('#loading').style.display = on ? 'grid' : 'none';
+const stamp = () => $('#updated').textContent = 'อัปเดต ' + new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+async function load() {
+  try { S.data = await call('data'); stamp(); render(); }
+  catch (e) { $('#app').innerHTML = `<div class="wrap"><div class="empty" style="margin-top:40px">โหลดข้อมูลไม่สำเร็จ: ${esc(e.message)}</div></div>`; }
+}
+async function refresh(manual) {
+  const b = $('#btnRefresh'); b.classList.add('spin'); b.disabled = true;
+  try { S.data = await call('data'); stamp(); render(); if (manual) toast('ดึงข้อมูลล่าสุดแล้ว'); }
+  catch (e) { if (manual) toast(e.message, true); }
+  finally { b.classList.remove('spin'); b.disabled = false; }
+}
+async function act(action, payload, okMsg) {
+  busy(true);
+  try { S.data = await call(action, { ...payload, pin: S.pin }); stamp(); render(); toast(okMsg); return true; }
+  catch (e) { toast(e.message, true); return false; }
+  finally { busy(false); }
+}
+function confirmBox({ title, sub = 'ตรวจสอบข้อมูลอีกครั้งก่อนยืนยัน', rows = [], ok = 'ยืนยัน', danger = false }) {
+  const d = $('#dlgConfirm');
+  d.classList.toggle('danger', danger);
+  $('#cfTitle').textContent = title; $('#cfSub').textContent = sub;
+  $('#cfList').innerHTML = rows.filter(r => r[1] !== '' && r[1] != null).map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
+  const okBtn = $('#cfOk'); okBtn.textContent = ok; okBtn.className = danger ? 'btn danger solid' : 'btn';
+  return new Promise(res => {
+    const done = v => { d.close(); res(v); };
+    okBtn.onclick = () => done(true);
+    $('#cfBack').onclick = () => done(false);
+    d.oncancel = e => { e.preventDefault(); done(false); };
+    d.showModal(); $('#cfBack').focus();
+  });
+}
+
+/* ---------- helpers ---------- */
+const D = () => S.data;
+const sportOf = id => D().sports.find(s => s.id === id);
+const eventOf = id => D().events.find(e => e.id === id);
+const eventsOf = sid => D().events.filter(e => e.sportId === sid);
+const teamsOfEvent = eid => D().teams.filter(t => t.eventId === eid);
+const teamsOfSport = sid => D().teams.filter(t => t.sportId === sid);
+const teamOf = id => D().teams.find(t => t.id === id);
+const membersOf = tid => { const ms = D().members.filter(m => m.teamId === tid); return [...ms.filter(m => m.role !== RES), ...ms.filter(m => m.role === RES)]; };
+const coordsOf = (sid, eid) => (D().coordinators || []).filter(c => c.sportId === sid && (c.eventId || '') === (eid || ''));
+const fullName = m => `${m.firstName} ${m.lastName}`;
+const pkey = m => norm(m.firstName + m.lastName);
+const people = list => new Set(list.map(pkey)).size;
+const isSingle = ev => ev.maxMembers === 1 && !ev.maxReserves;
+const unit = ev => ev.maxMembers === 1 ? 'คน' : ev.maxMembers === 2 ? 'คู่' : 'ทีม';
+const cap = ev => (ev.maxMembers === 1 ? 'เดี่ยว' : ev.maxMembers === 2 ? 'คู่ 2 คน' : `ตัวจริง ${ev.maxMembers} คน`) +
+  (ev.maxReserves ? ` · สำรอง ${ev.maxReserves} คน` : '') + (ev.maxTeams ? ` · รับไม่เกิน ${ev.maxTeams} ${unit(ev)}` : '');
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const today = () => ymd(new Date());
+const dt = s => new Date(s + 'T00:00:00');
+const thaiDate = d => d ? dt(d).toLocaleDateString('th-TH', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) : 'ยังไม่กำหนดวัน';
+const shortDate = d => d ? dt(d).toLocaleDateString('th-TH', { day: 'numeric', month: 'short' }) : '';
+const isOurs = side => side.includes('เขียว') || D().teams.some(t => norm(t.name) === norm(side));
+const byTime = (a, b) => (a.date || '9999').localeCompare(b.date || '9999') || (a.time || '99').localeCompare(b.time || '99');
+const upcoming = sid => D().matches.filter(m => (!sid || m.sportId === sid) && m.status !== 'จบแล้ว' && (!m.date || m.date >= today())).sort(byTime);
+const initial = m => (m.nickname || m.firstName || '?').trim().charAt(0);
+const coordChips = list => list.map(c => `<span class="coord">${esc(c.name)}${c.nickname ? ` (${esc(c.nickname)})` : ''}${c.phone ? ` · <a href="tel:${esc(c.phone.replace(/[^0-9+]/g, ''))}">${esc(c.phone)}</a>` : ''}</span>`).join('');
+
+/* รวมรายชื่อบุคลากร (1 คน = หลายทีม) */
+function persons() {
+  const g = {};
+  D().members.forEach(m => { const k = pkey(m); (g[k] = g[k] || { p: m, list: [] }).list.push(m); });
+  return Object.values(g).sort((a, b) => a.p.firstName.localeCompare(b.p.firstName, 'th'));
+}
+
+/* ---------- router ---------- */
+function render() {
+  const r = (location.hash.slice(1) || 'home').split('/');
+  renderNav(r); renderAdminBar();
+  const depts = [...new Set([...(D().departments || []), ...D().members.map(m => m.department)].filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
+  $('#deptList').innerHTML = depts.map(d => `<option value="${esc(d)}">`).join('');
+  $('#personList').innerHTML = persons().map(({ p }) => `<option value="${esc(fullName(p))} (${esc(p.nickname)}) · ${esc(p.department)}">`).join('');
+  const app = $('#app');
+  if (r[0] === 'sport' && sportOf(r[1])) app.innerHTML = viewSport(sportOf(r[1]), r[2] === 'calendar' ? 'calendar' : 'teams');
+  else if (r[0] === 'calendar') app.innerHTML = viewCalendar();
+  else if (r[0] === 'people') app.innerHTML = viewPeople();
+  else if (r[0] === 'summary') app.innerHTML = viewSummary();
+  else app.innerHTML = viewHome();
+  const q = $('#q'); if (q) { q.value = S.q; renderPeopleList(); }
+}
+function renderNav(r) {
+  const cur = r[0] === 'sport' ? 'sport/' + r[1] : (r[0] || 'home');
+  const items = [['home', 'ภาพรวม'], ...D().sports.map(s => ['sport/' + s.id, s.name]), ['calendar', 'ปฏิทิน'], ['people', 'นักกีฬา'], ['summary', 'สรุป']];
+  $('#nav').innerHTML = items.map(([h, l]) => `<a href="#${h}" class="${cur === h ? 'on' : ''}">${l}</a>`).join('');
+  const on = $('#nav .on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+function renderAdminBar() {
+  $('#adminbar').innerHTML = S.pin ? `<div class="adminbar"><div class="wrap"><span>โหมดผู้ดูแล · ลบทีม/รายชื่อ จัดตารางแข่ง บันทึกผล ตั้งผู้ประสานงานได้</span><button id="adminOff">ออก</button></div></div>` : '';
+  $('#adminBtn').textContent = S.pin ? 'ออกจากโหมดผู้ดูแล' : 'สำหรับผู้ดูแล';
+}
+
+/* ---------- หน้าแรก ---------- */
+function viewHome() {
+  const cards = D().sports.map(s => `<a class="sp" href="#sport/${s.id}" style="--c:${ui(s.id).c}">
+      <span class="go">${I.arrow}</span>
+      <span class="ic">${icon(s.id)}</span>
+      <span><h3>${s.name}</h3><div class="meta">${eventsOf(s.id).length} ประเภท</div></span>
+      <span class="nums"><span><b class="num">${teamsOfSport(s.id).length}</b>ทีม</span><span><b class="num">${people(D().members.filter(m => m.sportId === s.id))}</b>คน</span></span>
+    </a>`).join('');
+  const nx = upcoming().slice(0, 5);
+  return `<div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">กีฬาสีภายใน · งานปีใหม่ 2570</div>
+      <h1>ทีม<em>สีเขียว</em><br>ลงทะเบียนนักกีฬา</h1>
+      <p class="lead">เลือกกีฬา ตั้งทีม หรือลงชื่อเข้าทีมที่มีอยู่ เป็นตัวจริงหรือตัวสำรองก็ได้ หนึ่งคนลงได้หลายกีฬาและหลายทีม</p>
+      <div class="stats">
+        <div><b class="num">${D().teams.length}</b><span>ทีม / คู่</span></div>
+        <div><b class="num">${people(D().members)}</b><span>นักกีฬา (ไม่นับซ้ำ)</span></div>
+        <div><b class="num">${D().matches.length}</b><span>นัดแข่ง</span></div>
+      </div>
+    </section>
+    <section class="sec"><div class="sec-h"><div><h2>เลือกกีฬา</h2><p>กดเพื่อดูทีมและลงทะเบียน</p></div></div>
+      <div class="sports">${cards}</div></section>
+    <section class="sec"><div class="sec-h"><div><h2>นัดแข่งถัดไป</h2></div><a class="btn ghost sm" href="#calendar">เปิดปฏิทิน ${I.arrow}</a></div>
+      ${nx.length ? `<div class="matches">${nx.map(m => matchRow(m, true)).join('')}</div>` : `<div class="empty">ยังไม่มีตารางแข่ง ผู้ดูแลจะเพิ่มหลังจับสลาก</div>`}
+    </section></div>`;
+}
+
+/* ---------- หน้ากีฬา ---------- */
+function viewSport(sp, tab) {
+  const evs = eventsOf(sp.id);
+  const cur = evs.some(e => e.id === S.ev[sp.id]) ? S.ev[sp.id] : 'all';
+  const shown = cur === 'all' ? evs : evs.filter(e => e.id === cur);
+  const sc = coordsOf(sp.id, '');
+  const pills = `<div class="pills">
+    <button class="pill ${cur === 'all' ? 'on' : ''}" data-ev="${sp.id}|all">ทุกประเภท</button>
+    ${evs.map(e => `<button class="pill ${cur === e.id ? 'on' : ''}" data-ev="${sp.id}|${e.id}">${esc(e.name)}<small>${teamsOfEvent(e.id).length}</small></button>`).join('')}</div>`;
+  let body;
+  if (tab === 'calendar') {
+    const list = D().matches.filter(m => m.sportId === sp.id && (cur === 'all' || m.eventId === cur));
+    body = calendarBlock(list, { addKey: `${sp.id}|${cur === 'all' ? '' : cur}`, sportFilter: false });
+  } else {
+    body = shown.length ? shown.map(eventSection).join('') : `<div class="empty" style="margin-top:20px">ยังไม่มีประเภทในกีฬานี้ (เพิ่มได้ที่ชีต Events)</div>`;
+  }
+  return `<div class="wrap" style="--c:${ui(sp.id).c}">
+    <section class="sph"><div class="top-row">
+      <span class="ic">${icon(sp.id)}</span>
+      <div><h1>${sp.name}</h1><p>${evs.length} ประเภท · ${teamsOfSport(sp.id).length} ทีม/คู่ · ${people(D().members.filter(m => m.sportId === sp.id))} คน</p></div>
+      <nav class="seg"><a href="#sport/${sp.id}" class="${tab === 'teams' ? 'on' : ''}">ทีม & ลงทะเบียน</a><a href="#sport/${sp.id}/calendar" class="${tab === 'calendar' ? 'on' : ''}">ปฏิทินแข่งขัน</a></nav>
+    </div>
+    <div class="coords"><span class="lbl">ผู้ประสานงาน</span>${sc.length ? coordChips(sc) : '<span class="lbl">· ยังไม่ได้ตั้ง</span>'}
+      ${S.pin ? `<button class="btn sm ghost" data-coord="${sp.id}">จัดการ</button>` : ''}</div>
+    </section>${pills}${body}</div>`;
+}
+
+function eventSection(ev) {
+  const ts = teamsOfEvent(ev.id), single = isSingle(ev);
+  const closed = ev.maxTeams && ts.length >= ev.maxTeams;
+  const ec = coordsOf(ev.sportId, ev.id);
+  const content = !ts.length ? `<div class="empty">ยังไม่มีใครลงประเภทนี้ ลงเป็นคนแรกได้เลย</div>`
+    : single ? `<div class="solo">${ts.map(t => { const m = membersOf(t.id)[0];
+        return `<div class="pp"><span class="av">${esc(m ? initial(m) : '?')}</span>
+          <span class="who" style="min-width:0;line-height:1.3">${m ? `<b style="font-weight:500">${esc(fullName(m))}</b> <span class="muted">(${esc(m.nickname)})</span><small style="display:block;font-size:12px;color:var(--ink3)">${esc(m.department)}</small>` : esc(t.name)}</span>
+          ${S.pin ? `<button class="x" title="ลบ" data-delt="${t.id}">${I.x}</button>` : '<span></span>'}</div>`; }).join('')}</div>`
+    : `<div class="teams">${ts.map(t => teamCard(t, ev)).join('')}</div>`;
+  return `<section class="event">
+    <div class="event-h"><div><h3>${esc(ev.name)}</h3><p>${cap(ev)} · ตอนนี้ ${ts.length} ${unit(ev)}</p>
+      ${ec.length ? `<div class="coords" style="margin-top:8px"><span class="lbl">ผู้ประสานงาน</span>${coordChips(ec)}</div>` : ''}</div>
+      <button class="btn" data-new="${ev.id}" ${closed ? 'disabled' : ''}>${closed ? 'รับครบแล้ว' : `${I.plus} ${single ? 'ลงทะเบียนประเภทนี้' : `ตั้ง${unit(ev)}ใหม่`}`}</button>
+    </div>${content}</section>`;
+}
+
+function teamCard(t, ev) {
+  const ms = membersOf(t.id), main = ms.filter(m => m.role !== RES), res = ms.filter(m => m.role === RES);
+  const mainFull = main.length >= ev.maxMembers, full = mainFull && res.length >= ev.maxReserves;
+  const slots = [...Array(ev.maxMembers)].map((_, i) => `<i class="${i < main.length ? 'f' : ''}"></i>`).join('') +
+    [...Array(ev.maxReserves)].map((_, i) => `<i class="${i < res.length ? 'rf' : 'r'}"></i>`).join('');
+  const row = m => `<li><span class="av ${m.role === RES ? 'res' : ''}">${esc(initial(m))}</span>
+    <span class="who"><b>${esc(m.nickname)}</b> <span>${esc(fullName(m))}</span><small>${esc(m.department)}</small></span>
+    <span class="rt">${m.role === RES ? '<span class="tag res">สำรอง</span>' : '<span class="tag">ตัวจริง</span>'}${S.pin ? `<button class="x" title="ลบ" data-delm="${m.id}">${I.x}</button>` : ''}</span></li>`;
+  return `<article class="team">
+    <div class="team-h"><div><h4>${esc(t.name)}</h4><div class="by">ตั้งโดย ${esc(t.createdBy)}</div></div>
+      ${full ? '<span class="tag out">ครบแล้ว</span>' : ''}</div>
+    <div class="slots">${slots}</div>
+    <div class="cnt"><span>ตัวจริง <b class="num">${main.length}/${ev.maxMembers}</b></span>${ev.maxReserves ? `<span>สำรอง <b class="num">${res.length}/${ev.maxReserves}</b></span>` : ''}</div>
+    <ul class="roster">${main.map(row).join('')}${res.length ? `<li class="sub">ตัวสำรอง</li>${res.map(row).join('')}` : ''}</ul>
+    <div class="team-f">
+      <button class="btn sm ${full ? '' : 'ghost'}" data-join="${t.id}" ${full ? 'disabled' : ''}>${full ? `${unit(ev)}นี้ครบแล้ว` : `${I.plus} ${mainFull ? 'ลงชื่อเป็นตัวสำรอง' : 'ลงชื่อเข้าทีมนี้'}`}</button>
+      ${S.pin ? `<button class="btn sm danger" data-delt="${t.id}">ลบ</button>` : ''}
+    </div></article>`;
+}
+
+/* ---------- แถวนัดแข่ง ---------- */
+function matchRow(m, showSport) {
+  const sp = sportOf(m.sportId), ev = eventOf(m.eventId);
+  const a = parseFloat(m.scoreA), b = parseFloat(m.scoreB);
+  const done = m.status === 'จบแล้ว' && !isNaN(a) && !isNaN(b);
+  const wA = done && a > b, wB = done && b > a;
+  const st = { 'กำลังแข่ง': 'live', 'จบแล้ว': 'done', 'เลื่อน': 'post' }[m.status] || '';
+  const meta = [showSport && sp ? sp.name : '', ev ? ev.name : '', m.round, m.venue].filter(Boolean);
+  return `<article class="match" style="--c:${ui(m.sportId).c}">
+    <div class="t num">${esc(m.time) || '--:--'}<small>${showSport && m.date ? shortDate(m.date) : ''}</small></div>
+    <div style="min-width:0">
+      <div class="meta">${meta.map(x => `<span>${esc(x)}</span>`).join('')}</div>
+      <div class="vs">
+        <span class="s a ${isOurs(m.sideA) ? 'ours' : ''} ${wA ? 'win' : ''}">${esc(m.sideA)}</span>
+        <span class="sc ${m.scoreA ? '' : 'dim'}">${esc(m.scoreA) || '–'}</span><span class="c">:</span>
+        <span class="sc ${m.scoreB ? '' : 'dim'}">${esc(m.scoreB) || '–'}</span>
+        <span class="s ${isOurs(m.sideB) ? 'ours' : ''} ${wB ? 'win' : ''}">${esc(m.sideB)}</span>
+      </div>
+      ${m.note ? `<p class="note">${esc(m.note)}</p>` : ''}
+    </div>
+    <div class="r"><span class="st ${st}">${esc(m.status)}</span>${S.pin ? `<button class="btn sm ghost" data-editm="${m.id}">แก้ไข</button>` : ''}</div>
+  </article>`;
+}
+function agenda(list, showSport) {
+  const days = {};
+  list.slice().sort(byTime).forEach(m => (days[m.date || ''] = days[m.date || ''] || []).push(m));
+  return Object.keys(days).sort((a, b) => (a || '9999').localeCompare(b || '9999')).map(d =>
+    `<div class="dayh">${thaiDate(d)} <small>${days[d].length} นัด</small></div><div class="matches">${days[d].map(m => matchRow(m, showSport)).join('')}</div>`).join('');
+}
+
+/* ---------- ปฏิทิน ---------- */
+function defaultMonth(list) {
+  const t = today(), nx = list.filter(m => m.date && m.date >= t).sort(byTime)[0] || list.filter(m => m.date).sort(byTime)[0];
+  return (nx ? nx.date : t).slice(0, 7);
+}
+function calendarBlock(list, { addKey = '', sportFilter = true } = {}) {
+  if (!S.calMonth) S.calMonth = defaultMonth(D().matches);
+  const [y, mo] = S.calMonth.split('-').map(Number);
+  const first = new Date(y, mo - 1, 1), start = new Date(y, mo - 1, 1 - first.getDay());
+  const weeks = Math.ceil((first.getDay() + new Date(y, mo, 0).getDate()) / 7);
+  const byDay = {};
+  list.filter(m => m.date).sort(byTime).forEach(m => (byDay[m.date] = byDay[m.date] || []).push(m));
+  const t = today();
+  let cells = '';
+  for (let i = 0; i < weeks * 7; i++) {
+    const d = new Date(start); d.setDate(start.getDate() + i);
+    const k = ymd(d), ms = byDay[k] || [], inM = d.getMonth() === mo - 1;
+    cells += `<button class="cd ${inM ? '' : 'out'} ${k === t ? 'today' : ''} ${k === S.calDay ? 'sel' : ''}" data-day="${k}" aria-label="${thaiDate(k)} ${ms.length} นัด">
+      <span class="n">${d.getDate()}</span>
+      ${ms.slice(0, 3).map(m => `<span class="e" style="--c:${ui(m.sportId).c}"><i></i>${esc(m.time || '')} ${esc(ui(m.sportId).short)}</span>`).join('')}
+      ${ms.length > 3 ? `<span class="more">+${ms.length - 3} นัด</span>` : ''}
+      ${ms.length ? `<span class="dots">${ms.slice(0, 4).map(m => `<i style="--c:${ui(m.sportId).c}"></i>`).join('')}</span>` : ''}
+    </button>`;
+  }
+  const monthName = first.toLocaleDateString('th-TH', { month: 'long', year: 'numeric' });
+  const inMonth = list.filter(m => m.date && m.date.slice(0, 7) === S.calMonth);
+  const undated = list.filter(m => !m.date);
+  const showSport = sportFilter;
+  let detail;
+  if (S.calMode === 'list') {
+    detail = list.length ? agenda(list, showSport) : `<div class="empty">ยังไม่มีนัดแข่ง</div>`;
+  } else if (S.calDay && S.calDay.slice(0, 7) === S.calMonth) {
+    const ms = byDay[S.calDay] || [];
+    detail = `<div class="dayh">${thaiDate(S.calDay)} <small>${ms.length} นัด · <a href="javascript:void 0" data-day="${S.calDay}" style="text-decoration:underline">ดูทั้งเดือน</a></small></div>
+      ${ms.length ? `<div class="matches">${ms.map(m => matchRow(m, showSport)).join('')}</div>` : `<div class="empty">ไม่มีนัดแข่งในวันนี้</div>`}`;
+  } else {
+    detail = inMonth.length ? agenda(inMonth, showSport) : `<div class="empty" style="margin-top:18px">ไม่มีนัดแข่งในเดือนนี้</div>`;
+    if (undated.length) detail += agenda(undated, showSport);
+  }
+  const legend = `<div class="legend">${D().sports.map(s => `<span style="--c:${ui(s.id).c}"><i></i>${s.name}</span>`).join('')}</div>`;
+  return `<div class="cal-bar">
+      ${S.calMode === 'month' ? `<h3>${monthName}</h3><div class="nv">
+        <button class="iconbtn" data-cal="prev" title="เดือนก่อน">${I.left}</button>
+        <button class="iconbtn" data-cal="today">วันนี้</button>
+        <button class="iconbtn" data-cal="next" title="เดือนถัดไป">${I.right}</button></div>` : `<h3>ทุกนัด (${list.length})</h3>`}
+      <span class="sp1"></span>
+      <div class="seg"><button class="${S.calMode === 'month' ? 'on' : ''}" data-calmode="month">รายเดือน</button><button class="${S.calMode === 'list' ? 'on' : ''}" data-calmode="list">รายการ</button></div>
+      ${S.pin ? `<button class="btn sm" data-addmatch="${addKey}">${I.plus} เพิ่มนัดแข่ง</button>` : ''}
+    </div>
+    ${S.calMode === 'month' ? `<div class="cal">
+      <div class="cal-w">${['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'].map(w => `<div>${w}</div>`).join('')}</div>
+      <div class="cal-g">${cells}</div></div>${sportFilter ? legend : ''}` : ''}
+    <div style="margin-top:8px">${detail}</div>`;
+}
+function viewCalendar() {
+  const cur = S.calSport;
+  const list = D().matches.filter(m => cur === 'all' || m.sportId === cur);
+  return `<div class="wrap">
+    <section class="sph"><div class="top-row"><div><div class="eyebrow">ตารางการแข่งขัน</div><h1>ปฏิทินแข่งขัน</h1>
+      <p>ทุกกีฬาในที่เดียว กดที่วันเพื่อดูรายละเอียด</p></div></div></section>
+    <div class="pills"><button class="pill ${cur === 'all' ? 'on' : ''}" data-calsp="all">ทุกกีฬา<small>${D().matches.length}</small></button>
+      ${D().sports.map(s => `<button class="pill ${cur === s.id ? 'on' : ''}" data-calsp="${s.id}" style="--c:${ui(s.id).c}"><span class="sw"></span>${s.name}<small>${D().matches.filter(m => m.sportId === s.id).length}</small></button>`).join('')}</div>
+    ${calendarBlock(list, { addKey: `${cur === 'all' ? '' : cur}|` })}</div>`;
+}
+
+/* ---------- รายชื่อนักกีฬา ---------- */
+function viewPeople() {
+  const depts = [...new Set(D().members.map(m => m.department).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
+  return `<div class="wrap">
+    <section class="sph"><div class="top-row"><div><div class="eyebrow">บุคลากร</div><h1>รายชื่อนักกีฬา</h1>
+      <p>${people(D().members)} คน · ลงทะเบียนรวม ${D().members.length} ครั้ง · ดูว่าแต่ละคนอยู่ทีมไหนบ้าง</p></div></div></section>
+    <div class="ptools" style="margin-top:22px">
+      <input id="q" type="search" placeholder="ค้นหาชื่อ นามสกุล หรือชื่อเล่น" autocomplete="off">
+      <select id="deptSel"><option value="">ทุกฝ่าย</option>${depts.map(d => `<option ${d === S.dept ? 'selected' : ''}>${esc(d)}</option>`).join('')}</select>
+    </div>
+    <div id="plist"></div></div>`;
+}
+function renderPeopleList() {
+  const n = norm(S.q);
+  const list = persons().filter(({ p }) => (!S.dept || p.department === S.dept) &&
+    (!n || pkey(p).includes(n) || norm(p.nickname).includes(n)));
+  $('#plist').innerHTML = !list.length ? `<div class="empty">${D().members.length ? 'ไม่พบชื่อนี้ ลองพิมพ์แค่ชื่อหรือชื่อเล่น' : 'ยังไม่มีผู้ลงทะเบียน'}</div>`
+    : `<div class="people">${list.map(({ p, list: ls }) => `<article class="person">
+      <div class="person-h"><span class="av">${esc(initial(p))}</span>
+        <div style="min-width:0"><h4>${esc(fullName(p))} <span class="muted">(${esc(p.nickname)})</span></h4><p>${esc(p.department)}</p></div>
+        <div class="k"><b class="num">${ls.length}</b>ทีม</div></div>
+      <ul class="plays">${ls.map(m => { const sp = sportOf(m.sportId), ev = eventOf(m.eventId), t = teamOf(m.teamId);
+        return `<li style="--c:${ui(m.sportId).c}"><i></i><a class="w" href="#sport/${m.sportId}">${sp ? sp.name : ''} <small>${ev ? esc(ev.name) : ''}${t && ev && !isSingle(ev) ? ` · ${unit(ev)} ${esc(t.name)}` : ''}</small></a>
+          ${m.role === RES ? '<span class="tag res">สำรอง</span>' : '<span class="tag">ตัวจริง</span>'}</li>`; }).join('')}</ul>
+    </article>`).join('')}</div>`;
+}
+
+/* ---------- สรุป ---------- */
+function viewSummary() {
+  const sel = S.sumSport, sports = sel ? [sportOf(sel)] : D().sports, inSel = m => !sel || m.sportId === sel;
+  const cnt = (eid, res) => D().members.filter(m => m.eventId === eid && (m.role === RES) === res).length;
+  const coordLine = list => list.map(c => esc(c.name) + (c.phone ? ' ' + esc(c.phone) : '')).join(', ');
+  const overview = `<table><tr><th>กีฬา</th><th>ประเภท</th><th class="n">ทีม/คู่</th><th class="n">ตัวจริง</th><th class="n">สำรอง</th></tr>
+    ${sports.map(s => eventsOf(s.id).map((e, i) => `<tr>${i === 0 ? `<td rowspan="${eventsOf(s.id).length}">${s.name}</td>` : ''}
+      <td>${esc(e.name)}</td><td class="n">${teamsOfEvent(e.id).length}</td><td class="n">${cnt(e.id, false)}</td><td class="n">${cnt(e.id, true)}</td></tr>`).join('')).join('')}
+    <tr class="grp"><td colspan="2">รวม · นักกีฬาไม่นับซ้ำ ${people(D().members.filter(inSel))} คน</td>
+      <td class="n">${D().teams.filter(inSel).length}</td><td class="n">${D().members.filter(m => inSel(m) && m.role !== RES).length}</td><td class="n">${D().members.filter(m => inSel(m) && m.role === RES).length}</td></tr></table>`;
+  const detail = sports.map(s => { const sc = coordsOf(s.id, '');
+    return `<div class="sum-sp"><h3>${s.name}</h3>${sc.length ? `<p class="muted" style="margin:-4px 0 6px;font-size:14px">ผู้ประสานงาน: ${coordLine(sc)}</p>` : ''}
+    ${eventsOf(s.id).map(e => { const ts = teamsOfEvent(e.id);
+      return `<div class="sum-ev"><h4>${esc(e.name)} · ${ts.length} ${unit(e)}</h4>
+        ${ts.length ? `<table><tr><th style="width:56px">ลำดับ</th><th>ชื่อ - นามสกุล</th><th>ชื่อเล่น</th><th>ฝ่าย</th><th style="width:90px">ประเภท</th></tr>
+        ${ts.map(t => (isSingle(e) ? '' : `<tr class="grp"><td colspan="5">${unit(e)} ${esc(t.name)}</td></tr>`) +
+          membersOf(t.id).map((m, i) => `<tr><td>${i + 1}</td><td>${esc(fullName(m))}</td><td>${esc(m.nickname)}</td><td>${esc(m.department)}</td><td>${m.role}</td></tr>`).join('')).join('')}</table>`
+        : `<p class="muted" style="margin:0;font-size:14px">ยังไม่มีผู้สมัคร</p>`}</div>`; }).join('')}</div>`; }).join('');
+  return `<div class="wrap">
+    <section class="sph"><div class="top-row"><div><div class="eyebrow">รายงาน</div><h1>สรุปรายชื่อนักกีฬา</h1>
+      <p>ข้อมูล ณ ${new Date().toLocaleString('th-TH')}</p></div>
+      <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
+        <select id="sumSel" style="width:auto;height:42px"><option value="">ทุกกีฬา</option>${D().sports.map(s => `<option value="${s.id}" ${s.id === sel ? 'selected' : ''}>${s.name}</option>`).join('')}</select>
+        <button class="btn ghost" id="btnCsv">ดาวน์โหลด CSV</button><button class="btn" onclick="print()">พิมพ์</button></div>
+    </div></section>
+    <div style="margin-top:26px">${overview}</div>${detail}</div>`;
+}
+function downloadCsv() {
+  const sel = S.sumSport, rows = [['กีฬา', 'ประเภทการแข่งขัน', 'ทีม', 'ลำดับ', 'ชื่อ', 'นามสกุล', 'ชื่อเล่น', 'ฝ่าย', 'ประเภทนักกีฬา']];
+  D().sports.filter(s => !sel || s.id === sel).forEach(s => eventsOf(s.id).forEach(e => teamsOfEvent(e.id).forEach(t =>
+    membersOf(t.id).forEach((m, i) => rows.push([s.name, e.name, t.name, i + 1, m.firstName, m.lastName, m.nickname, m.department, m.role])))));
+  const csv = '﻿' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = `นักกีฬาสีเขียว_${sel ? sportOf(sel).name : 'ทุกกีฬา'}.csv`; a.click();
+}
+
+/* ---------- dialogs ---------- */
+const formData = f => Object.fromEntries(new FormData(f).entries());
+const personRows = f => [['ชื่อ - นามสกุล', `${f.firstName} ${f.lastName}`], ['ชื่อเล่น', f.nickname], ['ฝ่าย', f.department]];
+
+function openTeam(eid) {
+  const ev = eventOf(eid), sp = sportOf(ev.sportId), solo = ev.maxMembers === 1;
+  S.teamEvent = eid; $('#formTeam').reset();
+  $('#teamTitle').textContent = isSingle(ev) ? 'ลงทะเบียนประเภทเดี่ยว' : `ตั้ง${unit(ev)}ใหม่`;
+  $('#teamNameLabel').textContent = `ชื่อ${unit(ev)}`;
+  $('#teamSub').textContent = `${sp.name} · ${ev.name}`;
+  $('#teamNameRow').hidden = solo;
+  $('#formTeam [name=teamName]').required = !solo;
+  $('#teamHint').textContent = isSingle(ev) ? 'กรอกข้อมูลของคุณเพื่อลงชื่อในประเภทนี้'
+    : `คุณจะเป็นตัวจริงคนแรกของ${unit(ev)} · ตัวจริงได้ ${ev.maxMembers} คน${ev.maxReserves ? ` สำรอง ${ev.maxReserves} คน` : ''} แล้วชวนเพื่อนมาลงชื่อต่อได้`;
+  $('#dlgTeam').showModal();
+}
+function openJoin(tid) {
+  const t = teamOf(tid), ev = eventOf(t.eventId), sp = sportOf(t.sportId);
+  const ms = membersOf(tid), main = ms.filter(m => m.role !== RES).length, res = ms.filter(m => m.role === RES).length;
+  S.joinTeam = tid; $('#formJoin').reset();
+  $('#joinTitle').textContent = `ลงชื่อเข้า${unit(ev)} ${t.name}`;
+  $('#joinSub').textContent = `${sp.name} · ${ev.name}`;
+  const [rMain, rRes] = document.querySelectorAll('#formJoin [name=role]');
+  rMain.disabled = main >= ev.maxMembers; rRes.disabled = res >= ev.maxReserves;
+  $('#roleResWrap').hidden = !ev.maxReserves;
+  $('#leftMain').textContent = rMain.disabled ? 'เต็มแล้ว' : `ว่าง ${ev.maxMembers - main} ที่`;
+  $('#leftRes').textContent = rRes.disabled ? 'เต็มแล้ว' : `ว่าง ${ev.maxReserves - res} ที่`;
+  (rMain.disabled ? rRes : rMain).checked = true;
+  $('#dlgJoin').showModal();
+}
+/* เลือกชื่อที่เคยลงทะเบียน → กรอกให้อัตโนมัติ */
+document.addEventListener('change', e => {
+  if (!e.target.classList.contains('pf')) return;
+  const v = e.target.value, hit = persons().find(({ p }) => v.startsWith(`${fullName(p)} (${p.nickname})`));
+  if (!hit) return;
+  const f = e.target.form, p = hit.p;
+  f.firstName.value = p.firstName; f.lastName.value = p.lastName; f.nickname.value = p.nickname; f.department.value = p.department;
+});
+function fillMatchEvents(sid, eid) {
+  $('#mEvent').innerHTML = `<option value="">ไม่ระบุประเภท</option>` + eventsOf(sid).map(e => `<option value="${e.id}" ${e.id === eid ? 'selected' : ''}>${esc(e.name)}</option>`).join('');
+  fillSides();
+}
+function fillSides() {
+  const eid = $('#mEvent').value, sid = $('#mSport').value;
+  const names = (eid ? teamsOfEvent(eid) : teamsOfSport(sid)).map(t => t.name);
+  $('#sideList').innerHTML = [...new Set(['สีเขียว', ...names, ...D().opponents])].map(n => `<option value="${esc(n)}">`).join('');
+}
+function openMatch(m, sid, eid) {
+  const f = $('#formMatch'); f.reset();
+  $('#mSport').innerHTML = D().sports.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+  $('#mStatus').innerHTML = D().statuses.map(s => `<option>${s}</option>`).join('');
+  $('#mSport').value = m ? m.sportId : (sid || D().sports[0].id);
+  fillMatchEvents($('#mSport').value, m ? m.eventId : eid);
+  if (m) ['id', 'round', 'date', 'time', 'venue', 'sideA', 'sideB', 'scoreA', 'scoreB', 'status', 'note'].forEach(k => f.elements[k].value = m[k] || '');
+  else if (S.calDay) f.elements.date.value = S.calDay;
+  $('#matchTitle').textContent = m ? 'แก้ไขนัดแข่ง / บันทึกผล' : 'เพิ่มนัดแข่ง';
+  $('#matchDelete').hidden = !m;
+  $('#dlgMatch').showModal();
+}
+function openCoord(sid, c) {
+  S.coordSport = sid;
+  const sp = sportOf(sid), f = $('#formCoord'); f.reset();
+  f.elements.sportId.value = sid; f.elements.id.value = c ? c.id : '';
+  $('#coordSub').textContent = sp.name;
+  $('#cEvent').innerHTML = `<option value="">ทั้งกีฬา${sp.name}</option>` + eventsOf(sid).map(e => `<option value="${e.id}">เฉพาะ${esc(e.name)}</option>`).join('');
+  if (c) ['eventId', 'name', 'nickname', 'department', 'phone'].forEach(k => f.elements[k].value = c[k] || '');
+  $('#coordFormTitle').textContent = c ? `แก้ไข ${c.name}` : 'เพิ่มผู้ประสานงาน';
+  const list = (D().coordinators || []).filter(x => x.sportId === sid);
+  $('#coordList').innerHTML = list.length ? list.map(x => `<li><span><b style="font-weight:500">${esc(x.name)}</b>${x.nickname ? ` (${esc(x.nickname)})` : ''}
+      <small>${x.eventId && eventOf(x.eventId) ? 'เฉพาะ' + esc(eventOf(x.eventId).name) : 'ทั้งกีฬา'}${x.phone ? ' · ' + esc(x.phone) : ''}</small></span>
+      <span style="display:flex;gap:6px"><button class="btn sm ghost" data-editc="${x.id}">แก้ไข</button><button class="btn sm danger" data-delc="${x.id}">ลบ</button></span></li>`).join('')
+    : `<li class="muted">ยังไม่มีผู้ประสานงาน</li>`;
+  if (!$('#dlgCoord').open) $('#dlgCoord').showModal();
+}
+
+$('#mSport').addEventListener('change', e => fillMatchEvents(e.target.value, ''));
+$('#mEvent').addEventListener('change', fillSides);
+
+$('#formTeam').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = formData(e.target), ev = eventOf(S.teamEvent), sp = sportOf(ev.sportId), solo = ev.maxMembers === 1;
+  const ok = await confirmBox({ title: isSingle(ev) ? 'ยืนยันการลงทะเบียน' : `ยืนยันการตั้ง${unit(ev)}`,
+    rows: [['กีฬา', `${sp.name} · ${ev.name}`], ...(solo ? [] : [[`ชื่อ${unit(ev)}`, f.teamName]]), ...personRows(f), ['ประเภทนักกีฬา', MAIN]],
+    ok: isSingle(ev) ? 'ยืนยันลงทะเบียน' : `ยืนยันตั้ง${unit(ev)}` });
+  if (!ok) return;
+  if (await act('createTeam', { eventId: S.teamEvent, teamName: f.teamName,
+    member: { firstName: f.firstName, lastName: f.lastName, nickname: f.nickname, department: f.department } },
+    solo ? `ลงชื่อ ${f.firstName} ใน${ev.name}แล้ว` : `ตั้ง${unit(ev)} ${f.teamName} แล้ว`)) $('#dlgTeam').close();
+});
+$('#formJoin').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = formData(e.target), t = teamOf(S.joinTeam), ev = eventOf(t.eventId);
+  const ok = await confirmBox({ title: 'ยืนยันการลงชื่อ',
+    rows: [['กีฬา', `${sportOf(t.sportId).name} · ${ev.name}`], [unit(ev), t.name], ...personRows(f), ['ประเภทนักกีฬา', f.role]], ok: 'ยืนยันลงชื่อ' });
+  if (!ok) return;
+  if (await act('joinTeam', { teamId: S.joinTeam, ...f }, `${f.firstName} ลงชื่อเป็น${f.role}แล้ว`)) $('#dlgJoin').close();
+});
+$('#formMatch').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = formData(e.target), ev = eventOf(f.eventId);
+  const ok = await confirmBox({ title: f.id ? 'ยืนยันการแก้ไขนัดแข่ง' : 'ยืนยันการเพิ่มนัดแข่ง',
+    rows: [['กีฬา', `${sportOf(f.sportId).name}${ev ? ' · ' + ev.name : ''}`], ['รอบ', f.round], ['วันเวลา', `${thaiDate(f.date)} ${f.time}`],
+      ['สนาม', f.venue], ['คู่แข่ง', `${f.sideA} พบ ${f.sideB}`], ['ผล', f.scoreA || f.scoreB ? `${f.scoreA || '-'} : ${f.scoreB || '-'}` : ''], ['สถานะ', f.status], ['หมายเหตุ', f.note]],
+    ok: f.id ? 'ยืนยันแก้ไข' : 'ยืนยันบันทึก' });
+  if (!ok) return;
+  if (await act('saveMatch', f, f.id ? 'แก้ไขนัดแข่งแล้ว' : 'บันทึกนัดแข่งแล้ว')) $('#dlgMatch').close();
+});
+$('#matchDelete').addEventListener('click', async () => {
+  const f = formData($('#formMatch'));
+  if (!await confirmBox({ title: 'ลบนัดแข่งนี้?', sub: 'ลบแล้วกู้คืนไม่ได้', rows: [['คู่แข่ง', `${f.sideA} พบ ${f.sideB}`], ['วัน', f.date ? thaiDate(f.date) : '']], ok: 'ลบนัดนี้', danger: true })) return;
+  if (await act('deleteMatch', { matchId: f.id }, 'ลบนัดแข่งแล้ว')) $('#dlgMatch').close();
+});
+$('#formCoord').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = formData(e.target), ev = eventOf(f.eventId);
+  const ok = await confirmBox({ title: f.id ? 'ยืนยันการแก้ไขผู้ประสานงาน' : 'ยืนยันการเพิ่มผู้ประสานงาน',
+    rows: [['กีฬา', sportOf(f.sportId).name], ['ดูแล', ev ? 'เฉพาะ' + ev.name : 'ทั้งกีฬา'], ['ชื่อ - นามสกุล', f.name], ['ชื่อเล่น', f.nickname], ['ฝ่าย', f.department], ['เบอร์โทร', f.phone]],
+    ok: f.id ? 'ยืนยันแก้ไข' : 'ยืนยันบันทึก' });
+  if (!ok) return;
+  if (await act('saveCoord', f, 'บันทึกผู้ประสานงานแล้ว')) openCoord(f.sportId);
+});
+$('#formPin').addEventListener('submit', async e => {
+  e.preventDefault();
+  const pin = e.target.elements.pin.value; busy(true);
+  try { await call('checkPin', { pin }); S.pin = pin; $('#dlgPin').close(); render(); toast('เข้าโหมดผู้ดูแลแล้ว'); }
+  catch (err) { toast(err.message, true); } finally { busy(false); }
+});
+$('#adminBtn').addEventListener('click', () => {
+  if (S.pin) { S.pin = null; render(); toast('ออกจากโหมดผู้ดูแลแล้ว'); }
+  else { $('#formPin').reset(); $('#dlgPin').showModal(); }
+});
+$('#btnRefresh').addEventListener('click', () => refresh(true));
+
+/* ---------- ปุ่มต่าง ๆ ---------- */
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-new],[data-join],[data-delm],[data-delt],[data-ev],[data-addmatch],[data-editm],[data-coord],[data-editc],[data-delc],[data-close],[data-cal],[data-day],[data-calmode],[data-calsp],#adminOff,#btnCsv');
+  if (!b) return;
+  const d = b.dataset;
+  if (b.id === 'adminOff') { S.pin = null; render(); }
+  else if (b.id === 'btnCsv') downloadCsv();
+  else if ('close' in d) b.closest('dialog').close();
+  else if (d.new) openTeam(d.new);
+  else if (d.join) openJoin(d.join);
+  else if (d.ev) { const [sid, eid] = d.ev.split('|'); S.ev[sid] = eid; render(); }
+  else if (d.cal) {
+    if (d.cal === 'today') { S.calMonth = today().slice(0, 7); S.calDay = today(); }
+    else { const [y, m] = S.calMonth.split('-').map(Number), n = new Date(y, m - 1 + (d.cal === 'next' ? 1 : -1), 1); S.calMonth = ymd(n).slice(0, 7); S.calDay = null; }
+    render();
+  }
+  else if (d.day) { S.calDay = S.calDay === d.day ? null : d.day; if (S.calDay) S.calMonth = d.day.slice(0, 7); render(); }
+  else if (d.calmode) { S.calMode = d.calmode; render(); }
+  else if (d.calsp) { S.calSport = d.calsp; render(); }
+  else if (d.addmatch !== undefined) { const [sid, eid] = d.addmatch.split('|'); openMatch(null, sid, eid); }
+  else if (d.editm) openMatch(D().matches.find(m => m.id === d.editm));
+  else if (d.coord) openCoord(d.coord);
+  else if (d.editc) openCoord(S.coordSport, D().coordinators.find(c => c.id === d.editc));
+  else if (d.delc) {
+    const c = D().coordinators.find(x => x.id === d.delc);
+    if (await confirmBox({ title: 'ลบผู้ประสานงาน?', sub: 'ลบแล้วกู้คืนไม่ได้', rows: [['ชื่อ', c.name], ['เบอร์โทร', c.phone]], ok: 'ลบ', danger: true })
+      && await act('deleteCoord', { coordId: c.id }, 'ลบผู้ประสานงานแล้ว')) openCoord(S.coordSport);
+  } else if (d.delm) {
+    const m = D().members.find(x => x.id === d.delm), t = teamOf(m.teamId);
+    if (await confirmBox({ title: 'ลบรายชื่อนี้?', sub: 'ลบแล้วกู้คืนไม่ได้', rows: [['ชื่อ', `${fullName(m)} (${m.nickname})`], ['ทีม', t ? t.name : ''], ['ประเภทนักกีฬา', m.role]], ok: 'ลบรายชื่อ', danger: true }))
+      act('deleteMember', { memberId: m.id }, 'ลบรายชื่อแล้ว');
+  } else if (d.delt) {
+    const t = teamOf(d.delt), ev = eventOf(t.eventId);
+    if (await confirmBox({ title: `ลบ${unit(ev)}นี้?`, sub: 'รายชื่อทั้งหมดในทีมจะถูกลบด้วย และกู้คืนไม่ได้', rows: [[unit(ev), t.name], ['ประเภท', ev.name], ['จำนวนคน', membersOf(t.id).length + ' คน']], ok: 'ลบ', danger: true }))
+      act('deleteTeam', { teamId: t.id }, 'ลบแล้ว');
+  }
+});
+document.addEventListener('input', e => { if (e.target.id === 'q') { S.q = e.target.value; renderPeopleList(); } });
+document.addEventListener('change', e => {
+  if (e.target.id === 'sumSel') { S.sumSport = e.target.value; render(); }
+  if (e.target.id === 'deptSel') { S.dept = e.target.value; renderPeopleList(); }
+});
+window.addEventListener('hashchange', () => { if (S.data) { render(); window.scrollTo(0, 0); } });
+setInterval(() => {
+  const typing = document.activeElement && /INPUT|SELECT/.test(document.activeElement.tagName);
+  if (!document.querySelector('dialog[open]') && !typing) refresh(false);
+}, 60000);
+load();
+</script>
+</body>
+</html>
