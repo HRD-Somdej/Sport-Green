@@ -392,6 +392,51 @@ tr.grp td{background:#F7F9F6;font-weight:600}
 .ghead p{margin:2px 0 0;font-size:14px;color:var(--ink2)}
 .ghead .btn{margin-left:auto}
 
+/* ================= posters (ภาพประชาสัมพันธ์) ================= */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.pc{margin:0;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.pc .pv{position:relative;display:block;width:100%;aspect-ratio:3/4;padding:0;border:0;background:#EEF1ED;cursor:zoom-in;overflow:hidden}
+.pc .pv img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.pc .pv:hover img{transform:scale(1.03)}
+.pc .pv .ld{position:absolute;inset:0;display:grid;place-items:center;color:var(--ink3);font-size:13px}
+.pc figcaption{display:flex;align-items:center;gap:8px;padding:12px 14px}
+.pc figcaption div{flex:1;min-width:0;line-height:1.35}
+.pc figcaption b{display:block;font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pc figcaption small{color:var(--ink2);font-size:12px}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}
+.strip .pv{aspect-ratio:4/3;border-radius:14px;border:1px solid var(--line)}
+@media (max-width:640px){.strip{grid-template-columns:repeat(2,1fr)}}
+.box{margin-top:26px;padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:18px}
+.box-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.box-h h3{font-size:18px}
+.box-h .sp1{flex:1}
+dialog.view{width:min(1100px,calc(100vw - 16px));background:#0E1511;color:#fff}
+dialog.view::backdrop{background:rgba(5,12,8,.8)}
+.vw img{display:block;width:100%;max-height:calc(100dvh - 120px);object-fit:contain;background:#0E1511}
+.vbar{display:flex;align-items:center;gap:8px;padding:12px 16px;flex-wrap:wrap}
+.vbar b{font-weight:600}
+.vbar small{color:rgba(255,255,255,.6)}
+.vbar .sp1{flex:1}
+.vbar .hbtn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff}
+.upl{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:8px;margin-top:12px}
+.upl img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;margin-top:14px;padding:26px 16px;border:2px dashed var(--line2);border-radius:16px;color:var(--ink2);text-align:center;cursor:pointer;background:#FAFBF9}
+.drop:hover,.drop.over{border-color:var(--g);background:var(--gs);color:var(--g)}
+.drop svg{width:30px;height:30px}
+.drop input{display:none}
+/* ================= schedule rows ================= */
+.match{grid-template-columns:132px 1fr auto}
+.match .t{font-size:18px;white-space:nowrap}
+.match .r{flex-direction:row;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:640px){.match{grid-template-columns:1fr}.match .r{justify-content:flex-start}}
+.spl{display:flex;align-items:center;gap:10px}
+.spl .spi{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 13%,#fff);color:var(--c);flex:none}
+.spl .spi svg{width:19px;height:19px}
+.chips .sw{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px;vertical-align:middle}
+.chips input:checked+span .sw{background:#fff}
+/* ================= sport art ================= */
+.spc .ph svg.art{position:absolute;inset:0;width:100%;height:100%;stroke:none}
+
 /* ================= dialogs ================= */
 dialog{width:min(560px,calc(100vw - 20px));max-height:calc(100dvh - 20px);padding:0;border:0;border-radius:24px;background:#fff;color:var(--ink);box-shadow:0 40px 100px -30px rgba(0,0,0,.45);overscroll-behavior:contain}
 dialog::backdrop{background:rgba(10,30,20,.45);backdrop-filter:blur(4px)}
@@ -574,27 +619,53 @@ footer .copy .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap
 
 <!-- ปฏิทิน: นัดแข่ง / กิจกรรม (ผู้ดูแล) -->
 <dialog id="dlgMatch">
-  <div class="dh"><h3 id="matchTitle">เพิ่มรายการในปฏิทิน</h3><p>วันเดียวกันเพิ่มได้หลายรายการ</p></div>
+  <div class="dh"><h3 id="matchTitle">เพิ่มวันแข่งขัน</h3><p>เลือกวัน กีฬา และเวลา · คู่แข่งขันดูได้ที่ภาพประชาสัมพันธ์ของแต่ละกีฬา</p></div>
   <form id="formMatch" autocomplete="off">
     <input type="hidden" name="id">
-    <div class="seg" style="margin-top:12px"><button type="button" data-mkind="sport" class="on">นัดแข่งกีฬา</button><button type="button" data-mkind="general">กิจกรรม</button></div>
-    <div class="mk-gen"><label>ชื่อกิจกรรม</label><input name="title" maxlength="80" placeholder="เช่น พิธีเปิด, ซ้อมเชียร์, ประชุมทีม"></div>
-    <div class="row2 mk-sport"><div><label>กีฬา</label><select name="sportId" id="mSport"></select></div><div><label>ประเภท</label><select name="eventId" id="mEvent"></select></div></div>
-    <div class="row3"><div><label>วันที่</label><input type="date" name="date" required></div><div><label>เวลา</label><input type="time" name="time"></div><div><label>สถานที่/สนาม <small>(ไม่บังคับ)</small></label><input name="venue" maxlength="60"></div></div>
-    <div class="mk-sport">
-      <label>รอบ <small>(ไม่บังคับ)</small></label><input name="round" maxlength="40" list="roundList" placeholder="รอบแรก">
-      <div class="row2"><div><label>ฝั่งที่ 1</label><input name="sideA" maxlength="60" list="sideList"></div><div><label>ฝั่งที่ 2</label><input name="sideB" maxlength="60" list="sideList"></div></div>
-      <div class="row2"><div><label>คะแนนฝั่งที่ 1</label><input name="scoreA" maxlength="30" inputmode="numeric"></div><div><label>คะแนนฝั่งที่ 2</label><input name="scoreB" maxlength="30" inputmode="numeric"></div></div>
-    </div>
-    <div class="row2"><div><label>สถานะ</label><select name="status" id="mStatus"></select></div><div><label>หมายเหตุ <small>(ไม่บังคับ)</small></label><input name="note" maxlength="160"></div></div>
+    <label>วันที่</label><input type="date" name="date" required>
+    <fieldset class="chips" id="mSports"></fieldset>
+    <div id="mTitleRow" hidden><label>ชื่อกิจกรรม</label><input name="title" maxlength="80" placeholder="เช่น พิธีเปิด, ซ้อมเชียร์"></div>
+    <div class="row2"><div><label>เวลาเริ่ม</label><input type="time" name="time"></div><div><label>ถึงเวลา <small>(ไม่บังคับ)</small></label><input type="time" name="endTime"></div></div>
+    <label>หมายเหตุ <small>(ไม่บังคับ)</small></label><input name="note" maxlength="160" placeholder="เช่น สนามกีฬาในร่ม">
     <div class="acts">
       <button type="button" class="btn danger sm left" id="matchDelete" hidden>ลบ</button>
-      <button type="button" class="btn ghost sm" id="matchCopy" hidden>คัดลอกเป็นรายการใหม่</button>
       <button type="button" class="btn ghost" data-close>ปิด</button>
-      <button type="submit" class="btn ghost" data-more="1" id="matchMore">บันทึกแล้วเพิ่มต่อ</button>
+      <button type="submit" class="btn ghost" data-more="1" id="matchMore">บันทึก แล้วเพิ่มวันถัดไป</button>
       <button type="submit" class="btn">บันทึก</button>
     </div>
   </form>
+</dialog>
+
+<!-- อัปโหลดภาพประชาสัมพันธ์ (ผู้ดูแล) -->
+<dialog id="dlgUpload">
+  <div class="dh"><h3>อัปโหลดภาพประชาสัมพันธ์</h3><p id="upSub"></p></div>
+  <form id="formUpload" autocomplete="off">
+    <label class="drop" id="upDrop"><svg class="i" viewBox="0 0 24 24"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg><b>เลือกรูป หรือลากไฟล์มาวางที่นี่</b><small>เลือกได้หลายรูป · JPG PNG WEBP · ระบบย่อขนาดให้อัตโนมัติ</small><input type="file" id="upFile" accept="image/*" multiple></label>
+    <div class="upl" id="upPrev"></div>
+    <label>ชื่อภาพ <small>(ไม่บังคับ · ถ้าเลือกหลายรูปจะใช้ชื่อเดียวกันตามด้วยลำดับ)</small></label>
+    <input name="title" maxlength="90" list="posterTitles" placeholder="เช่น ตารางคู่แข่งขัน, ผลการตัดสินรอบแรก">
+    <div class="acts"><button type="button" class="btn ghost" data-close>ยกเลิก</button><button type="submit" class="btn" id="upGo">อัปโหลด</button></div>
+  </form>
+</dialog>
+<datalist id="posterTitles"><option value="ตารางคู่แข่งขัน"><option value="ผลการตัดสิน"><option value="ผลการแข่งขันรอบแรก"><option value="สายการแข่งขัน"><option value="กติกาการแข่งขัน"><option value="ประกาศ"></datalist>
+
+<!-- แก้ไขภาพ (ผู้ดูแล) -->
+<dialog id="dlgPoster">
+  <div class="dh"><h3>แก้ไขภาพประชาสัมพันธ์</h3><p id="poSub"></p></div>
+  <form id="formPoster" autocomplete="off">
+    <input type="hidden" name="id">
+    <label>ชื่อภาพ</label><input name="title" maxlength="90" list="posterTitles">
+    <label class="chk"><input type="checkbox" name="cover" value="1"><span>ใช้เป็นภาพหน้าปกของกีฬานี้ <small class="muted">(แสดงที่การ์ดกีฬาหน้าแรก)</small></span></label>
+    <div class="acts"><button type="button" class="btn danger sm left" id="poDelete">ลบภาพ</button><button type="button" class="btn ghost" data-close>ยกเลิก</button><button type="submit" class="btn">บันทึก</button></div>
+  </form>
+</dialog>
+
+<!-- ดูภาพ -->
+<dialog id="dlgView" class="view">
+  <div class="vw"><img id="vImg" alt=""></div>
+  <div class="vbar"><div><b id="vTitle"></b><br><small id="vMeta"></small></div><span class="sp1"></span>
+    <button class="hbtn icon" id="vPrev" aria-label="ภาพก่อนหน้า"><svg class="i" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button><button class="hbtn icon" id="vNext" aria-label="ภาพถัดไป"><svg class="i" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+    <a class="hbtn" id="vOpen" target="_blank" rel="noopener">เปิดภาพเต็ม</a><button class="hbtn" data-close>ปิด</button></div>
 </dialog>
 
 <!-- ผู้ประสานงาน (ผู้ดูแล) -->
@@ -684,6 +755,55 @@ const UI = {
   cheerleader: { c: '#C4436F', short: 'เชียร์ลีดเดอร์', svg: '<path d="M12 3.5l2.5 5.2 5.7.7-4.2 3.9 1.1 5.6L12 16.1l-5.1 2.8 1.1-5.6-4.2-3.9 5.7-.7z"/>' },
   parade:      { c: '#1F7F7A', short: 'ขบวนพาเหรด', svg: '<path d="M5 21V3.5"/><path d="M5 4h12l-2.5 4.5L17 13H5"/>' }
 };
+/* ภาพประกอบแต่ละชนิดกีฬา (วาดเป็นเวกเตอร์ ไม่ต้องโหลดไฟล์) */
+const range = (a, b, st) => { const o = []; for (let v = a; v <= b + 1e-6; v += st) o.push(+v.toFixed(2)); return o; };
+const mesh = (x1, x2, y1, y2, st, op = .5) => range(x1, x2, st).map(x => `<path d="M${x} ${y1}V${y2}"/>`).join('') + range(y1, y2, st).map(y => `<path d="M${x1} ${y}H${x2}"/>`).join('');
+const ART = {
+  volleyball: () => `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="av1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7C566"/><stop offset="1" stop-color="#C27A10"/></linearGradient><clipPath id="av2"><circle cx="276" cy="88" r="40"/></clipPath><radialGradient id="av3" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+    <rect width="400" height="300" fill="url(#av1)"/><circle cx="340" cy="30" r="110" fill="#fff" opacity=".13"/><circle cx="60" cy="60" r="50" fill="#fff" opacity=".07"/>
+    <path d="M0 226 Q100 204 200 222 T400 212 V300 H0Z" fill="#F4DDAA"/><path d="M0 254 Q120 236 240 250 T400 244 V300 H0Z" fill="#EACB8C"/>
+    <rect x="56" y="108" width="7" height="140" rx="2" fill="#5B3B12" opacity=".75"/><rect x="337" y="108" width="7" height="140" rx="2" fill="#5B3B12" opacity=".75"/>
+    <g stroke="#fff" stroke-width="1.3" opacity=".6">${mesh(63, 337, 120, 174, 11)}</g><rect x="60" y="111" width="280" height="9" rx="2" fill="#fff"/><rect x="60" y="173" width="280" height="4" fill="#fff" opacity=".9"/>
+    <g stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".55" fill="none"><path d="M196 140q22-26 40-34"/><path d="M186 120q24-22 44-28"/><path d="M206 160q18-24 36-36"/></g>
+    <g clip-path="url(#av2)"><circle cx="276" cy="88" r="40" fill="#fff"/><path d="M230 72c26 18 64 18 92-6" stroke="#2563EB" stroke-width="15" fill="none"/><path d="M244 136c4-34 24-56 60-66" stroke="#FACC15" stroke-width="15" fill="none"/><path d="M290 48c-8 20-2 46 22 70" stroke="#2563EB" stroke-width="13" fill="none"/><circle cx="276" cy="88" r="40" fill="url(#av3)"/></g>
+    <circle cx="276" cy="88" r="40" fill="none" stroke="#1F2937" stroke-width="2.5"/></svg>`,
+  takraw: () => {
+    const holes = []; for (let y = -66; y <= 66; y += 21) for (let x = -66; x <= 66; x += 24) { const xx = x + ((y / 21) % 2 ? 12 : 0); if (Math.hypot(xx, y) < 52) holes.push([215 + xx, 120 + y]); }
+    return `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="at1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E9805A"/><stop offset="1" stop-color="#9A3820"/></linearGradient><clipPath id="at2"><circle cx="215" cy="120" r="60"/></clipPath><radialGradient id="at3" cx=".32" cy=".28" r=".85"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#5A2A0E" stop-opacity=".35"/></radialGradient></defs>
+    <rect width="400" height="300" fill="url(#at1)"/><circle cx="60" cy="40" r="120" fill="#fff" opacity=".08"/>
+    <path d="M0 214 L400 196 V300 H0Z" fill="#7A2C18" opacity=".45"/><path d="M0 262 L400 240" stroke="#fff" stroke-width="3" opacity=".5"/>
+    <g stroke="#fff" stroke-width="1.2" opacity=".5">${mesh(0, 400, 196, 222, 10)}</g><rect x="0" y="190" width="400" height="7" fill="#fff"/>
+    <path d="M40 270 Q90 120 150 104" stroke="#fff" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" fill="none" opacity=".8"/>
+    <g clip-path="url(#at2)"><circle cx="215" cy="120" r="60" fill="#F3C68C"/>${holes.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="10.5" fill="none" stroke="#C9844A" stroke-width="4"/><circle cx="${x}" cy="${y}" r="6" fill="#8E4A1E"/>`).join('')}<circle cx="215" cy="120" r="60" fill="url(#at3)"/></g>
+    <circle cx="215" cy="120" r="60" fill="none" stroke="#7A3A12" stroke-width="3"/></svg>`;
+  },
+  petanque: () => {
+    const dots = []; for (let i = 0; i < 90; i++) dots.push([(i * 97) % 400, 214 + ((i * 53) % 86), 1 + (i % 3)]);
+    const boule = (x, y, r) => `<ellipse cx="${x + 6}" cy="${y + r - 3}" rx="${r * .9}" ry="${r * .22}" fill="#000" opacity=".25"/><circle cx="${x}" cy="${y}" r="${r}" fill="url(#ap1)"/><path d="M${x - r * .85} ${y - r * .1}Q${x} ${y + r * .55} ${x + r * .85} ${y - r * .1}" stroke="#4B5563" stroke-width="1.6" fill="none" opacity=".7"/><path d="M${x - r * .8} ${y + r * .25}Q${x} ${y + r * .85} ${x + r * .8} ${y + r * .25}" stroke="#4B5563" stroke-width="1.6" fill="none" opacity=".7"/>`;
+    return `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="ap0" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FA2BC"/><stop offset="1" stop-color="#3F4B5D"/></linearGradient><radialGradient id="ap1" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#D5D9DF"/><stop offset=".8" stop-color="#6B7280"/><stop offset="1" stop-color="#374151"/></radialGradient></defs>
+    <rect width="400" height="300" fill="url(#ap0)"/><circle cx="320" cy="50" r="110" fill="#fff" opacity=".1"/>
+    <path d="M0 206 Q200 188 400 204 V300 H0Z" fill="#CBB99D"/>${dots.map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#9C8869" opacity=".7"/>`).join('')}
+    <ellipse cx="96" cy="262" rx="64" ry="15" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="8 7" opacity=".85"/>
+    <ellipse cx="243" cy="196" rx="9" ry="2.5" fill="#000" opacity=".25"/><circle cx="240" cy="188" r="9" fill="#F2A33A" stroke="#B45F09" stroke-width="2"/>
+    ${boule(186, 214, 36)}${boule(292, 228, 32)}${boule(318, 176, 27)}</svg>`;
+  },
+  tabletennis: () => `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="aq1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5E98E8"/><stop offset="1" stop-color="#1B4A95"/></linearGradient></defs>
+    <rect width="400" height="300" fill="url(#aq1)"/><circle cx="70" cy="40" r="110" fill="#fff" opacity=".1"/>
+    <rect x="52" y="250" width="8" height="50" fill="#0A2348"/><rect x="340" y="250" width="8" height="50" fill="#0A2348"/>
+    <polygon points="70,168 330,168 382,252 18,252" fill="#0E4C94" stroke="#fff" stroke-width="4" stroke-linejoin="round"/><path d="M200 168V252" stroke="#fff" stroke-width="2.5"/>
+    <g stroke="#fff" stroke-width="1" opacity=".55">${mesh(40, 360, 192, 208, 8)}</g><rect x="36" y="189" width="328" height="4" fill="#fff"/><rect x="32" y="186" width="6" height="26" fill="#0A2348"/><rect x="362" y="186" width="6" height="26" fill="#0A2348"/>
+    <path d="M170 128 Q230 70 268 92" stroke="#fff" stroke-width="2.5" stroke-dasharray="2 8" stroke-linecap="round" fill="none" opacity=".85"/><circle cx="166" cy="132" r="9" fill="#fff"/><circle cx="163" cy="129" r="3" fill="#fff" opacity=".6"/>
+    <g transform="rotate(-32 305 92)"><rect x="297" y="122" width="16" height="50" rx="6" fill="#C58A4A"/><rect x="297" y="122" width="16" height="12" fill="#8B5A2B"/><circle cx="305" cy="88" r="42" fill="#B91C1C"/><circle cx="305" cy="88" r="37" fill="#E23B3B"/></g></svg>`,
+  badminton: () => `<svg class="art" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="ab1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3DBB78"/><stop offset="1" stop-color="#0C5A33"/></linearGradient><clipPath id="ab2"><ellipse cx="0" cy="0" rx="31" ry="41"/></clipPath></defs>
+    <rect width="400" height="300" fill="url(#ab1)"/><circle cx="330" cy="40" r="120" fill="#fff" opacity=".1"/>
+    <polygon points="78,150 322,150 396,300 4,300" fill="#11753F" opacity=".55"/><g stroke="#fff" stroke-width="3" opacity=".6" fill="none"><polygon points="78,150 322,150 396,300 4,300"/><path d="M200 150V300M60 190H340M30 250H370"/></g>
+    <rect x="52" y="140" width="5" height="70" fill="#E5E7EB"/><rect x="343" y="140" width="5" height="70" fill="#E5E7EB"/>
+    <g stroke="#fff" stroke-width="1" opacity=".55">${mesh(57, 343, 150, 186, 9)}</g><rect x="56" y="146" width="288" height="5" fill="#fff"/>
+    <g transform="translate(118 92) rotate(28)"><g clip-path="url(#ab2)" stroke="#fff" stroke-width="1.2" opacity=".75">${mesh(-34, 34, -44, 44, 7)}</g><ellipse cx="0" cy="0" rx="31" ry="41" fill="none" stroke="#111827" stroke-width="5"/><path d="M0 41V96" stroke="#6B7280" stroke-width="4"/><rect x="-6" y="96" width="12" height="40" rx="4" fill="#111827"/></g>
+    <g transform="translate(262 104) rotate(-28)"><path d="M-17 34 L-34 -42 Q0 -50 34 -42 L17 34Z" fill="#fff"/><g stroke="#CBD5E1" stroke-width="1.6"><path d="M-9 34 L-17 -44M0 34V-46M9 34 L17 -44"/></g><path d="M-34 -42 Q-26 -50 -17 -44 Q-8 -51 0 -46 Q8 -51 17 -44 Q26 -50 34 -42" stroke="#CBD5E1" stroke-width="2" fill="none"/><rect x="-18" y="32" width="36" height="7" rx="2" fill="#E11D48"/><path d="M-18 39 A18 18 0 0 0 18 39Z" fill="#F8FAFC" stroke="#E5E7EB" stroke-width="1.5"/></g>
+    <g stroke="#fff" stroke-width="3.5" stroke-linecap="round" opacity=".5" fill="none"><path d="M300 150q16 10 28 26"/><path d="M286 160q12 12 20 26"/></g></svg>`
+};
+const sportArt = id => ART[id] ? ART[id]() : icon(id);
 const ui = id => UI[id] || { c: '#888', short: id, svg: '<circle cx="12" cy="12" r="9"/>' };
 const icon = id => `<svg class="i" viewBox="0 0 24 24">${ui(id).svg}</svg>`;
 const ic = p => `<svg class="i" viewBox="0 0 24 24">${p}</svg>`;
@@ -789,6 +909,7 @@ function buildIndex() {
     evBySport: by(d.events, 'sportId'), teamsByEvent: by(d.teams, 'eventId'), teamsBySport: by(d.teams, 'sportId'),
     memByTeam: by(d.members, 'teamId'), memBySport: by(d.members, 'sportId'), supByGroup: by(d.supporters || [], 'groupId'),
     shirt: Object.fromEntries((d.shirts || []).map(s => [s.key, s.size])),
+    posBySport: by(d.posters || [], 'sportId'),
     persons: null
   };
   const g = {};
@@ -805,6 +926,8 @@ const teamsOfEvent = eid => X.teamsByEvent[eid] || [];
 const teamsOfSport = sid => X.teamsBySport[sid] || [];
 const teamOf = id => X.team[id];
 const groupOf = id => X.group[id];
+const postersOf = sid => X.posBySport[sid] || [];
+const coverOf = sid => postersOf(sid).find(p => p.cover);
 const supOf = gid => X.supByGroup[gid] || [];
 const ROLE_ORDER = { [MAIN]: 0, [RES]: 1, [NONE]: 2 };
 const membersOf = tid => (X.memByTeam[tid] || []).slice().sort((a, b) => ROLE_ORDER[a.role] - ROLE_ORDER[b.role]);
@@ -831,6 +954,23 @@ const shirtOf = m => X.shirt[pkey(m)] || '';
 const tel = p => p ? `tel:${esc(String(p).replace(/[^0-9+]/g, ''))}` : '';
 const coordChips = list => list.map(c => `<span class="coord">${esc(c.name)}${c.nickname ? ` (${esc(c.nickname)})` : ''}${c.phone ? ` · <a href="${tel(c.phone)}">${esc(c.phone)}</a>` : ''}</span>`).join('');
 const heroSrc = () => ASSETS.hero || HERO_IMG;
+/* ภาพจาก Google Drive: ลองลิงก์ตรงก่อน ถ้าโหลดไม่ได้ (ไฟล์ไม่ได้แชร์) ดึงผ่าน API แทน */
+const driveSrc = (fid, w = 1200) => `https://drive.google.com/thumbnail?id=${encodeURIComponent(fid)}&sz=w${w}`;
+const IMG_CACHE = {};
+const posterImg = (p, w = 1200) => `<img src="${IMG_CACHE[p.fileId] || driveSrc(p.fileId, w)}" alt="${esc(p.title || 'ภาพประชาสัมพันธ์')}" loading="lazy" decoding="async" data-fid="${esc(p.fileId)}" onerror="imgFallback(this)">`;
+async function imgFallback(el) {
+  if (el.dataset.fb) { el.style.opacity = .15; return; }
+  el.dataset.fb = '1';
+  const fid = el.dataset.fid;
+  try {
+    if (!IMG_CACHE[fid]) {
+      const r = await (await fetch(API_URL + '?action=img&id=' + encodeURIComponent(fid))).json();
+      if (!r.ok) throw new Error(r.error);
+      IMG_CACHE[fid] = r.data;
+    }
+    el.src = IMG_CACHE[fid];
+  } catch (e) { el.style.opacity = .15; }
+}
 const img = (src, alt = '') => src ? `<img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async">` : '';
 const matchLabel = m => m.sportId === 'general' ? (m.title || 'กิจกรรม') : ui(m.sportId).short;
 
@@ -854,7 +994,7 @@ function render() {
   $('#personList').innerHTML = X.persons.map(({ p }) => `<option value="${esc(fullName(p))} (${esc(p.nickname)}) · ${esc(p.department)}">`).join('');
   $('#taskList').innerHTML = [...new Set([...(D().staffTasks || []), ...(D().staff || []).map(x => x.task)])].map(t => `<option value="${esc(t)}">`).join('');
   const app = $('#app');
-  if (r[0] === 'sport' && sportOf(r[1])) app.innerHTML = viewSport(sportOf(r[1]), r[2] === 'calendar' ? 'calendar' : 'teams');
+  if (r[0] === 'sport' && sportOf(r[1])) app.innerHTML = viewSport(sportOf(r[1]), ['calendar', 'posters'].includes(r[2]) ? r[2] : 'teams');
   else if (r[0] === 'calendar') app.innerHTML = viewCalendar();
   else if (r[0] === 'people') app.innerHTML = viewPeople();
   else if (r[0] === 'cheer') app.innerHTML = viewCheer();
@@ -889,13 +1029,12 @@ function banner({ crumb = '', title, sub = '', iconId = '', svg = '', act = '' }
 /* =================================================================== หน้าแรก */
 function viewHome() {
   const cards = D().sports.map(s => `<a class="spc" href="#sport/${s.id}" style="--c:${ui(s.id).c}">
-      <div class="ph">${ASSETS.sports && ASSETS.sports[s.id] ? img(ASSETS.sports[s.id], s.name) : icon(s.id)}<span class="cnt">${teamsOfSport(s.id).length} ทีม · ${people(X.memBySport[s.id] || [])} คน</span></div>
+      <div class="ph">${coverOf(s.id) ? posterImg(coverOf(s.id), 600) : ASSETS.sports && ASSETS.sports[s.id] ? img(ASSETS.sports[s.id], s.name) : sportArt(s.id)}<span class="cnt">${teamsOfSport(s.id).length} ทีม · ${people(X.memBySport[s.id] || [])} คน</span></div>
       <div class="bd"><h3>${s.name}</h3><div class="meta">${eventsOf(s.id).map(e => esc(e.name)).join(' · ') || 'ยังไม่มีประเภท'}</div>
       <span class="go" style="margin-top:auto;padding-top:10px">ลงทะเบียน ${I.arrow}</span></div></a>`).join('');
   const groups = (D().groups || []).map(g => `<a class="spc" href="#cheer" style="--c:${ui(g.id).c}">
       <div class="ph" style="aspect-ratio:16/9">${ASSETS.groups && ASSETS.groups[g.id] ? img(ASSETS.groups[g.id], g.name) : icon(g.id)}<span class="cnt">${supOf(g.id).length} คน</span></div>
       <div class="bd"><h3>${esc(g.name)}</h3><div class="meta">${g.positions.length ? g.positions.map(esc).join(' · ') : 'ร่วมส่งเสียงเชียร์สีเขียว'}</div><span class="go">ลงชื่อ ${I.arrow}</span></div></a>`).join('');
-  const nx = upcoming().slice(0, 5);
   const sup = (D().supporters || []).length;
   return `<section class="hero"><div class="bg"><img src="${esc(heroSrc())}" alt="โรงพยาบาลสมเด็จพระบรมราชเทวี ณ ศรีราชา" fetchpriority="high" decoding="async" onerror="this.onerror=null;this.src=HERO_IMG"></div><div class="wrap">
       <span class="badge"><i></i>กีฬาสีภายใน · งานปีใหม่ 2570</span>
@@ -908,12 +1047,10 @@ function viewHome() {
         <div><b class="num">${people(D().members)}</b><span>นักกีฬา (ไม่นับซ้ำ)</span></div>
         <div><b class="num">${D().teams.length}</b><span>ทีม / คู่</span></div>
         <div><b class="num">${sup}</b><span>กองเชียร์ & พาเหรด</span></div>
-        <div><b class="num">${D().matches.length}</b><span>รายการในปฏิทิน</span></div>
+        <div><b class="num">${(D().staff || []).length}</b><span>คณะทำงานสี</span></div>
       </div>
       <section class="sec" id="sports"><div class="sec-h"><div><span class="kicker">ลงทะเบียนนักกีฬา</span><h2>เลือกชนิดกีฬา</h2><p>ตั้งทีมใหม่ หรือลงชื่อเข้าทีมที่มีอยู่ เป็นตัวจริง ตัวสำรอง หรือไม่ระบุก็ได้</p></div></div>
         <div class="sports">${cards}</div></section>
-      <section class="sec"><div class="sec-h"><div><span class="kicker">ตารางกิจกรรม</span><h2>นัดแข่ง & กิจกรรมถัดไป</h2></div><a class="btn ghost sm" href="#calendar">ดูปฏิทินทั้งหมด ${I.arrow}</a></div>
-        ${nx.length ? `<div class="matches">${nx.map(m => matchRow(m, true)).join('')}</div>` : `<div class="empty">ยังไม่มีรายการในปฏิทิน</div>`}</section>
       <section class="sec"><div class="sec-h"><div><span class="kicker">ร่วมเชียร์</span><h2>กองเชียร์ · เชียร์ลีดเดอร์ · ขบวนพาเหรด</h2><p>ไม่ได้ลงแข่ง ก็มาช่วยทีมสีเขียวได้</p></div></div>
         <div class="sports g3">${groups}</div></section>
     </div>`;
@@ -921,23 +1058,34 @@ function viewHome() {
 
 /* =================================================================== หน้ากีฬา */
 function viewSport(sp, tab) {
-  const evs = eventsOf(sp.id);
+  const evs = eventsOf(sp.id), ps = postersOf(sp.id);
   const cur = evs.some(e => e.id === S.ev[sp.id]) ? S.ev[sp.id] : 'all';
   const shown = cur === 'all' ? evs : evs.filter(e => e.id === cur);
   const sc = coordsOf(sp.id, '');
   const pills = `<div class="pills"><button class="pill ${cur === 'all' ? 'on' : ''}" data-ev="${sp.id}|all">ทุกประเภท</button>
     ${evs.map(e => `<button class="pill ${cur === e.id ? 'on' : ''}" data-ev="${sp.id}|${e.id}">${esc(e.name)}<small>${teamsOfEvent(e.id).length}</small></button>`).join('')}</div>`;
-  const body = tab === 'calendar'
-    ? calendarBlock(D().matches.filter(m => m.sportId === sp.id && (cur === 'all' || m.eventId === cur)), { addKey: `${sp.id}|${cur === 'all' ? '' : cur}`, legend: false })
-    : shown.length ? shown.map(eventSection).join('')
-    : `<div class="empty" style="margin-top:24px">ยังไม่มีประเภทในกีฬานี้${S.pin ? `<br><br><button class="btn" data-evmgr="${sp.id}">${I.plus} เพิ่มประเภท</button>` : ' ผู้ดูแลกำลังตั้งค่า'}</div>`;
+  let body;
+  if (tab === 'calendar') body = calendarBlock(D().matches.filter(m => m.sportId === sp.id), { addKey: sp.id, legend: false });
+  else if (tab === 'posters') body = postersBlock(sp.id);
+  else body = (ps.length ? `<div class="box"><div class="box-h"><h3>ภาพประชาสัมพันธ์ล่าสุด</h3><span class="muted" style="font-size:14px">ตารางคู่แข่งขัน · ผลการตัดสิน</span><span class="sp1"></span><a class="btn xs ghost" href="#sport/${sp.id}/posters">ดูทั้งหมด ${ps.length} ภาพ ${I.arrow}</a></div>
+        <div class="strip">${ps.slice(0, 4).map(p => `<button class="pv" data-view="${p.id}" title="${esc(p.title)}" style="position:relative;padding:0;overflow:hidden;cursor:zoom-in;background:#EEF1ED">${posterImg(p, 600).replace('<img ', '<img style="width:100%;height:100%;object-fit:cover" ')}</button>`).join('')}</div></div>` : '')
+    + `<div class="coords"><span class="lbl">ผู้ประสานงาน</span>${sc.length ? coordChips(sc) : '<span class="lbl">· ยังไม่ได้ตั้ง</span>'}</div>${pills}`
+    + (shown.length ? shown.map(eventSection).join('')
+      : `<div class="empty" style="margin-top:24px">ยังไม่มีประเภทในกีฬานี้${S.pin ? `<br><br><button class="btn" data-evmgr="${sp.id}">${I.plus} เพิ่มประเภท</button>` : ' ผู้ดูแลกำลังตั้งค่า'}</div>`);
   return banner({ crumb: 'ชนิดกีฬา', title: sp.name, iconId: sp.id,
       sub: `${evs.length} ประเภท · ${teamsOfSport(sp.id).length} ทีม/คู่ · ${people(X.memBySport[sp.id] || [])} คน`,
-      act: S.pin ? `<button class="btn glass sm" data-coord="${sp.id}">ผู้ประสานงาน</button><button class="btn lime sm" data-evmgr="${sp.id}">ตั้งประเภทการแข่งขัน</button>` : '' })
-    + `<nav class="subnav"><div class="wrap"><a href="#sport/${sp.id}" class="${tab === 'teams' ? 'on' : ''}">ทีม & ลงทะเบียน</a><a href="#sport/${sp.id}/calendar" class="${tab === 'calendar' ? 'on' : ''}">ปฏิทินแข่งขัน</a></div></nav>
-    <div class="wrap" style="--c:${ui(sp.id).c}">
-      <div class="coords"><span class="lbl">ผู้ประสานงาน</span>${sc.length ? coordChips(sc) : '<span class="lbl">· ยังไม่ได้ตั้ง</span>'}</div>
-      ${pills}${body}</div>`;
+      act: S.pin ? `<button class="btn glass sm" data-coord="${sp.id}">ผู้ประสานงาน</button><button class="btn glass sm" data-evmgr="${sp.id}">ตั้งประเภท</button><button class="btn lime sm" data-upload="${sp.id}">${ic('<path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>')} อัปโหลดภาพ</button>` : '' })
+    + `<nav class="subnav"><div class="wrap"><a href="#sport/${sp.id}" class="${tab === 'teams' ? 'on' : ''}">ทีม & ลงทะเบียน</a><a href="#sport/${sp.id}/posters" class="${tab === 'posters' ? 'on' : ''}">ภาพประชาสัมพันธ์${ps.length ? ` (${ps.length})` : ''}</a><a href="#sport/${sp.id}/calendar" class="${tab === 'calendar' ? 'on' : ''}">วันแข่งขัน</a></div></nav>
+    <div class="wrap" style="--c:${ui(sp.id).c}">${body}</div>`;
+}
+function postersBlock(sid) {
+  const ps = postersOf(sid);
+  return `<div class="sec-h" style="margin-top:28px"><div><h2 style="font-size:24px">ภาพประชาสัมพันธ์</h2><p>ตารางคู่แข่งขัน ผลการตัดสิน และประกาศต่าง ๆ ของ${esc(sportOf(sid).name)} · กดที่ภาพเพื่อดูขนาดใหญ่</p></div>
+      ${S.pin ? `<button class="btn" data-upload="${sid}">${I.plus} อัปโหลดภาพ</button>` : ''}</div>
+    ${ps.length ? `<div class="gal">${ps.map(p => `<figure class="pc"><button class="pv" data-view="${p.id}">${posterImg(p, 800)}</button>
+      <figcaption><div><b>${esc(p.title || 'ภาพประชาสัมพันธ์')}</b><small>${p.createdAt ? shortDate(p.createdAt.slice(0, 10)) + ' ' + p.createdAt.slice(11, 16) + ' น.' : ''}</small></div>
+        ${p.cover ? '<span class="tag main">หน้าปก</span>' : ''}${S.pin ? `<button class="x ed" title="แก้ไข" data-poedit="${p.id}">${I.edit}</button>` : ''}</figcaption></figure>`).join('')}</div>`
+      : `<div class="empty">ยังไม่มีภาพประชาสัมพันธ์${S.pin ? ' — กด "อัปโหลดภาพ" เพื่อเพิ่มภาพตารางคู่แข่งขันหรือผลการตัดสิน' : ' ผู้ดูแลจะลงภาพตารางคู่แข่งขันและผลการตัดสินที่นี่'}</div>`}`;
 }
 function eventSection(ev) {
   const ts = teamsOfEvent(ev.id), single = isSingle(ev);
@@ -973,29 +1121,22 @@ function teamCard(t, ev) {
 }
 
 /* =================================================================== ปฏิทิน */
-function matchRow(m, showSport) {
-  const ev = eventOf(m.eventId), gen = m.sportId === 'general';
-  const sp = gen ? null : sportOf(m.sportId);
-  const a = parseFloat(m.scoreA), b = parseFloat(m.scoreB);
-  const done = !gen && m.status === 'จบแล้ว' && !isNaN(a) && !isNaN(b);
-  const st = { 'กำลังแข่ง': 'live', 'จบแล้ว': 'done', 'เลื่อน': 'post' }[m.status] || '';
-  const meta = [showSport ? (gen ? 'กิจกรรม' : sp ? sp.name : '') : (gen ? 'กิจกรรม' : ''), ev ? ev.name : '', m.round, m.venue].filter(Boolean);
-  const body = gen
-    ? `<h4>${esc(m.title || 'กิจกรรม')}</h4>${m.sideA || m.sideB ? `<p class="note">${esc([m.sideA, m.sideB].filter(Boolean).join(' · '))}</p>` : ''}`
-    : `<div class="vs"><span class="s a ${isOurs(m.sideA) ? 'ours' : ''} ${done && a > b ? 'win' : ''}">${esc(m.sideA)}</span>
-        <span class="sc ${m.scoreA ? '' : 'dim'}">${esc(m.scoreA) || '–'}</span><span class="c">:</span><span class="sc ${m.scoreB ? '' : 'dim'}">${esc(m.scoreB) || '–'}</span>
-        <span class="s ${isOurs(m.sideB) ? 'ours' : ''} ${done && b > a ? 'win' : ''}">${esc(m.sideB)}</span></div>${m.title ? `<p class="note">${esc(m.title)}</p>` : ''}`;
+function matchRow(m, showDate) {
+  const gen = m.sportId === 'general', sp = gen ? null : sportOf(m.sportId), ev = eventOf(m.eventId);
+  const time = m.time ? `${esc(m.time)}${m.endTime ? '–' + esc(m.endTime) : ''}` : 'ทั้งวัน';
+  const legacy = !gen && (m.sideA || m.sideB) ? `<p class="note">${esc(m.sideA)}${m.sideB ? ' พบ ' + esc(m.sideB) : ''}${m.scoreA || m.scoreB ? ` · ${esc(m.scoreA || '-')} : ${esc(m.scoreB || '-')}` : ''}</p>` : '';
   return `<article class="match" style="--c:${ui(m.sportId).c}">
-    <div class="t num">${esc(m.time) || '--:--'}<small>${showSport && m.date ? shortDate(m.date) : ''}</small></div>
-    <div style="min-width:0"><div class="meta">${meta.map((x, i) => `<span class="${i === 0 ? 'sp' : ''}">${esc(x)}</span>`).join('')}</div>${body}${m.note ? `<p class="note">${esc(m.note)}</p>` : ''}</div>
-    <div class="r"><span class="st ${gen && !st ? 'gen' : st}">${esc(m.status)}</span>${S.pin ? `<button class="btn xs ghost" data-editm="${m.id}">${I.edit} แก้ไข</button>` : ''}</div>
+    <div class="t num">${time}${showDate && m.date ? `<small>${shortDate(m.date)}</small>` : ''}</div>
+    <div style="min-width:0"><div class="spl"><span class="spi">${icon(m.sportId)}</span><div style="min-width:0"><h4>${gen ? esc(m.title || 'กิจกรรม') : sp ? sp.name : ''}${ev ? ` <small class="muted" style="font-weight:400">· ${esc(ev.name)}</small>` : ''}</h4>
+      ${m.note || m.venue ? `<p class="note" style="margin:2px 0 0">${esc([m.venue, m.note].filter(Boolean).join(' · '))}</p>` : ''}${legacy}</div></div></div>
+    <div class="r">${m.status === 'เลื่อน' ? '<span class="st post">เลื่อน</span>' : ''}${!gen && sp ? `<a class="btn xs ghost" href="#sport/${sp.id}/posters">ดูคู่แข่งขัน ${I.arrow}</a>` : ''}${S.pin ? `<button class="btn xs ghost" data-editm="${m.id}">${I.edit} แก้ไข</button>` : ''}</div>
   </article>`;
 }
 function agenda(list, showSport, addable) {
   const days = {};
   list.slice().sort(byTime).forEach(m => (days[m.date || ''] = days[m.date || ''] || []).push(m));
   return Object.keys(days).sort((a, b) => (a || '9999').localeCompare(b || '9999')).map(d =>
-    `<div class="dayh">${thaiDate(d)} <small>${days[d].length} รายการ</small>${S.pin && addable && d ? `<button class="btn xs ghost" data-addday="${d}">${I.plus} เพิ่มในวันนี้</button>` : ''}</div>
+    `<div class="dayh">${thaiDate(d)} <small>${days[d].length} รายการ</small>${S.pin && addable && d ? `<button class="btn xs ghost" data-addday="${d}">${I.plus} เพิ่มกีฬาในวันนี้</button>` : ''}</div>
      <div class="matches">${days[d].map(m => matchRow(m, showSport)).join('')}</div>`).join('');
 }
 function defaultMonth(list) {
@@ -1016,7 +1157,7 @@ function calendarBlock(list, { addKey = '', legend = true } = {}) {
     const k = ymd(d), ms = byDay[k] || [], inM = d.getMonth() === mo - 1;
     cells += `<div class="cd ${inM ? '' : 'out'} ${k === t ? 'today' : ''} ${k === S.calDay ? 'sel' : ''}" data-day="${k}" role="button" tabindex="0" aria-label="${thaiDate(k)} ${ms.length} รายการ">
       <span class="n">${d.getDate()}</span>
-      ${S.pin ? `<button class="add" data-addday="${k}" title="เพิ่มรายการวันนี้">${I.plus}</button>` : ''}
+      ${S.pin ? `<button class="add" data-addday="${k}" title="เพิ่มกีฬาในวันนี้">${I.plus}</button>` : ''}
       ${ms.slice(0, 4).map(m => `<span class="e" style="--c:${ui(m.sportId).c}"><i></i>${esc(m.time || '')} ${esc(matchLabel(m))}</span>`).join('')}
       ${ms.length > 4 ? `<span class="more">+ อีก ${ms.length - 4} รายการ</span>` : ''}
       ${ms.length ? `<span class="dots">${ms.slice(0, 6).map(m => `<i style="--c:${ui(m.sportId).c}"></i>`).join('')}${ms.length > 6 ? '<b>+</b>' : ''}</span>` : ''}
@@ -1029,14 +1170,14 @@ function calendarBlock(list, { addKey = '', legend = true } = {}) {
   if (S.calMode === 'list') detail = list.length ? agenda(list, showSport, true) : `<div class="empty">ยังไม่มีรายการ</div>`;
   else if (S.calDay && S.calDay.slice(0, 7) === S.calMonth) {
     const ms = byDay[S.calDay] || [];
-    detail = `<div class="dayh">${thaiDate(S.calDay)} <small>${ms.length} รายการ</small>${S.pin ? `<button class="btn xs" data-addday="${S.calDay}">${I.plus} เพิ่มรายการในวันนี้</button>` : ''}<button class="btn xs ghost" data-day="${S.calDay}" style="${S.pin ? 'margin-left:0' : ''}">ดูทั้งเดือน</button></div>
+    detail = `<div class="dayh">${thaiDate(S.calDay)} <small>${ms.length} รายการ</small>${S.pin ? `<button class="btn xs" data-addday="${S.calDay}">${I.plus} เพิ่มกีฬาในวันนี้</button>` : ''}<button class="btn xs ghost" data-day="${S.calDay}" style="${S.pin ? 'margin-left:0' : ''}">ดูทั้งเดือน</button></div>
       ${ms.length ? `<div class="matches">${ms.map(m => matchRow(m, showSport)).join('')}</div>` : `<div class="empty">ไม่มีรายการในวันนี้</div>`}`;
   } else detail = inMonth.length ? agenda(inMonth, showSport, true) : `<div class="empty" style="margin-top:20px">ไม่มีรายการในเดือนนี้ กดที่วันในปฏิทินเพื่อดูรายละเอียด</div>`;
   return `<div class="cal-bar">
       ${S.calMode === 'month' ? `<h3>${monthName}</h3><div class="nv"><button class="hbtn icon" data-cal="prev" title="เดือนก่อน">${I.left}</button><button class="hbtn" data-cal="today">วันนี้</button><button class="hbtn icon" data-cal="next" title="เดือนถัดไป">${I.right}</button></div>` : `<h3>ทุกรายการ (${list.length})</h3>`}
       <span class="sp1"></span>
       <div class="seg"><button class="${S.calMode === 'month' ? 'on' : ''}" data-calmode="month">รายเดือน</button><button class="${S.calMode === 'list' ? 'on' : ''}" data-calmode="list">รายการ</button></div>
-      ${S.pin ? `<button class="btn sm" data-addmatch="${addKey}">${I.plus} เพิ่มรายการ</button>` : ''}
+      ${S.pin ? `<button class="btn sm" data-addmatch="${addKey}">${I.plus} เพิ่มวันแข่ง</button>` : ''}
     </div>
     ${S.calMode === 'month' ? `<div class="cal"><div class="cal-w">${['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'].map(w => `<div>${w}</div>`).join('')}</div><div class="cal-g">${cells}</div></div>
       ${legend ? `<div class="legend">${[...D().sports.map(s => s.id), 'general'].map(id => `<span style="--c:${ui(id).c}"><i></i>${id === 'general' ? 'กิจกรรม' : sportOf(id).name}</span>`).join('')}</div>` : ''}` : ''}
@@ -1045,10 +1186,10 @@ function calendarBlock(list, { addKey = '', legend = true } = {}) {
 function viewCalendar() {
   const cur = S.calSport, list = D().matches.filter(m => cur === 'all' || m.sportId === cur);
   const cnt = id => D().matches.filter(m => m.sportId === id).length;
-  return banner({ title: 'ปฏิทินแข่งขัน', svg: I.cal, sub: 'นัดแข่งทุกชนิดกีฬาและกิจกรรมของทีมสีเขียว — กดที่วันเพื่อดูรายละเอียด' })
+  return banner({ title: 'ปฏิทินแข่งขัน', svg: I.cal, sub: 'วันไหนแข่งกีฬาอะไร เวลาไหน — คู่แข่งขันดูได้ที่ภาพประชาสัมพันธ์ของแต่ละกีฬา' })
     + `<div class="wrap"><div class="pills"><button class="pill ${cur === 'all' ? 'on' : ''}" data-calsp="all">ทั้งหมด<small>${D().matches.length}</small></button>
       ${[...D().sports.map(s => [s.id, s.name]), ['general', 'กิจกรรม']].map(([id, n]) => `<button class="pill ${cur === id ? 'on' : ''}" data-calsp="${id}" style="--c:${ui(id).c}"><span class="sw"></span>${n}<small>${cnt(id)}</small></button>`).join('')}</div>
-      ${calendarBlock(list, { addKey: `${cur === 'all' ? '' : cur}|` })}</div>`;
+      ${calendarBlock(list, { addKey: cur === 'all' ? '' : cur })}</div>`;
 }
 
 /* =================================================================== ตารางรายชื่อนักกีฬา */
@@ -1352,35 +1493,80 @@ function openEdit(kind, m) {
   }
   $('#dlgEdit').showModal();
 }
-function setMkind(kind) {
-  S.mkind = kind;
-  $$('#formMatch [data-mkind]').forEach(b => b.classList.toggle('on', b.dataset.mkind === kind));
-  $$('#formMatch .mk-sport').forEach(x => x.hidden = kind !== 'sport');
-  $$('#formMatch .mk-gen').forEach(x => x.hidden = kind !== 'general');
-  const f = $('#formMatch');
-  f.title.required = kind === 'general'; f.sideA.required = f.sideB.required = kind === 'sport';
-}
-function fillMatchEvents(sid, eid) {
-  $('#mEvent').innerHTML = `<option value="">ไม่ระบุประเภท</option>` + eventsOf(sid).map(e => `<option value="${e.id}" ${e.id === eid ? 'selected' : ''}>${esc(e.name)}</option>`).join('');
-  fillSides();
-}
-function fillSides() {
-  const eid = $('#mEvent').value, sid = $('#mSport').value;
-  $('#sideList').innerHTML = [...new Set(['สีเขียว', ...(eid ? teamsOfEvent(eid) : teamsOfSport(sid)).map(t => t.name), ...D().opponents])].map(n => `<option value="${esc(n)}">`).join('');
-}
-function openMatch(m, sid, eid, date) {
-  const f = $('#formMatch'); f.reset();
-  $('#mSport').innerHTML = D().sports.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-  $('#mStatus').innerHTML = D().statuses.map(s => `<option>${s}</option>`).join('');
-  const kind = m ? (m.sportId === 'general' ? 'general' : 'sport') : (sid === 'general' ? 'general' : 'sport');
-  $('#mSport').value = m && kind === 'sport' ? m.sportId : (sid && sid !== 'general' ? sid : D().sports[0].id);
-  fillMatchEvents($('#mSport').value, m ? m.eventId : eid);
-  if (m) ['id', 'title', 'round', 'date', 'time', 'venue', 'sideA', 'sideB', 'scoreA', 'scoreB', 'status', 'note'].forEach(k => f.elements[k].value = m[k] || '');
+function openMatch(m, sid, date) {
+  const f = $('#formMatch'); f.reset(); f.elements.id.value = m ? m.id : '';
+  const opts = [...D().sports.map(s => [s.id, s.name]), ['general', 'กิจกรรมอื่น']];
+  const type = m ? 'radio' : 'checkbox';
+  $('#mSports').innerHTML = `<legend>${m ? 'กีฬา' : 'กีฬาที่แข่งวันนี้ <small style="font-weight:400;color:var(--ink3)">(เลือกได้หลายชนิด)</small>'}</legend>` +
+    opts.map(([id, n]) => `<label><input type="${type}" name="${m ? 'sportId' : 'sportIds'}" value="${id}" ${(m ? m.sportId === id : sid === id) ? 'checked' : ''}><span style="--c:${ui(id).c}"><i class="sw"></i>${n}</span></label>`).join('');
+  if (m) ['date', 'time', 'endTime', 'title', 'note'].forEach(k => f.elements[k].value = m[k] || '');
   else f.elements.date.value = date || S.calDay || '';
-  setMkind(kind);
-  $('#matchTitle').textContent = m ? 'แก้ไขรายการ / บันทึกผล' : 'เพิ่มรายการในปฏิทิน';
-  $('#matchDelete').hidden = $('#matchCopy').hidden = !m; $('#matchMore').hidden = !!m;
+  syncTitleRow();
+  $('#matchTitle').textContent = m ? 'แก้ไขวันแข่งขัน' : 'เพิ่มวันแข่งขัน';
+  $('#matchDelete').hidden = !m; $('#matchMore').hidden = !!m;
   if (!$('#dlgMatch').open) $('#dlgMatch').showModal();
+}
+function syncTitleRow() {
+  const gen = !!$('#mSports').querySelector('input[value="general"]:checked');
+  $('#mTitleRow').hidden = !gen; $('#formMatch').elements.title.required = gen;
+}
+$('#mSports').addEventListener('change', syncTitleRow);
+/* อัปโหลดภาพประชาสัมพันธ์ */
+let UP = { sid: '', files: [] };
+function openUpload(sid) {
+  UP = { sid, files: [] }; $('#formUpload').reset(); $('#upPrev').innerHTML = '';
+  $('#upSub').textContent = `${sportOf(sid).name} · ภาพจะแสดงในแท็บ "ภาพประชาสัมพันธ์" ของกีฬานี้`;
+  $('#upGo').textContent = 'อัปโหลด'; $('#dlgUpload').showModal();
+}
+function addFiles(list) {
+  const imgs = [...list].filter(f => /^image\//.test(f.type));
+  if (imgs.length < list.length) toast('ข้ามไฟล์ที่ไม่ใช่รูปภาพ', true);
+  UP.files.push(...imgs);
+  $('#upPrev').innerHTML = UP.files.map(f => `<img src="${URL.createObjectURL(f)}" alt="">`).join('');
+  $('#upGo').textContent = UP.files.length ? `อัปโหลด ${UP.files.length} ภาพ` : 'อัปโหลด';
+}
+$('#upFile').addEventListener('change', e => addFiles(e.target.files));
+['dragover', 'dragenter'].forEach(t => $('#upDrop').addEventListener(t, e => { e.preventDefault(); $('#upDrop').classList.add('over'); }));
+['dragleave', 'drop'].forEach(t => $('#upDrop').addEventListener(t, e => { e.preventDefault(); $('#upDrop').classList.remove('over'); }));
+$('#upDrop').addEventListener('drop', e => addFiles(e.dataTransfer.files));
+/** ย่อรูปในเครื่องก่อนส่ง (ด้านยาวไม่เกิน 2000px) — ส่งเร็ว ประหยัดพื้นที่ */
+function shrink(file) {
+  return new Promise((ok, no) => {
+    const url = URL.createObjectURL(file), im = new Image();
+    im.onload = () => {
+      const k = Math.min(1, 2000 / Math.max(im.naturalWidth, im.naturalHeight));
+      const c = document.createElement('canvas'); c.width = Math.round(im.naturalWidth * k); c.height = Math.round(im.naturalHeight * k);
+      const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); ok(c.toDataURL('image/jpeg', .86));
+    };
+    im.onerror = () => { URL.revokeObjectURL(url); no(new Error('อ่านไฟล์รูปไม่ได้: ' + file.name)); };
+    im.src = url;
+  });
+}
+/* ดูภาพขนาดใหญ่ */
+let VIEW = { list: [], i: 0 };
+function openView(pid) {
+  const p = (D().posters || []).find(x => x.id === pid); if (!p) return;
+  VIEW = { list: postersOf(p.sportId), i: 0 }; VIEW.i = VIEW.list.findIndex(x => x.id === pid);
+  showView(); $('#dlgView').showModal();
+}
+function showView() {
+  const p = VIEW.list[VIEW.i], im = $('#vImg');
+  im.removeAttribute('data-fb'); im.style.opacity = 1; im.dataset.fid = p.fileId; im.onerror = () => imgFallback(im);
+  im.src = IMG_CACHE[p.fileId] || driveSrc(p.fileId, 2000); im.alt = p.title || '';
+  $('#vTitle').textContent = p.title || 'ภาพประชาสัมพันธ์';
+  $('#vMeta').textContent = `${(sportOf(p.sportId) || {}).name || ''} · ภาพที่ ${VIEW.i + 1} จาก ${VIEW.list.length}`;
+  $('#vOpen').href = `https://drive.google.com/file/d/${encodeURIComponent(p.fileId)}/view`;
+  $('#vPrev').disabled = VIEW.i === 0; $('#vNext').disabled = VIEW.i === VIEW.list.length - 1;
+}
+$('#vPrev').addEventListener('click', () => { if (VIEW.i > 0) { VIEW.i--; showView(); } });
+$('#vNext').addEventListener('click', () => { if (VIEW.i < VIEW.list.length - 1) { VIEW.i++; showView(); } });
+$('#dlgView').addEventListener('keydown', e => { if (e.key === 'ArrowLeft') $('#vPrev').click(); if (e.key === 'ArrowRight') $('#vNext').click(); });
+function openPosterEdit(pid) {
+  const p = (D().posters || []).find(x => x.id === pid), f = $('#formPoster'); f.reset();
+  f.elements.id.value = p.id; f.elements.title.value = p.title || ''; f.elements.cover.checked = !!p.cover;
+  $('#poSub').textContent = (sportOf(p.sportId) || {}).name || '';
+  $('#dlgPoster').showModal();
 }
 function openCoord(sid, c) {
   S.coordSport = sid;
@@ -1409,8 +1595,6 @@ function openEventMgr(sid, ev) {
   if (!$('#dlgEvent').open) $('#dlgEvent').showModal();
 }
 
-$('#mSport').addEventListener('change', e => fillMatchEvents(e.target.value, ''));
-$('#mEvent').addEventListener('change', fillSides);
 
 /* =================================================================== submit */
 const on = (sel, fn) => $(sel).addEventListener('submit', async e => { e.preventDefault(); await fn(e.target, e.submitter); });
@@ -1445,26 +1629,53 @@ on('#formEdit', async form => {
   if (await act('editPerson', { ...f, all }, 'แก้ไขรายชื่อแล้ว')) $('#dlgEdit').close();
 });
 on('#formMatch', async (form, btn) => {
-  const f = formData(form), gen = S.mkind === 'general', more = btn && btn.dataset.more;
-  if (gen) { f.sportId = 'general'; f.eventId = ''; }
-  const ev = eventOf(f.eventId);
-  if (!await confirmBox({ title: f.id ? 'ยืนยันการแก้ไข' : 'ยืนยันการเพิ่มรายการ',
-    rows: [[gen ? 'กิจกรรม' : 'กีฬา', gen ? f.title : `${sportOf(f.sportId).name}${ev ? ' · ' + ev.name : ''}`], ['วันเวลา', `${thaiDate(f.date)} ${f.time}`], ['สถานที่', f.venue],
-      ['คู่แข่ง', gen ? '' : `${f.sideA} พบ ${f.sideB}`], ['ผล', !gen && (f.scoreA || f.scoreB) ? `${f.scoreA || '-'} : ${f.scoreB || '-'}` : ''], ['สถานะ', f.status], ['หมายเหตุ', f.note]],
-    ok: 'ยืนยันบันทึก' })) return;
-  if (!await act('saveMatch', f, f.id ? 'แก้ไขแล้ว' : 'เพิ่มรายการแล้ว')) return;
-  if (more) { // เก็บวัน/กีฬาไว้ เพิ่มรายการถัดไปในวันเดียวกัน
-    const keep = { date: f.date, sportId: f.sportId, eventId: f.eventId, venue: f.venue };
-    openMatch(null, keep.sportId, keep.eventId, keep.date); form.elements.venue.value = keep.venue || '';
-    toast('บันทึกแล้ว เพิ่มรายการถัดไปได้เลย');
+  const f = formData(form), more = btn && btn.dataset.more, edit = !!f.id;
+  const ids = edit ? [f.sportId] : $$('#mSports input:checked').map(x => x.value);
+  if (!ids.length || !ids[0]) return toast('กรุณาเลือกกีฬาอย่างน้อย 1 ชนิด', true);
+  if (f.endTime && f.time && f.endTime < f.time) return toast('เวลาสิ้นสุดต้องไม่ก่อนเวลาเริ่ม', true);
+  const names = ids.map(id => id === 'general' ? `กิจกรรม: ${f.title}` : sportOf(id).name).join(', ');
+  if (!await confirmBox({ title: edit ? 'ยืนยันการแก้ไข' : 'ยืนยันการเพิ่มวันแข่งขัน',
+    rows: [['วันที่', thaiDate(f.date)], ['กีฬา', names], ['เวลา', f.time ? f.time + (f.endTime ? ' – ' + f.endTime : '') + ' น.' : 'ทั้งวัน'], ['หมายเหตุ', f.note]], ok: 'ยืนยันบันทึก' })) return;
+  if (edit) {
+    const m = D().matches.find(x => x.id === f.id) || {};
+    if (await act('saveMatch', { ...m, ...f, sportId: f.sportId, eventId: f.sportId === m.sportId ? m.eventId : '' }, 'แก้ไขแล้ว')) $('#dlgMatch').close();
+    return;
+  }
+  if (!await act('addSchedule', { date: f.date, sportIds: ids, time: f.time, endTime: f.endTime, title: f.title, note: f.note }, `เพิ่ม ${ids.length} รายการแล้ว`)) return;
+  if (more) { // วันถัดไป: คงกีฬาและเวลาไว้
+    const d = dt(f.date); d.setDate(d.getDate() + 1); form.elements.date.value = ymd(d);
+    S.calDay = ymd(d); S.calMonth = S.calDay.slice(0, 7); render(); toast('บันทึกแล้ว · เลือกวันถัดไปให้แล้ว');
   } else $('#dlgMatch').close();
 });
-$('#matchCopy').addEventListener('click', () => { const f = $('#formMatch'); f.elements.id.value = ''; ['scoreA', 'scoreB'].forEach(k => f.elements[k].value = ''); f.elements.status.value = D().statuses[0];
-  $('#matchTitle').textContent = 'เพิ่มรายการใหม่ (คัดลอก)'; $('#matchDelete').hidden = $('#matchCopy').hidden = true; $('#matchMore').hidden = false; });
 $('#matchDelete').addEventListener('click', async () => {
-  const f = formData($('#formMatch'));
-  if (await confirmBox({ title: 'ลบรายการนี้?', sub: 'ลบแล้วกู้คืนไม่ได้', rows: [['รายการ', S.mkind === 'general' ? f.title : `${f.sideA} พบ ${f.sideB}`], ['วัน', thaiDate(f.date)]], ok: 'ลบ', danger: true })
+  const f = formData($('#formMatch')), m = D().matches.find(x => x.id === f.id);
+  if (await confirmBox({ title: 'ลบรายการนี้?', sub: 'ลบแล้วกู้คืนไม่ได้', rows: [['กีฬา', m.sportId === 'general' ? m.title : (sportOf(m.sportId) || {}).name], ['วันที่', thaiDate(m.date)], ['เวลา', m.time]], ok: 'ลบ', danger: true })
     && await act('deleteMatch', { matchId: f.id }, 'ลบแล้ว')) $('#dlgMatch').close();
+});
+on('#formUpload', async () => {
+  if (!UP.files.length) return toast('กรุณาเลือกรูปภาพ', true);
+  const title = $('#formUpload').elements.title.value.trim(), n = UP.files.length;
+  busy(true); let done = 0;
+  try {
+    for (const [i, file] of UP.files.entries()) {
+      $('#loading > div').textContent = `กำลังอัปโหลดภาพ ${i + 1} / ${n}…`;
+      const data = await shrink(file);
+      const d = await call('uploadPoster', { pin: S.pin || '', sportId: UP.sid, title: n > 1 && title ? `${title} (${i + 1})` : title, data });
+      done++; S.raw = ''; setData(d);
+    }
+    $('#dlgUpload').close(); toast(`อัปโหลดแล้ว ${done} ภาพ`);
+    if (route()[2] !== 'posters') location.hash = `#sport/${UP.sid}/posters`;
+  } catch (e) { toast((done ? `อัปโหลดแล้ว ${done} ภาพ · ` : '') + e.message, true); }
+  finally { busy(false); $('#loading > div').textContent = 'กำลังบันทึก…'; }
+});
+on('#formPoster', async form => {
+  const f = formData(form);
+  if (await act('savePoster', { id: f.id, title: f.title, cover: !!f.cover }, 'บันทึกแล้ว')) $('#dlgPoster').close();
+});
+$('#poDelete').addEventListener('click', async () => {
+  const f = formData($('#formPoster')), p = (D().posters || []).find(x => x.id === f.id);
+  if (await confirmBox({ title: 'ลบภาพนี้?', sub: 'ไฟล์จะถูกย้ายไปถังขยะใน Google Drive', rows: [['ภาพ', p.title || 'ภาพประชาสัมพันธ์'], ['กีฬา', (sportOf(p.sportId) || {}).name]], ok: 'ลบภาพ', danger: true })
+    && await act('deletePoster', { id: f.id }, 'ลบภาพแล้ว')) $('#dlgPoster').close();
 });
 on('#formCoord', async form => {
   const f = formData(form), ev = eventOf(f.eventId);
@@ -1491,14 +1702,16 @@ $('#burger').addEventListener('click', () => document.body.classList.toggle('men
 /* =================================================================== clicks */
 document.addEventListener('click', async e => {
   if (!e.target.closest('.dd')) $$('.dd.open').forEach(x => x.classList.remove('open'));
-  const b = e.target.closest('[data-dd],[data-new],[data-join],[data-delm],[data-delt],[data-ev],[data-addmatch],[data-addday],[data-editm],[data-coord],[data-editc],[data-delc],[data-close],[data-cal],[data-day],[data-calmode],[data-calsp],[data-evmgr],[data-editev],[data-delev],[data-pre],[data-grp],[data-delsup],[data-edmem],[data-edsup],[data-edstaff],[data-delstaff],[data-staffnew],[data-mkind],[data-sort],[data-csv],#adminOff');
+  const b = e.target.closest('[data-dd],[data-new],[data-join],[data-delm],[data-delt],[data-ev],[data-addmatch],[data-addday],[data-editm],[data-coord],[data-editc],[data-delc],[data-close],[data-cal],[data-day],[data-calmode],[data-calsp],[data-evmgr],[data-editev],[data-delev],[data-pre],[data-grp],[data-delsup],[data-edmem],[data-edsup],[data-edstaff],[data-delstaff],[data-staffnew],[data-sort],[data-csv],[data-upload],[data-view],[data-poedit],#adminOff');
   if (!b) return;
   const d = b.dataset;
   if ('dd' in d) { const p = b.parentElement, o = p.classList.contains('open'); $$('.dd.open').forEach(x => x.classList.remove('open')); if (!o) p.classList.add('open'); }
   else if (b.id === 'adminOff') logout();
   else if (d.csv) downloadCsv(d.csv);
   else if ('close' in d) b.closest('dialog').close();
-  else if (d.mkind) setMkind(d.mkind);
+  else if (d.upload) openUpload(d.upload);
+  else if (d.view) openView(d.view);
+  else if (d.poedit) openPosterEdit(d.poedit);
   else if (d.new) openTeam(d.new);
   else if (d.join) openJoin(d.join);
   else if (d.ev) { const [sid, eid] = d.ev.split('|'); S.ev[sid] = eid; render(); }
@@ -1508,11 +1721,11 @@ document.addEventListener('click', async e => {
     else { const [y, m] = S.calMonth.split('-').map(Number); S.calMonth = ymd(new Date(y, m - 1 + (d.cal === 'next' ? 1 : -1), 1)).slice(0, 7); S.calDay = null; }
     render();
   }
-  else if (d.addday) { e.stopPropagation(); S.calDay = d.addday; S.calMonth = d.addday.slice(0, 7); const sid = route()[0] === 'sport' ? route()[1] : (S.calSport !== 'all' ? S.calSport : ''); openMatch(null, sid, '', d.addday); }
+  else if (d.addday) { e.stopPropagation(); S.calDay = d.addday; S.calMonth = d.addday.slice(0, 7); const sid = route()[0] === 'sport' ? route()[1] : (S.calSport !== 'all' ? S.calSport : ''); openMatch(null, sid, d.addday); }
   else if (d.day) { S.calDay = S.calDay === d.day ? null : d.day; if (S.calDay) S.calMonth = d.day.slice(0, 7); render(); }
   else if (d.calmode) { S.calMode = d.calmode; render(); }
   else if (d.calsp) { S.calSport = d.calsp; render(); }
-  else if (d.addmatch !== undefined) { const [sid, eid] = d.addmatch.split('|'); openMatch(null, sid, eid); }
+  else if (d.addmatch !== undefined) openMatch(null, d.addmatch);
   else if (d.editm) openMatch(D().matches.find(m => m.id === d.editm));
   else if (d.coord) openCoord(d.coord);
   else if (d.editc) openCoord(S.coordSport, D().coordinators.find(c => c.id === d.editc));
