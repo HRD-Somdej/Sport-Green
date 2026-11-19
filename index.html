@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#F6F6F2">
-<title>สีเขียว · ลงทะเบียนนักกีฬา กองเชียร์ ขบวนพาเหรด · กีฬาสีปีใหม่ 2570</title>
+<title>สีเขียว · ลงทะเบียนนักกีฬา กองเชียร์ ขบวนพาเหรด คณะทำงาน · กีฬาสีปีใหม่ 2570</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -36,14 +36,15 @@ svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-widt
 
 /* ---------- top bar ---------- */
 .top{position:sticky;top:0;z-index:20;background:rgba(246,246,242,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:18px;height:64px}
+.top .wrap{display:flex;align-items:center;gap:12px;height:64px;max-width:1240px}
+@media (min-width:861px) and (max-width:1180px){.brand small{display:none}.top .iconbtn .txt{display:none}}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;white-space:nowrap}
 .brand .dot{width:26px;height:26px;border-radius:50%;background:var(--g);position:relative;flex:none}
 .brand .dot::after{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--lime)}
 .brand small{display:block;font-weight:400;font-size:12px;color:var(--ink2);line-height:1.1}
 .nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
-.nav a{padding:8px 11px;border-radius:999px;font-size:14.5px;color:var(--ink2);white-space:nowrap;transition:.15s}
+.nav a{padding:7px 9px;border-radius:999px;font-size:14px;color:var(--ink2);white-space:nowrap;transition:.15s}
 .nav a:hover{color:var(--ink);background:rgba(0,0,0,.04)}
 .nav a.on{color:var(--ink);background:var(--card);box-shadow:0 0 0 1px var(--line)}
 .iconbtn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:13px;color:var(--ink2);white-space:nowrap}
@@ -289,6 +290,24 @@ tr.grp td{background:#FAFAF7;font-weight:600}
 .posgrid input:checked+span{border-color:var(--g);background:var(--gs);box-shadow:0 0 0 1px var(--g)}
 input[type=number]{-moz-appearance:textfield}
 
+/* ---------- staff ---------- */
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
+.sf{display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:center;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.sf .av{width:36px;height:36px;background:#EEF0F6;color:#3D4A6B}
+.sf b{font-weight:500}
+.sf small{display:block;font-size:12px;color:var(--ink3)}
+.sf .tel{display:inline-flex;align-items:center;gap:5px;margin-top:3px;font-size:14px;color:var(--g);font-weight:500}
+.sf .tel svg{width:14px;height:14px}
+.adm{display:flex;gap:2px;align-items:center}
+.x.ed:hover{background:var(--gs);color:var(--g)}
+.cta{display:flex;align-items:center;gap:18px;padding:22px;border-radius:var(--r);background:var(--ink);color:#fff;flex-wrap:wrap}
+.cta h3{font-size:20px}
+.cta p{margin:2px 0 0;color:#B9BFBA;font-size:14px}
+.cta .btn{background:var(--lime);border-color:var(--lime);color:var(--ink)}
+.cta .btn.ghost{margin-left:auto;background:transparent;border-color:#4A504B;color:#fff}
+.chk{display:flex;gap:10px;align-items:flex-start;margin:16px 0 0;font-size:14px;color:var(--ink);font-weight:400;cursor:pointer}
+.chk input{width:18px;height:18px;margin-top:2px;accent-color:var(--g)}
+
 /* ---------- dialog ---------- */
 dialog{width:min(520px,calc(100vw - 24px));max-height:calc(100vh - 24px);padding:0;border:0;border-radius:22px;background:var(--card);color:var(--ink);box-shadow:0 30px 80px -20px rgba(0,0,0,.35)}
 dialog::backdrop{background:rgba(20,24,20,.38);backdrop-filter:blur(3px)}
@@ -485,23 +504,20 @@ footer button{background:none;border:0;color:var(--ink2);cursor:pointer;text-dec
       <input type="hidden" name="id"><input type="hidden" name="sportId">
       <h4 style="margin-top:22px;font-size:15px" id="evFormTitle">เพิ่มประเภทใหม่</h4>
       <div class="presets" id="evPresets">
-        <button type="button" data-pre="เดี่ยว|1|0">เดี่ยว</button>
-        <button type="button" data-pre="คู่|2|1">คู่</button>
-        <button type="button" data-pre="ทีม 3 คน|3|2">ทีม 3 คน</button>
-        <button type="button" data-pre="ทีม 4 คน|4|2">ทีม 4 คน</button>
-        <button type="button" data-pre="ทีม 6 คน|6|6">ทีม 6 คน</button>
+        <button type="button" data-pre="เดี่ยว|1">เดี่ยว</button>
+        <button type="button" data-pre="คู่|2">คู่</button>
+        <button type="button" data-pre="ทีม 3 คน|3">ทีม 3 คน</button>
+        <button type="button" data-pre="ทีม 4 คน|4">ทีม 4 คน</button>
+        <button type="button" data-pre="ทีม 6 คน|6">ทีม 6 คน</button>
       </div>
       <label>ชื่อประเภท</label>
       <input name="name" required maxlength="50" placeholder="เช่น ชายคู่, ทีมผสม, ชายอายุ 40 ปีขึ้นไป">
       <div class="row2">
         <div><label>ตัวจริงต่อทีม</label><input name="maxMembers" type="number" min="1" max="30" required value="1"></div>
-        <div><label>ตัวสำรองต่อทีม</label><input name="maxReserves" type="number" min="0" max="30" required value="0"></div>
-      </div>
-      <div class="row2">
         <div><label>รับสูงสุดกี่ทีม <small>(0 = ไม่จำกัด)</small></label><input name="maxTeams" type="number" min="0" max="200" required value="0"></div>
-        <div><label>เงื่อนไข / หมายเหตุ <small>(ไม่บังคับ)</small></label><input name="note" maxlength="120" placeholder="เช่น ต้องมีหญิง 2 คน"></div>
       </div>
-      <p class="hint">ตัวจริง 1 + สำรอง 0 = ประเภทเดี่ยว (ลงชื่อได้เลย ไม่ต้องตั้งชื่อทีม)</p>
+      <label>เงื่อนไข / หมายเหตุ <small>(ไม่บังคับ)</small></label><input name="note" maxlength="120" placeholder="เช่น ต้องมีหญิง 2 คน">
+      <p class="hint">ตัวสำรองไม่จำกัดจำนวน · ตัวจริง 1 คน = ประเภทเดี่ยว (ลงชื่อได้เลย ไม่ต้องตั้งชื่อทีม ไม่มีตัวสำรอง)</p>
       <div class="acts">
         <button type="button" class="btn ghost" id="evNew" hidden>เพิ่มประเภทใหม่แทน</button>
         <button type="button" class="btn ghost" data-close>ปิด</button>
@@ -528,6 +544,62 @@ footer button{background:none;border:0;color:var(--ink2);cursor:pointer;text-dec
       <div><label>ชื่อเล่น</label><input name="nickname" required maxlength="30"></div>
       <div><label>ฝ่าย</label><input name="department" required maxlength="80" list="deptList"></div>
     </div>
+    <div class="acts">
+      <button type="button" class="btn ghost" data-close>ยกเลิก</button>
+      <button type="submit" class="btn">ถัดไป</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- คณะทำงานสี -->
+<dialog id="dlgStaff">
+  <div class="dh"><h3 id="stTitle">ลงข้อมูลคณะทำงานสี</h3><p>สีเขียว · กีฬาสีปีใหม่ 2570</p></div>
+  <form id="formStaff" autocomplete="off">
+    <input type="hidden" name="id">
+    <label>รับผิดชอบงาน</label>
+    <input name="task" required maxlength="80" list="taskList" placeholder="เลือกหรือพิมพ์งานที่รับผิดชอบ">
+    <div class="prefill" id="stPrefill">
+      <label>เคยลงทะเบียนแล้ว? เลือกชื่อเพื่อกรอกให้อัตโนมัติ</label>
+      <input type="search" class="pf" list="personList" placeholder="พิมพ์ชื่อ หรือชื่อเล่น">
+    </div>
+    <div class="row2">
+      <div><label>ชื่อ</label><input name="firstName" required maxlength="60"></div>
+      <div><label>นามสกุล</label><input name="lastName" required maxlength="60"></div>
+    </div>
+    <div class="row2">
+      <div><label>ชื่อเล่น</label><input name="nickname" required maxlength="30"></div>
+      <div><label>ฝ่าย</label><input name="department" required maxlength="80" list="deptList"></div>
+    </div>
+    <label>เบอร์โทรติดต่อ</label>
+    <input name="phone" required maxlength="15" inputmode="tel" placeholder="08x-xxx-xxxx">
+    <div class="acts">
+      <button type="button" class="btn danger sm left" id="stDelete" hidden>ลบรายชื่อนี้</button>
+      <button type="button" class="btn ghost" data-close>ยกเลิก</button>
+      <button type="submit" class="btn">ถัดไป</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- แก้ไขรายชื่อ (ผู้ดูแล) -->
+<dialog id="dlgEdit">
+  <div class="dh"><h3>แก้ไขรายชื่อ</h3><p id="edSub"></p></div>
+  <form id="formEdit" autocomplete="off">
+    <input type="hidden" name="kind"><input type="hidden" name="id">
+    <fieldset class="roles" id="edRole">
+      <legend>ประเภทนักกีฬา</legend>
+      <label class="role"><input type="radio" name="role" value="ตัวจริง"><span>ตัวจริง<small id="edMainLeft"></small></span></label>
+      <label class="role"><input type="radio" name="role" value="สำรอง"><span>ตัวสำรอง<small>ไม่จำกัด</small></span></label>
+    </fieldset>
+    <fieldset class="posgrid" id="edPos"></fieldset>
+    <div class="row2">
+      <div><label>ชื่อ</label><input name="firstName" required maxlength="60"></div>
+      <div><label>นามสกุล</label><input name="lastName" required maxlength="60"></div>
+    </div>
+    <div class="row2">
+      <div><label>ชื่อเล่น</label><input name="nickname" required maxlength="30"></div>
+      <div><label>ฝ่าย</label><input name="department" required maxlength="80" list="deptList"></div>
+    </div>
+    <label class="chk" id="edAllWrap"><input type="checkbox" name="all" value="1" checked><span>แก้ชื่อ ชื่อเล่น และฝ่าย ในทุกรายการของคนนี้ด้วย <small class="muted" id="edAllN"></small></span></label>
     <div class="acts">
       <button type="button" class="btn ghost" data-close>ยกเลิก</button>
       <button type="submit" class="btn">ถัดไป</button>
@@ -562,6 +634,7 @@ footer button{background:none;border:0;color:var(--ink2);cursor:pointer;text-dec
 
 <datalist id="deptList"></datalist>
 <datalist id="personList"></datalist>
+<datalist id="taskList"></datalist>
 <datalist id="sideList"></datalist>
 <datalist id="roundList">
   <option value="รอบแรก"><option value="รอบแบ่งกลุ่ม"><option value="รอบ 8 ทีม"><option value="รอบรองชนะเลิศ">
@@ -599,6 +672,9 @@ const I = {
   plus: '<svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>',
   x: '<svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
   left: '<svg class="i" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg>',
+  edit: '<svg class="i" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>',
+  phone: '<svg class="i" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>',
+  team: '<svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2A4.5 4.5 0 0 1 21 18.5"/></svg>',
   right: '<svg class="i" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>'
 };
 
@@ -660,10 +736,10 @@ const coordsOf = (sid, eid) => (D().coordinators || []).filter(c => c.sportId ==
 const fullName = m => `${m.firstName} ${m.lastName}`;
 const pkey = m => norm(m.firstName + m.lastName);
 const people = list => new Set(list.map(pkey)).size;
-const isSingle = ev => ev.maxMembers === 1 && !ev.maxReserves;
+const isSingle = ev => ev.maxMembers === 1;
 const unit = ev => ev.maxMembers === 1 ? 'คน' : ev.maxMembers === 2 ? 'คู่' : 'ทีม';
 const cap = ev => (ev.maxMembers === 1 ? 'เดี่ยว' : ev.maxMembers === 2 ? 'คู่ 2 คน' : `ตัวจริง ${ev.maxMembers} คน`) +
-  (ev.maxReserves ? ` · สำรอง ${ev.maxReserves} คน` : '') + (ev.maxTeams ? ` · รับไม่เกิน ${ev.maxTeams} ${unit(ev)}` : '');
+  (ev.maxMembers > 1 ? ' · ตัวสำรองไม่จำกัด' : '') + (ev.maxTeams ? ` · รับไม่เกิน ${ev.maxTeams} ${unit(ev)}` : '');
 const pad = n => String(n).padStart(2, '0');
 const ymd = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 const today = () => ymd(new Date());
@@ -681,8 +757,9 @@ const groupOf = id => (D().groups || []).find(g => g.id === id);
 const supOf = gid => (D().supporters || []).filter(x => x.groupId === gid);
 function persons() {
   const g = {};
-  D().members.forEach(m => { const k = pkey(m); (g[k] = g[k] || { p: m, list: [], sup: [] }).list.push(m); });
-  (D().supporters || []).forEach(m => { const k = pkey(m); (g[k] = g[k] || { p: m, list: [], sup: [] }).sup.push(m); });
+  D().members.forEach(m => { const k = pkey(m); (g[k] = g[k] || { p: m, list: [], sup: [], st: [] }).list.push(m); });
+  (D().supporters || []).forEach(m => { const k = pkey(m); (g[k] = g[k] || { p: m, list: [], sup: [], st: [] }).sup.push(m); });
+  (D().staff || []).forEach(m => { const k = pkey(m); (g[k] = g[k] || { p: m, list: [], sup: [], st: [] }).st.push(m); });
   return Object.values(g).sort((a, b) => a.p.firstName.localeCompare(b.p.firstName, 'th'));
 }
 
@@ -692,24 +769,26 @@ function render() {
   renderNav(r); renderAdminBar();
   const depts = [...new Set([...(D().departments || []), ...D().members.map(m => m.department)].filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
   $('#deptList').innerHTML = depts.map(d => `<option value="${esc(d)}">`).join('');
+  $('#taskList').innerHTML = [...new Set([...(D().staffTasks || []), ...(D().staff || []).map(x => x.task)])].map(t => `<option value="${esc(t)}">`).join('');
   $('#personList').innerHTML = persons().map(({ p }) => `<option value="${esc(fullName(p))} (${esc(p.nickname)}) · ${esc(p.department)}">`).join('');
   const app = $('#app');
   if (r[0] === 'sport' && sportOf(r[1])) app.innerHTML = viewSport(sportOf(r[1]), r[2] === 'calendar' ? 'calendar' : 'teams');
   else if (r[0] === 'calendar') app.innerHTML = viewCalendar();
   else if (r[0] === 'people') app.innerHTML = viewPeople();
   else if (r[0] === 'cheer') app.innerHTML = viewCheer();
+  else if (r[0] === 'staff') app.innerHTML = viewStaff();
   else if (r[0] === 'summary') app.innerHTML = viewSummary();
   else app.innerHTML = viewHome();
   const q = $('#q'); if (q) { q.value = S.q; renderPeopleList(); }
 }
 function renderNav(r) {
   const cur = r[0] === 'sport' ? 'sport/' + r[1] : (r[0] || 'home');
-  const items = [['home', 'ภาพรวม'], ...D().sports.map(s => ['sport/' + s.id, s.name]), ['cheer', 'กองเชียร์'], ['calendar', 'ปฏิทิน'], ['people', 'รายชื่อ'], ['summary', 'สรุป']];
+  const items = [['home', 'ภาพรวม'], ...D().sports.map(s => ['sport/' + s.id, s.name]), ['cheer', 'กองเชียร์'], ['staff', 'คณะทำงาน'], ['calendar', 'ปฏิทิน'], ['people', 'รายชื่อ'], ['summary', 'สรุป']];
   $('#nav').innerHTML = items.map(([h, l]) => `<a href="#${h}" class="${cur === h ? 'on' : ''}">${l}</a>`).join('');
   const on = $('#nav .on'); if (on && on.scrollIntoView) on.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 function renderAdminBar() {
-  $('#adminbar').innerHTML = S.pin ? `<div class="adminbar"><div class="wrap"><span>โหมดผู้ดูแล · ตั้งประเภทการแข่งขัน ลบทีม/รายชื่อ จัดตารางแข่ง บันทึกผล ตั้งผู้ประสานงานได้</span><button id="adminOff">ออก</button></div></div>` : '';
+  $('#adminbar').innerHTML = S.pin ? `<div class="adminbar"><div class="wrap"><span>โหมดผู้ดูแล · ตั้งประเภทการแข่งขัน แก้ไข/ลบรายชื่อ ลบทีม จัดตารางแข่ง บันทึกผล ตั้งผู้ประสานงานได้</span><button id="adminOff">ออก</button></div></div>` : '';
   $('#adminBtn').textContent = S.pin ? 'ออกจากโหมดผู้ดูแล' : 'สำหรับผู้ดูแล';
 }
 
@@ -736,6 +815,9 @@ function viewHome() {
     </section>
     <section class="sec"><div class="sec-h"><div><h2>เลือกกีฬา</h2><p>กดเพื่อดูทีมและลงทะเบียน</p></div></div>
       <div class="sports">${cards}</div></section>
+    <section class="sec"><div class="cta"><span style="width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:#2A302B;color:var(--lime)">${I.team}</span>
+      <div><h3>คณะทำงานสีเขียว</h3><p>${(D().staff || []).length} คน · ลงข้อมูลงานที่รับผิดชอบและเบอร์โทรติดต่อ</p></div>
+      <a class="btn ghost" href="#staff">ดูรายชื่อ</a><button class="btn" data-staffnew>${I.plus} ลงข้อมูลคณะทำงาน</button></div></section>
     <section class="sec"><div class="sec-h"><div><h2>กองเชียร์ · เชียร์ลีดเดอร์ · ขบวนพาเหรด</h2><p>ไม่ได้ลงแข่ง ก็มาช่วยสีเขียวได้</p></div></div>
       <div class="sports g3">${(D().groups || []).map(g => `<a class="sp" href="#cheer" style="--c:${ui(g.id).c}">
         <span class="go">${I.arrow}</span><span class="ic">${icon(g.id)}</span>
@@ -781,7 +863,7 @@ function eventSection(ev) {
     : single ? `<div class="solo">${ts.map(t => { const m = membersOf(t.id)[0];
         return `<div class="pp"><span class="av">${esc(m ? initial(m) : '?')}</span>
           <span class="who" style="min-width:0;line-height:1.3">${m ? `<b style="font-weight:500">${esc(fullName(m))}</b> <span class="muted">(${esc(m.nickname)})</span><small style="display:block;font-size:12px;color:var(--ink3)">${esc(m.department)}</small>` : esc(t.name)}</span>
-          ${S.pin ? `<button class="x" title="ลบ" data-delt="${t.id}">${I.x}</button>` : '<span></span>'}</div>`; }).join('')}</div>`
+          ${S.pin ? `<span class="adm">${m ? `<button class="x ed" title="แก้ไข" data-edmem="${m.id}">${I.edit}</button>` : ''}<button class="x" title="ลบ" data-delt="${t.id}">${I.x}</button></span>` : '<span></span>'}</div>`; }).join('')}</div>`
     : `<div class="teams">${ts.map(t => teamCard(t, ev)).join('')}</div>`;
   return `<section class="event">
     <div class="event-h"><div><h3>${esc(ev.name)}${S.pin ? ` <button class="btn sm ghost" style="height:28px;margin-left:6px;vertical-align:middle" data-editev="${ev.id}">แก้ไขประเภท</button>` : ''}</h3><p>${cap(ev)} · ตอนนี้ ${ts.length} ${unit(ev)}</p>
@@ -793,20 +875,19 @@ function eventSection(ev) {
 
 function teamCard(t, ev) {
   const ms = membersOf(t.id), main = ms.filter(m => m.role !== RES), res = ms.filter(m => m.role === RES);
-  const mainFull = main.length >= ev.maxMembers, full = mainFull && res.length >= ev.maxReserves;
-  const slots = [...Array(ev.maxMembers)].map((_, i) => `<i class="${i < main.length ? 'f' : ''}"></i>`).join('') +
-    [...Array(ev.maxReserves)].map((_, i) => `<i class="${i < res.length ? 'rf' : 'r'}"></i>`).join('');
+  const mainFull = main.length >= ev.maxMembers;
+  const slots = [...Array(ev.maxMembers)].map((_, i) => `<i class="${i < main.length ? 'f' : ''}"></i>`).join('');
   const row = m => `<li><span class="av ${m.role === RES ? 'res' : ''}">${esc(initial(m))}</span>
     <span class="who"><b>${esc(m.nickname)}</b> <span>${esc(fullName(m))}</span><small>${esc(m.department)}</small></span>
-    <span class="rt">${m.role === RES ? '<span class="tag res">สำรอง</span>' : '<span class="tag">ตัวจริง</span>'}${S.pin ? `<button class="x" title="ลบ" data-delm="${m.id}">${I.x}</button>` : ''}</span></li>`;
+    <span class="rt">${m.role === RES ? '<span class="tag res">สำรอง</span>' : '<span class="tag">ตัวจริง</span>'}${S.pin ? `<span class="adm"><button class="x ed" title="แก้ไข" data-edmem="${m.id}">${I.edit}</button><button class="x" title="ลบ" data-delm="${m.id}">${I.x}</button></span>` : ''}</span></li>`;
   return `<article class="team">
     <div class="team-h"><div><h4>${esc(t.name)}</h4><div class="by">ตั้งโดย ${esc(t.createdBy)}</div></div>
-      ${full ? '<span class="tag out">ครบแล้ว</span>' : ''}</div>
+      ${mainFull ? '<span class="tag out">ตัวจริงครบ</span>' : ''}</div>
     <div class="slots">${slots}</div>
-    <div class="cnt"><span>ตัวจริง <b class="num">${main.length}/${ev.maxMembers}</b></span>${ev.maxReserves ? `<span>สำรอง <b class="num">${res.length}/${ev.maxReserves}</b></span>` : ''}</div>
+    <div class="cnt"><span>ตัวจริง <b class="num">${main.length}/${ev.maxMembers}</b></span><span>ตัวสำรอง <b class="num">${res.length}</b> คน <span style="color:var(--ink3)">(ไม่จำกัด)</span></span></div>
     <ul class="roster">${main.map(row).join('')}${res.length ? `<li class="sub">ตัวสำรอง</li>${res.map(row).join('')}` : ''}</ul>
     <div class="team-f">
-      <button class="btn sm ${full ? '' : 'ghost'}" data-join="${t.id}" ${full ? 'disabled' : ''}>${full ? `${unit(ev)}นี้ครบแล้ว` : `${I.plus} ${mainFull ? 'ลงชื่อเป็นตัวสำรอง' : 'ลงชื่อเข้าทีมนี้'}`}</button>
+      <button class="btn sm ghost" data-join="${t.id}">${I.plus} ${mainFull ? 'ลงชื่อเป็นตัวสำรอง' : 'ลงชื่อเข้าทีมนี้'}</button>
       ${S.pin ? `<button class="btn sm danger" data-delt="${t.id}">ลบ</button>` : ''}
     </div></article>`;
 }
@@ -911,7 +992,7 @@ function viewPeople() {
   const depts = [...new Set(persons().map(x => x.p.department).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
   return `<div class="wrap">
     <section class="sph"><div class="top-row"><div><div class="eyebrow">บุคลากร</div><h1>รายชื่อทั้งหมด</h1>
-      <p>${persons().length} คน · นักกีฬา ${people(D().members)} คน · กองเชียร์ & พาเหรด ${people(D().supporters || [])} คน · ดูว่าแต่ละคนลงอะไรไว้บ้าง</p></div></div></section>
+      <p>${persons().length} คน · นักกีฬา ${people(D().members)} คน · กองเชียร์ & พาเหรด ${people(D().supporters || [])} คน · คณะทำงาน ${people(D().staff || [])} คน</p></div></div></section>
     <div class="ptools" style="margin-top:22px">
       <input id="q" type="search" placeholder="ค้นหาชื่อ นามสกุล หรือชื่อเล่น" autocomplete="off">
       <select id="deptSel"><option value="">ทุกฝ่าย</option>${depts.map(d => `<option ${d === S.dept ? 'selected' : ''}>${esc(d)}</option>`).join('')}</select>
@@ -923,22 +1004,23 @@ function renderPeopleList() {
   const list = persons().filter(({ p }) => (!S.dept || p.department === S.dept) &&
     (!n || pkey(p).includes(n) || norm(p.nickname).includes(n)));
   $('#plist').innerHTML = !list.length ? `<div class="empty">${persons().length ? 'ไม่พบชื่อนี้ ลองพิมพ์แค่ชื่อหรือชื่อเล่น' : 'ยังไม่มีผู้ลงทะเบียน'}</div>`
-    : `<div class="people">${list.map(({ p, list: ls, sup }) => `<article class="person">
+    : `<div class="people">${list.map(({ p, list: ls, sup, st }) => `<article class="person">
       <div class="person-h"><span class="av">${esc(initial(p))}</span>
         <div style="min-width:0"><h4>${esc(fullName(p))} <span class="muted">(${esc(p.nickname)})</span></h4><p>${esc(p.department)}</p></div>
-        <div class="k"><b class="num">${ls.length + sup.length}</b>รายการ</div></div>
+        <div class="k"><b class="num">${ls.length + sup.length + st.length}</b>รายการ</div></div>
       <ul class="plays">${ls.map(m => { const sp = sportOf(m.sportId), ev = eventOf(m.eventId), t = teamOf(m.teamId);
         return `<li style="--c:${ui(m.sportId).c}"><i></i><a class="w" href="#sport/${m.sportId}">${sp ? sp.name : ''} <small>${ev ? esc(ev.name) : ''}${t && ev && !isSingle(ev) ? ` · ${unit(ev)} ${esc(t.name)}` : ''}</small></a>
           ${m.role === RES ? '<span class="tag res">สำรอง</span>' : '<span class="tag">ตัวจริง</span>'}</li>`; }).join('')}
         ${sup.map(m => { const g = groupOf(m.groupId);
-          return `<li style="--c:${ui(m.groupId).c}"><i></i><a class="w" href="#cheer">${g ? esc(g.name) : ''}</a>${m.position ? `<span class="tag out">${esc(m.position)}</span>` : ''}</li>`; }).join('')}</ul>
+          return `<li style="--c:${ui(m.groupId).c}"><i></i><a class="w" href="#cheer">${g ? esc(g.name) : ''}</a>${m.position ? `<span class="tag out">${esc(m.position)}</span>` : ''}</li>`; }).join('')}
+        ${st.map(m => `<li style="--c:#3D4A6B"><i></i><a class="w" href="#staff">คณะทำงาน <small>${esc(m.task)}</small></a>${m.phone ? `<a class="tag out" href="tel:${esc(m.phone.replace(/[^0-9+]/g, ''))}">${esc(m.phone)}</a>` : ''}</li>`).join('')}</ul>
     </article>`).join('')}</div>`;
 }
 
 /* ---------- สรุป ---------- */
 function viewSummary() {
   const sel = S.sumSport, onlyG = sel === 'cheer', showG = !sel || onlyG;
-  const sports = onlyG ? [] : sel ? [sportOf(sel)] : D().sports, inSel = m => !sel || m.sportId === sel;
+  const sports = onlyG || sel === 'staff' ? [] : sel ? [sportOf(sel)] : D().sports, inSel = m => !sel || m.sportId === sel;
   const cnt = (eid, res) => D().members.filter(m => m.eventId === eid && (m.role === RES) === res).length;
   const coordLine = list => list.map(c => esc(c.name) + (c.phone ? ' ' + esc(c.phone) : '')).join(', ');
   const overview = !sports.length ? '' : `<table><tr><th>กีฬา</th><th>ประเภท</th><th class="n">ทีม/คู่</th><th class="n">ตัวจริง</th><th class="n">สำรอง</th></tr>
@@ -958,10 +1040,16 @@ function viewSummary() {
     <section class="sph"><div class="top-row"><div><div class="eyebrow">รายงาน</div><h1>สรุปรายชื่อนักกีฬา</h1>
       <p>ข้อมูล ณ ${new Date().toLocaleString('th-TH')}</p></div>
       <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto">
-        <select id="sumSel" style="width:auto;height:42px"><option value="">ทุกกีฬา</option>${D().sports.map(s => `<option value="${s.id}" ${s.id === sel ? 'selected' : ''}>${s.name}</option>`).join('')}<option value="cheer" ${sel === 'cheer' ? 'selected' : ''}>กองเชียร์ & พาเหรด</option></select>
+        <select id="sumSel" style="width:auto;height:42px"><option value="">ทุกกีฬา</option>${D().sports.map(s => `<option value="${s.id}" ${s.id === sel ? 'selected' : ''}>${s.name}</option>`).join('')}<option value="cheer" ${sel === 'cheer' ? 'selected' : ''}>กองเชียร์ & พาเหรด</option><option value="staff" ${sel === 'staff' ? 'selected' : ''}>คณะทำงานสี</option></select>
         <button class="btn ghost" id="btnCsv">ดาวน์โหลด CSV</button><button class="btn" onclick="print()">พิมพ์</button></div>
     </div></section>
-    <div style="margin-top:26px">${overview}</div>${detail}${showG ? groupsSummary() : ''}</div>`;
+    <div style="margin-top:26px">${overview}</div>${detail}${showG ? groupsSummary() : ''}${!sel || sel === 'staff' ? staffSummary() : ''}</div>`;
+}
+function staffSummary() {
+  const ls = staffSorted();
+  return `<div class="sum-sp"><h3>คณะทำงานสี · ${ls.length} คน</h3>${ls.length ? `<table><tr><th style="width:56px">ลำดับ</th><th>รับผิดชอบงาน</th><th>ชื่อ - นามสกุล</th><th>ชื่อเล่น</th><th>ฝ่าย</th><th>เบอร์โทร</th></tr>
+    ${ls.map((m, i) => `<tr><td>${i + 1}</td><td>${esc(m.task)}</td><td>${esc(fullName(m))}</td><td>${esc(m.nickname)}</td><td>${esc(m.department)}</td><td>${esc(m.phone)}</td></tr>`).join('')}</table>`
+    : `<p class="muted" style="margin:0;font-size:14px">ยังไม่มีผู้ลงข้อมูล</p>`}</div>`;
 }
 function groupsSummary() {
   return `<div class="sum-sp"><h3>กองเชียร์ · เชียร์ลีดเดอร์ · ขบวนพาเหรด</h3>${(D().groups || []).map(g => { const ls = supOf(g.id);
@@ -970,15 +1058,18 @@ function groupsSummary() {
       : `<p class="muted" style="margin:0;font-size:14px">ยังไม่มีผู้ลงชื่อ</p>`}</div>`; }).join('')}</div>`;
 }
 function downloadCsv() {
-  const sel = S.sumSport, rows = [['กีฬา', 'ประเภทการแข่งขัน', 'ทีม', 'ลำดับ', 'ชื่อ', 'นามสกุล', 'ชื่อเล่น', 'ฝ่าย', 'ประเภทนักกีฬา']];
+  const sel = S.sumSport;
+  const rows = [['กีฬา / กิจกรรม', 'ประเภท / งาน', 'ทีม', 'ลำดับ', 'ชื่อ', 'นามสกุล', 'ชื่อเล่น', 'ฝ่าย', 'ประเภทนักกีฬา / ตำแหน่ง / เบอร์โทร']];
   D().sports.filter(s => !sel || s.id === sel).forEach(s => eventsOf(s.id).forEach(e => teamsOfEvent(e.id).forEach(t =>
     membersOf(t.id).forEach((m, i) => rows.push([s.name, e.name, t.name, i + 1, m.firstName, m.lastName, m.nickname, m.department, m.role])))));
+  if (!sel || sel === 'staff') staffSorted().forEach((m, i) =>
+    rows.push(['คณะทำงานสี', m.task, '', i + 1, m.firstName, m.lastName, m.nickname, m.department, m.phone]));
   if (!sel || sel === 'cheer') (D().groups || []).forEach(g => supOf(g.id).forEach((m, i) =>
     rows.push([g.name, '', '', i + 1, m.firstName, m.lastName, m.nickname, m.department, m.position || ''])));
   const csv = '﻿' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-  a.download = `สีเขียว_${sel === 'cheer' ? 'กองเชียร์และพาเหรด' : sel ? sportOf(sel).name : 'ทั้งหมด'}.csv`; a.click();
+  a.download = `สีเขียว_${sel === 'staff' ? 'คณะทำงาน' : sel === 'cheer' ? 'กองเชียร์และพาเหรด' : sel ? sportOf(sel).name : 'ทั้งหมด'}.csv`; a.click();
 }
 
 /* ---------- กองเชียร์ / เชียร์ลีดเดอร์ / ขบวนพาเหรด ---------- */
@@ -997,8 +1088,63 @@ function viewCheer() {
           ${pos ? `<div class="dayh" style="margin-top:14px">${esc(pos)} <small>${l.length} คน</small></div>` : ''}
           <div class="solo">${l.map(m => `<div class="pp"><span class="av" style="background:color-mix(in srgb,var(--c) 12%,#fff);color:var(--c)">${esc(initial(m))}</span>
             <span style="min-width:0;line-height:1.3"><b style="font-weight:500">${esc(m.nickname)}</b> <span class="muted">${esc(fullName(m))}</span><small style="display:block;font-size:12px;color:var(--ink3)">${esc(m.department)}</small></span>
-            ${S.pin ? `<button class="x" title="ลบ" data-delsup="${m.id}">${I.x}</button>` : '<span></span>'}</div>`).join('')}</div>`).join('')}
+            ${S.pin ? `<span class="adm"><button class="x ed" title="แก้ไข" data-edsup="${m.id}">${I.edit}</button><button class="x" title="ลบ" data-delsup="${m.id}">${I.x}</button></span>` : '<span></span>'}</div>`).join('')}</div>`).join('')}
       </section>`; }).join('')}</div>`;
+}
+/* ---------- คณะทำงานสี ---------- */
+function staffSorted() {
+  const order = D().staffTasks || [], idx = t => { const i = order.indexOf(t); return i < 0 ? 999 : i; };
+  return (D().staff || []).slice().sort((a, b) => idx(a.task) - idx(b.task) || a.task.localeCompare(b.task, 'th') || a.firstName.localeCompare(b.firstName, 'th'));
+}
+function viewStaff() {
+  const ls = staffSorted(), groups = [];
+  ls.forEach(m => { const g = groups.find(x => x[0] === m.task); g ? g[1].push(m) : groups.push([m.task, [m]]); });
+  return `<div class="wrap">
+    <section class="sph"><div class="top-row"><div><div class="eyebrow">ทีมงานเบื้องหลัง</div><h1>คณะทำงานสีเขียว</h1>
+      <p>${ls.length} คน · ${groups.length} งาน · กดเบอร์เพื่อโทรได้ทันที</p></div>
+      <button class="btn" style="margin-left:auto" data-staffnew>${I.plus} ลงข้อมูลคณะทำงาน</button></div></section>
+    ${!ls.length ? `<div class="empty" style="margin-top:28px">ยังไม่มีผู้ลงข้อมูลคณะทำงาน</div>` : groups.map(([task, l]) => `
+      <div class="dayh" style="margin-top:30px">${esc(task)} <small>${l.length} คน</small></div>
+      <div class="staff-grid">${l.map(m => `<div class="sf"><span class="av">${esc(initial(m))}</span>
+        <span style="min-width:0;line-height:1.3"><b>${esc(fullName(m))}</b> <span class="muted">(${esc(m.nickname)})</span><small>${esc(m.department)}</small>
+          ${m.phone ? `<a class="tel" href="tel:${esc(m.phone.replace(/[^0-9+]/g, ''))}">${I.phone}${esc(m.phone)}</a>` : ''}</span>
+        ${S.pin ? `<span class="adm"><button class="x ed" title="แก้ไข" data-edstaff="${m.id}">${I.edit}</button><button class="x" title="ลบ" data-delstaff="${m.id}">${I.x}</button></span>` : '<span></span>'}</div>`).join('')}</div>`).join('')}
+  </div>`;
+}
+function openStaff(m) {
+  const f = $('#formStaff'); f.reset();
+  f.elements.id.value = m ? m.id : '';
+  if (m) ['task', 'firstName', 'lastName', 'nickname', 'department', 'phone'].forEach(k => f.elements[k].value = m[k] || '');
+  $('#stTitle').textContent = m ? `แก้ไขคณะทำงาน · ${m.nickname}` : 'ลงข้อมูลคณะทำงานสี';
+  $('#stPrefill').hidden = !!m; $('#stDelete').hidden = !m;
+  $('#dlgStaff').showModal();
+}
+/* ผู้ดูแลแก้ไขรายชื่อ (นักกีฬา / กองเชียร์) */
+function openEdit(kind, m) {
+  const f = $('#formEdit'); f.reset();
+  f.elements.kind.value = kind; f.elements.id.value = m.id;
+  ['firstName', 'lastName', 'nickname', 'department'].forEach(k => f.elements[k].value = m[k] || '');
+  const others = persons().find(x => pkey(x.p) === pkey(m)) || { list: [], sup: [], st: [] };
+  const n = others.list.length + others.sup.length + others.st.length;
+  $('#edAllWrap').hidden = n < 2; $('#edAllN').textContent = `(ทั้งหมด ${n} รายการ)`;
+  if (kind === 'member') {
+    const t = teamOf(m.teamId), ev = eventOf(m.eventId);
+    $('#edSub').textContent = `${sportOf(m.sportId).name} · ${ev ? ev.name : ''}${t && ev && !isSingle(ev) ? ` · ${unit(ev)} ${t.name}` : ''}`;
+    $('#edRole').hidden = !ev || isSingle(ev); $('#edPos').hidden = true; $('#edPos').innerHTML = '';
+    if (ev) {
+      const main = membersOf(m.teamId).filter(x => x.role !== RES && x.id !== m.id).length;
+      $('#edMainLeft').textContent = `${main}/${ev.maxMembers} คน (ไม่รวมคนนี้)`;
+    }
+    f.querySelector(`[name=role][value="${m.role}"]`).checked = true;
+  } else {
+    const g = groupOf(m.groupId);
+    $('#edSub').textContent = g ? g.name : '';
+    $('#edRole').hidden = true;
+    $('#edPos').hidden = !(g && g.positions.length);
+    $('#edPos').innerHTML = g && g.positions.length ? `<legend>ตำแหน่ง</legend>` + g.positions.map(p =>
+      `<label><input type="radio" name="position" value="${esc(p)}" ${p === m.position ? 'checked' : ''}><span>${esc(p)}</span></label>`).join('') : '';
+  }
+  $('#dlgEdit').showModal();
 }
 function openGroup(gid) {
   const g = groupOf(gid); S.group = gid; $('#formGroup').reset();
@@ -1014,7 +1160,7 @@ function openEventMgr(sid, ev) {
   const sp = sportOf(sid), f = $('#formEvent'); f.reset();
   f.elements.sportId.value = sid; f.elements.id.value = ev ? ev.id : '';
   $('#evSub').textContent = `${sp.name} · ตั้งประเภทและจำนวนผู้เล่นต่อทีมได้เอง`;
-  if (ev) { f.elements.name.value = ev.name; f.elements.maxMembers.value = ev.maxMembers; f.elements.maxReserves.value = ev.maxReserves; f.elements.maxTeams.value = ev.maxTeams; f.elements.note.value = ev.note || ''; }
+  if (ev) { f.elements.name.value = ev.name; f.elements.maxMembers.value = ev.maxMembers; f.elements.maxTeams.value = ev.maxTeams; f.elements.note.value = ev.note || ''; }
   $('#evFormTitle').textContent = ev ? `แก้ไขประเภท ${ev.name}` : 'เพิ่มประเภทใหม่';
   $('#evPresets').hidden = !!ev; $('#evNew').hidden = !ev;
   const list = eventsOf(sid);
@@ -1038,7 +1184,7 @@ function openTeam(eid) {
   $('#teamNameRow').hidden = solo;
   $('#formTeam [name=teamName]').required = !solo;
   $('#teamHint').textContent = isSingle(ev) ? 'กรอกข้อมูลของคุณเพื่อลงชื่อในประเภทนี้'
-    : `คุณจะเป็นตัวจริงคนแรกของ${unit(ev)} · ตัวจริงได้ ${ev.maxMembers} คน${ev.maxReserves ? ` สำรอง ${ev.maxReserves} คน` : ''} แล้วชวนเพื่อนมาลงชื่อต่อได้`;
+    : `คุณจะเป็นตัวจริงคนแรกของ${unit(ev)} · ตัวจริงได้ ${ev.maxMembers} คน ตัวสำรองไม่จำกัด แล้วชวนเพื่อนมาลงชื่อต่อได้`;
   $('#dlgTeam').showModal();
 }
 function openJoin(tid) {
@@ -1048,10 +1194,10 @@ function openJoin(tid) {
   $('#joinTitle').textContent = `ลงชื่อเข้า${unit(ev)} ${t.name}`;
   $('#joinSub').textContent = `${sp.name} · ${ev.name}`;
   const [rMain, rRes] = document.querySelectorAll('#formJoin [name=role]');
-  rMain.disabled = main >= ev.maxMembers; rRes.disabled = res >= ev.maxReserves;
-  $('#roleResWrap').hidden = !ev.maxReserves;
+  rMain.disabled = main >= ev.maxMembers; rRes.disabled = false;
+  $('#roleResWrap').hidden = isSingle(ev);
   $('#leftMain').textContent = rMain.disabled ? 'เต็มแล้ว' : `ว่าง ${ev.maxMembers - main} ที่`;
-  $('#leftRes').textContent = rRes.disabled ? 'เต็มแล้ว' : `ว่าง ${ev.maxReserves - res} ที่`;
+  $('#leftRes').textContent = `ไม่จำกัด · ตอนนี้ ${res} คน`;
   (rMain.disabled ? rRes : rMain).checked = true;
   $('#dlgJoin').showModal();
 }
@@ -1062,6 +1208,7 @@ document.addEventListener('change', e => {
   if (!hit) return;
   const f = e.target.form, p = hit.p;
   f.firstName.value = p.firstName; f.lastName.value = p.lastName; f.nickname.value = p.nickname; f.department.value = p.department;
+  if (f.phone && !f.phone.value && hit.st[0]) f.phone.value = hit.st[0].phone;
 });
 function fillMatchEvents(sid, eid) {
   $('#mEvent').innerHTML = `<option value="">ไม่ระบุประเภท</option>` + eventsOf(sid).map(e => `<option value="${e.id}" ${e.id === eid ? 'selected' : ''}>${esc(e.name)}</option>`).join('');
@@ -1148,9 +1295,9 @@ $('#formCoord').addEventListener('submit', async e => {
 });
 $('#formEvent').addEventListener('submit', async e => {
   e.preventDefault();
-  const f = formData(e.target), single = +f.maxMembers === 1 && +f.maxReserves === 0;
+  const f = formData(e.target), single = +f.maxMembers === 1;
   const ok = await confirmBox({ title: f.id ? 'ยืนยันการแก้ไขประเภท' : 'ยืนยันการเพิ่มประเภท',
-    rows: [['กีฬา', sportOf(f.sportId).name], ['ชื่อประเภท', f.name], ['รูปแบบ', single ? 'เดี่ยว' : `ตัวจริง ${f.maxMembers} คน · สำรอง ${f.maxReserves} คน`],
+    rows: [['กีฬา', sportOf(f.sportId).name], ['ชื่อประเภท', f.name], ['รูปแบบ', single ? 'เดี่ยว' : `ตัวจริง ${f.maxMembers} คน · ตัวสำรองไม่จำกัด`],
       ['รับสูงสุด', +f.maxTeams ? f.maxTeams + ' ทีม' : 'ไม่จำกัด'], ['เงื่อนไข', f.note]],
     ok: f.id ? 'ยืนยันแก้ไข' : 'ยืนยันเพิ่ม' });
   if (!ok) return;
@@ -1163,6 +1310,28 @@ $('#formGroup').addEventListener('submit', async e => {
   const ok = await confirmBox({ title: `ยืนยันการลงชื่อ${g.name}`, rows: [['กิจกรรม', g.name], ['ตำแหน่ง', f.position || ''], ...personRows(f)], ok: 'ยืนยันลงชื่อ' });
   if (!ok) return;
   if (await act('joinGroup', { groupId: g.id, ...f }, `${f.firstName} ลงชื่อ${g.name}แล้ว`)) $('#dlgGroup').close();
+});
+$('#formStaff').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = formData(e.target);
+  const ok = await confirmBox({ title: f.id ? 'ยืนยันการแก้ไขคณะทำงาน' : 'ยืนยันการลงข้อมูลคณะทำงาน',
+    rows: [['รับผิดชอบงาน', f.task], ...personRows(f), ['เบอร์โทร', f.phone]], ok: f.id ? 'ยืนยันแก้ไข' : 'ยืนยันบันทึก' });
+  if (!ok) return;
+  if (await act('saveStaff', f, f.id ? 'แก้ไขข้อมูลแล้ว' : `บันทึก ${f.firstName} ในคณะทำงานแล้ว`)) $('#dlgStaff').close();
+});
+$('#stDelete').addEventListener('click', async () => {
+  const f = formData($('#formStaff'));
+  if (await confirmBox({ title: 'ลบรายชื่อนี้?', sub: 'ลบแล้วกู้คืนไม่ได้', rows: [['ชื่อ', `${f.firstName} ${f.lastName}`], ['งาน', f.task]], ok: 'ลบรายชื่อ', danger: true })
+    && await act('deleteStaff', { staffId: f.id }, 'ลบรายชื่อแล้ว')) $('#dlgStaff').close();
+});
+$('#formEdit').addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = formData(e.target), all = !$('#edAllWrap').hidden && !!f.all;
+  const ok = await confirmBox({ title: 'ยืนยันการแก้ไขรายชื่อ', sub: $('#edSub').textContent,
+    rows: [...personRows(f), ['ประเภทนักกีฬา', f.kind === 'member' && !$('#edRole').hidden ? f.role : ''], ['ตำแหน่ง', f.position || ''],
+      ['แก้ทุกรายการ', all ? 'ใช่' : '']], ok: 'ยืนยันแก้ไข' });
+  if (!ok) return;
+  if (await act('editPerson', { ...f, all }, 'แก้ไขรายชื่อแล้ว')) $('#dlgEdit').close();
 });
 $('#formPin').addEventListener('submit', async e => {
   e.preventDefault();
@@ -1178,7 +1347,7 @@ $('#btnRefresh').addEventListener('click', () => refresh(true));
 
 /* ---------- ปุ่มต่าง ๆ ---------- */
 document.addEventListener('click', async e => {
-  const b = e.target.closest('[data-new],[data-join],[data-delm],[data-delt],[data-ev],[data-addmatch],[data-editm],[data-coord],[data-editc],[data-delc],[data-close],[data-cal],[data-day],[data-calmode],[data-calsp],[data-evmgr],[data-editev],[data-delev],[data-pre],[data-grp],[data-delsup],#adminOff,#btnCsv');
+  const b = e.target.closest('[data-new],[data-join],[data-delm],[data-delt],[data-ev],[data-addmatch],[data-editm],[data-coord],[data-editc],[data-delc],[data-close],[data-cal],[data-day],[data-calmode],[data-calsp],[data-evmgr],[data-editev],[data-delev],[data-pre],[data-grp],[data-delsup],[data-edmem],[data-edsup],[data-edstaff],[data-delstaff],[data-staffnew],#adminOff,#btnCsv');
   if (!b) return;
   const d = b.dataset;
   if (b.id === 'adminOff') { S.pin = null; render(); }
@@ -1197,8 +1366,17 @@ document.addEventListener('click', async e => {
   else if (d.calsp) { S.calSport = d.calsp; render(); }
   else if (d.evmgr) openEventMgr(d.evmgr);
   else if (d.editev) { const ev = eventOf(d.editev); openEventMgr(ev.sportId, ev); }
-  else if (d.pre) { const [n, mm, mr] = d.pre.split('|'), f = $('#formEvent'); if (!f.elements.name.value) f.elements.name.value = n; f.elements.maxMembers.value = mm; f.elements.maxReserves.value = mr; }
+  else if (d.pre) { const [n, mm] = d.pre.split('|'), f = $('#formEvent'); if (!f.elements.name.value) f.elements.name.value = n; f.elements.maxMembers.value = mm; }
   else if (d.grp) openGroup(d.grp);
+  else if ('staffnew' in d) openStaff(null);
+  else if (d.edmem) openEdit('member', D().members.find(x => x.id === d.edmem));
+  else if (d.edsup) openEdit('supporter', D().supporters.find(x => x.id === d.edsup));
+  else if (d.edstaff) openStaff(D().staff.find(x => x.id === d.edstaff));
+  else if (d.delstaff) {
+    const m = D().staff.find(x => x.id === d.delstaff);
+    if (await confirmBox({ title: 'ลบรายชื่อนี้?', sub: 'ลบแล้วกู้คืนไม่ได้', rows: [['ชื่อ', `${fullName(m)} (${m.nickname})`], ['งาน', m.task]], ok: 'ลบรายชื่อ', danger: true }))
+      act('deleteStaff', { staffId: m.id }, 'ลบรายชื่อแล้ว');
+  }
   else if (d.delev) {
     const ev = eventOf(d.delev), n = teamsOfEvent(ev.id).length;
     if (n) { toast(`ประเภท${ev.name}มี ${n} ${unit(ev)}อยู่ ต้องลบทีมก่อน`, true); return; }
